@@ -1,11 +1,11 @@
-import ModalReact from 'react-modal';
+import Modal from 'react-modal';
 import { IoClose } from "react-icons/io5";
 
-import css from "./Modal.module.css";
+import css from "./SimpleModal.module.css";
 
-const Modal = ({modalIsOpen, closeModal, children }) => {
+const SimpleModal = ({modalIsOpen, closeModal }) => {
   return (
-    <ModalReact
+    <Modal
       isOpen={modalIsOpen}
       overlayClassName="ReactModal__Overlay"
       className="ReactModal__Content"
@@ -16,9 +16,8 @@ const Modal = ({modalIsOpen, closeModal, children }) => {
       <button className={css.closeBtn} onClick={() => closeModal()}>
         <IoClose className={css.closeIcon} />
       </button>
-      {children}
-    </ModalReact>
+    </Modal>
   )
 }
 
-export default Modal
+export default SimpleModal
