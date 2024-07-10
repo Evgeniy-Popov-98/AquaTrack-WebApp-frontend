@@ -51,7 +51,7 @@ section {
 @media screen and (min-width: 768px) {
   section {
     min-width: 768px;
-    padding: 0 32px;
+    padding: 32px;
   }
 }
 
