@@ -1,16 +1,7 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -36,7 +27,6 @@ ul {
 }
 
 a {
-  color: currentColor;
   text-decoration: none;
 }
 
@@ -49,4 +39,24 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+section {
+  min-width: 320px;
+  width: 375px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  section {
+    min-width: 768px;
+    padding: 0 32px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  section {
+    min-width: 1440px;
+  }
 }
