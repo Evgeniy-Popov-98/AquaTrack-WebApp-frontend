@@ -1,0 +1,162 @@
+.formContainer {
+  width: 311px;
+  height: 732px;
+  border-radius: 30px;
+  background-color: #f0eff4;
+  padding: 24px 16px;
+}
+
+.formTitle {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #323f47;
+  margin-bottom: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 126px;
+}
+
+.inputWrap {
+  margin-bottom: 32px;
+}
+
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  color: #2f2f2f;
+}
+
+.formLabel:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.formInput {
+  border: 1px solid rgba(47, 47, 47, 0.2);
+  border-radius: 15px;
+  padding: 16px;
+  width: 279px;
+  background-color: transparent;
+}
+
+.formInput::placeholder {
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  color: rgba(47, 47, 47, 0.6);
+}
+
+.formBtn {
+  width: max-content;
+  border-radius: 30px;
+  padding: 16px 129px;
+  background-color: #9be1a0;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #323f47;
+  margin-bottom: 16px;
+}
+
+.error {
+  font-size: 8px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  color: #de1717;
+}
+
+.formLink {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  color: rgba(47, 47, 47, 0.5);
+}
+
+.linkSignIn {
+  font-weight: 700;
+  text-decoration: underline;
+  color: #2f2f2f;
+}
+
+@media screen and (min-width: 768px) {
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    width: 640px;
+    height: 896px;
+    padding: 32px 32px;
+  }
+
+  .form {
+    margin: 0 auto;
+    margin-top: 171px;
+  }
+
+  .formTitle {
+    font-size: 36px;
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+  }
+
+  .formLabel {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .formLabel:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .formInput {
+    padding: 16px;
+    width: 402px;
+    background-color: transparent;
+  }
+
+  .formInput::placeholder {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .formBtn {
+    padding: 18px 189px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+
+  .formLink {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .formContainer {
+    width: 608px;
+    height: 672px;
+  }
+
+  .form {
+    margin-top: 74px;
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .formContainer {
+    margin: 0 auto;
+  }
+}

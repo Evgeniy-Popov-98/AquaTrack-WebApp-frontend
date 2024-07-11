@@ -1,0 +1,76 @@
+.welcomeContainer {
+  width: 311px;
+  height: 320px;
+  border-radius: 30px;
+  background-color: #f0eff4;
+  padding: 24px 16px 67px;
+}
+
+.subtitle {
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+  margin-top: 74px;
+  color: #2f2f2f;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #323f47;
+  margin-bottom: 46px;
+}
+
+.linkSignUp {
+  width: 116px;
+  height: 46px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #323f47;
+  background-color: #9be1a0;
+  padding: 14px 19px;
+  margin-right: 10px;
+}
+
+.linkSignIn {
+  width: 104px;
+  height: 46px;
+  border: 1px solid #323f47;
+  border-radius: 30px;
+  color: #323f47;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  text-align: center;
+  padding: 14px 28px;
+}
+
+@media screen and (min-width: 768px) {
+  .welcomeContainer {
+    width: 640px;
+    height: 416px;
+    padding: 32px 32px 50px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .welcomeContainer {
+    width: 608px;
+    height: 672px;
+    padding: 32px;
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .welcomeContainer {
+    margin: 0 auto;
+  }
+}

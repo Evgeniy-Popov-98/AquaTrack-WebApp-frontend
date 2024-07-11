@@ -1,0 +1,137 @@
+.advantageContainer {
+  border-radius: 30px;
+  width: 311px;
+  height: 112px;
+  background-image: url(../../assets/images/home-mob.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  padding: 209px 16px 32px;
+}
+
+@media (min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi),
+  (min-resolution: 2dppx) {
+  .advantageContainer {
+    background-image: url(../../assets/images/home-mob-2x.jpg);
+  }
+}
+
+.customersContainer {
+  display: flex;
+  border-radius: 30px;
+  padding: 10px 14px;
+  width: 132px;
+  height: 28px;
+  box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  margin-bottom: 8px;
+}
+
+.customersList {
+  display: flex;
+}
+
+.customersParagraf {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.17;
+  color: #323f47;
+}
+
+.customersParagraf span {
+  color: #9be1a0;
+}
+
+.paragrafContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 200px;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.paragrafHabit {
+  width: 63px;
+  border-radius: 30px;
+  padding: 9px 12px;
+  background-color: #323f47;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #ffffff;
+}
+
+.paragrafView {
+  border-radius: 30px;
+  padding: 9px 12px;
+  width: 65px;
+  background-color: #9be1a0;
+  color: #323f47;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.paragrafPersonal {
+  border-radius: 30px;
+  padding: 9px 12px;
+  width: 90px;
+  background-color: #ffffff;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #323f47;
+}
+
+@media screen and (min-width: 768px) {
+  .advantageContainer {
+    width: 640px;
+    height: 131px;
+    background-image: url(../../assets/images/home-tab.jpg);
+    padding: 283px 32px 32px;
+  }
+
+  @media (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+    .advantageContainer {
+      background-image: url(../../assets/images/home-tab-2x.jpg);
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .advantageContainer {
+    width: 608px;
+    height: 167px;
+    background-image: url(../../assets/images/home.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    padding: 537px 16px 32px;
+    margin: 0 auto;
+  }
+
+  @media (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+    .advantageContainer {
+      background-image: url(../../assets/images/home-2x.jpg);
+    }
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .advantageContainer {
+    margin: 0 auto;
+  }
+}
