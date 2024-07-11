@@ -2,10 +2,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const dailyNorma = (gender, weight = 0, sport = 0) => {
-  console.log(gender, weight, sport);
-
-  if (weight === 0) return 1.8;
+const dailyNormaCalculation = (gender, weight = 0, sport = 0) => {
+  if (!weight) return 1.8;
   switch (gender) {
     case 'female':
       return (weight * 0.03 + sport * 0.4).toFixed(1);
@@ -15,19 +13,30 @@ const dailyNorma = (gender, weight = 0, sport = 0) => {
       break;
   }
 };
-console.log(dailyNorma('male', 70, 2));
+
+// всі поля reguired?
+// const schema = yup
+//   .object({
+//     name: yup.string().required('Name is required'),
+//     gender: yup
+//       .string()
+//       .oneOf(['female', 'male'], 'Gender is required')
+//       .required('Gender is required'),
+//     email: yup.string().email(),
+//     weight: yup.number().positive().required('Weight is required'),
+//     sportTime: yup.number().positive().required('sportTime is required'),
+//     waterAmount: yup.number().positive().required('sportTime is required'),
+//   })
+//   .required();
 
 const schema = yup
   .object({
-    name: yup.string().required('Name is required'),
-    gender: yup
-      .string()
-      .oneOf(['female', 'male'], 'Gender is required')
-      .required('Gender is required'),
+    name: yup.string(),
+    gender: yup.string().oneOf(['female', 'male']),
     email: yup.string().email(),
-    weight: yup.number().positive().required('Weight is required'),
-    sportTime: yup.number().positive().required('sportTime is required'),
-    waterAmount: yup.number().positive().required('sportTime is required'),
+    weight: yup.number().positive().default(0).notRequired(),
+    sportTime: yup.number().positive().default(0).notRequired(),
+    waterAmount: yup.number().positive().default(0).notRequired(),
   })
   .required();
 
@@ -35,6 +44,7 @@ export default function UserSettingsForm() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -42,7 +52,24 @@ export default function UserSettingsForm() {
       gender: 'female',
     },
   });
-  const onSubmit = data => console.log(data);
+
+  const onSubmit = data => {
+    console.log(data);
+    const formData = new FormData();
+    Object.keys(data).forEach(key => formData.append(key, data[key]));
+
+    console.log(...formData);
+  };
+
+  const genderInput = watch('gender');
+  const weightInput = watch('weight');
+  const sportTimeInput = watch('sportTime');
+
+  const dailyNorma = dailyNormaCalculation(
+    genderInput,
+    weightInput,
+    sportTimeInput
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -98,9 +125,13 @@ export default function UserSettingsForm() {
       </div>
 
       <div>
-        <p>The required amount of water in liters per day:</p>
-        <label>The required amount of water in liters per day:</label>
-        <input type="number" {...register('waterAmount')} />
+        <p>The required amount of water in liters per day: {dailyNorma} l</p>
+        <label>Write down how much water you will drink:</label>
+        <input
+          type="number"
+          {...register('waterAmount')}
+          placeholder={dailyNorma}
+        />
         <p>{errors.waterAmount?.message}</p>
       </div>
 
