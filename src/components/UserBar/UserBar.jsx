@@ -4,11 +4,13 @@ import chevronDown from '../../assets/icons/icons.svg';
 import { useState } from "react";
 
 import UserBarPopover from '../UserBarPopover/UserBarPopover';
+import LogOutModal from '../LogOutModal/LogOutModal.jsx';
 
 import css from './UserBar.module.css';
 
 const UserBar = ({ name, avatar }) => {
   const [userBarPopover, setUserBarPopover] = useState(false);
+  const [logOutModalIsOpen, setLogOutModalIsOpen] = useState(false);
 
   function openUserBarPopover() {
     setUserBarPopover(true)
@@ -16,6 +18,14 @@ const UserBar = ({ name, avatar }) => {
 
   function closeUserBarPopover() {
     setUserBarPopover(false)
+  }
+
+  function openLogOutModal() {
+    setLogOutModalIsOpen(true);
+  }
+
+  function closeLogOutModal() {
+    setLogOutModalIsOpen(false);
   }
 
   return (  
@@ -31,7 +41,12 @@ const UserBar = ({ name, avatar }) => {
                 <use href={`${chevronDown}#icon-chevron-down`} />
             </svg>
         </button>
-        <UserBarPopover userBarPopover={userBarPopover} closeUserBarPopover={closeUserBarPopover}/>  
+        <UserBarPopover userBarPopover={userBarPopover} 
+                        closeUserBarPopover={closeUserBarPopover} 
+                        openLogOutModal={openLogOutModal}/>
+        <LogOutModal logOutModalIsOpen={logOutModalIsOpen} 
+                     closeLogOutModal={closeLogOutModal}
+        />  
     </div>
   )
 }

@@ -4,14 +4,14 @@ import sprite from '../../assets/icons/icons.svg';
 
 import css from "./UserBarPopover.module.css"
 
-const UserBarPopover = ({userBarPopover, closeUserBarPopover}) => {
+const UserBarPopover = ({userBarPopover, closeUserBarPopover, openLogOutModal}) => {
   function openSetting () {
     console.log('open setting');
     closeUserBarPopover();
   }
 
   function logOut () {
-    console.log('log out');
+    openLogOutModal();
     closeUserBarPopover();
   }
 
