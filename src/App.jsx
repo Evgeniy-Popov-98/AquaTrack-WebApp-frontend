@@ -3,8 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import SharedLayout from './SharedLayout';
 
-import UserPanel from './components/UserPanel/UserPanel.jsx'
-
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
 const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
 const SignUpPage = lazy(() => import('./page/SignUpPage/SignUpPage'));
@@ -12,8 +10,6 @@ const TrackerPage = lazy(() => import('./page/TrackerPage/TrackerPage'));
 
 function App() {
   return (
-    <>
-    <UserPanel name="Masha" avatar=""/>
     <Routes>
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<HomePage />} />
@@ -22,7 +18,6 @@ function App() {
         <Route path="/tracker" element={<TrackerPage />} />
       </Route>
     </Routes>
-    </>
   );
 }
 
