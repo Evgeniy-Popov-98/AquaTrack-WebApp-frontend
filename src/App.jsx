@@ -1,21 +1,24 @@
 import { Route, Routes } from 'react-router-dom';
+import { lazy } from 'react';
+import SharedLayout from './SharedLayout';
+
 import './App.css';
-import SharedLayout from './components/SharedLayout/SharedLayout.jsx';
-import HomePage from './page/HomePage/HomePage.jsx';
-import SignUpPage from './page/SignUpPage/SignUpPage.jsx';
-import SignInPage from './page/SignInPage/SignInPage.jsx';
+
+const HomePage = lazy(() => import('./page/HomePage/HomePage'));
+const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
+const SignUpPage = lazy(() => import('./page/SignUpPage/SignUpPage'));
+const TrackerPage = lazy(() => import('./page/TrackerPage/TrackerPage'));
 
 function App() {
   return (
-    <>
-      <SharedLayout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage />} />
-        </Routes>
-      </SharedLayout>
-    </>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/tracker" element={<TrackerPage />} />
+      </Route>
+    </Routes>
   );
 }
 
