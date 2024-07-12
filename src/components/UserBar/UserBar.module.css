@@ -1,0 +1,43 @@
+.boxUserBar {
+    position: relative;
+}
+
+.btnUserBar {
+    min-width: 137px;
+    height: 50px;
+    background-color: #323F47;
+    border-radius: 30px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.userName {
+    min-width: 43px;
+    height: 18px;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: white;
+    /* var(--main-white); */
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+}
+
+.staticPositionIcon {
+    transform: rotate(0deg);
+    transition: 0.3s;
+}
+
+.activeRotateIcon {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}

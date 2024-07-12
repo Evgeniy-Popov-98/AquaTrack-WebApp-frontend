@@ -1,0 +1,73 @@
+.backdropPopover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: transparent;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .activeBackdropPopover {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .userBarPopover {
+    position: absolute;
+  top: 55px;
+  left: 0px;
+  width: 137px;
+  border-radius: 15px;
+  padding: 14px 20px;
+  z-index: 15;
+  background-color: white;
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition: 0.3s;
+  }
+
+  .active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+.popoverContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 129%;
+  color: var(--main);
+}
+
+.popoverItem {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.textColor {
+  color: rgba(50, 63, 71, 0.4);
+  transition: 0.3s;
+}
+
+.iconColor {
+  fill: rgba(50, 63, 71, 0.4);
+  transition: 0.3s;
+}
+
+.popoverItem:hover.textColor {
+  color: black;
+}
+
+.popoverItem:hover>.iconColor {
+  fill: black;
+}
