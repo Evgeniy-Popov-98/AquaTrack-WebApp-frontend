@@ -1,9 +1,9 @@
-import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import SharedLayout from './SharedLayout';
 
 import UserPanel from './components/UserPanel/UserPanel.jsx'
+import './App.css';
 
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
 const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
