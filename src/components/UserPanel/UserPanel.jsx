@@ -1,8 +1,14 @@
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../redux/auth/selectors";
+
 import UserBar from '../UserBar/UserBar.jsx';
 
 import css from './UserPanel.module.css';
 
-const UserPanel = ({ name, email, avatar }) => {
+const UserPanel = () => {
+  const userData = useSelector(selectUserData);
+  const [name, email, avatar] = userData;
+
   let userName;
   if(name) {
     userName = name;

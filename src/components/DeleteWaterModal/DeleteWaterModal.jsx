@@ -1,8 +1,12 @@
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contacts/operations.js";
+
 import Modal from "../Modal/Modal.jsx"
 
 import css from "./DeleteWaterModal.module.css";
 
-const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal}) => {
+const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal, waterId}) => {
+  const dispatch = useDispatch();
   return (
     <Modal modalIsOpen={deleteWaterModalIsOpen} closeModal={closeDeleteWaterModal}>
         <div className={css.box}>
@@ -11,7 +15,9 @@ const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal}) => {
                 <p  className={css.text}>Are you sure you want to delete the entry?</p>
             </div>
             <div className={css.buttonBox}>
-                <button className={css.btnDelete}>Delete</button>
+                <button className={css.btnDelete} onClick={()=>{
+                  closeDeleteWaterModal();
+                  dispatch(deleteContact(waterId))}}>Delete</button>
                 <button className={css.btnCancel} onClick={()=>closeDeleteWaterModal()}>Cancel</button>
             </div>
         </div>
