@@ -1,8 +1,11 @@
+import { Route, Routes } from 'react-router-dom';
+import { lazy } from 'react';
+import SharedLayout from './SharedLayout';
+
 import './App.css';
-import UserSettingsForm from './components/UserSettingsForm/UserSettingsForm';
 
 function App() {
-  return <UserSettingsForm />;
+  return;
 }
 
 export default App;
