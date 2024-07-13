@@ -1,0 +1,13 @@
+.logo {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.11;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #323f47;
+  transition: color 300ms ease-in-out;
+}
+
+.logo:hover, .logo:focus {
+  color: #87D28D;
+}

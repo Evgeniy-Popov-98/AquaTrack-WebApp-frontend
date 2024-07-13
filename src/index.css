@@ -1,7 +1,10 @@
+@import url(./components/Modal/Modal.css);
+
 :root {
   font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  box-sizing: border-box;
 }
 
 h1,
