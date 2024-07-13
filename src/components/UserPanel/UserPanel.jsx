@@ -1,3 +1,6 @@
+// import UserPanel from './components/UserPanel/UserPanel.jsx'
+//     <UserPanel name="Nadia" email="zharovskiy@gmai.com" avatar=""/>
+
 import { useSelector } from "react-redux";
 import { selectUserData } from "../../redux/auth/selectors";
 

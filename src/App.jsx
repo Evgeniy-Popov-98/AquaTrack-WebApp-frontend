@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import SharedLayout from './SharedLayout';
 
-import UserPanel from './components/UserPanel/UserPanel.jsx'
 import './App.css';
 
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
@@ -12,8 +11,6 @@ const TrackerPage = lazy(() => import('./page/TrackerPage/TrackerPage'));
 
 function App() {
   return (
-    <>
-    <UserPanel name="Nadia" email="zharovskiy@gmai.com" avatar=""/>
     <Routes>
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<HomePage />} />
@@ -22,7 +19,6 @@ function App() {
         <Route path="/tracker" element={<TrackerPage />} />
       </Route>
     </Routes>
-    </>
   );
 }
 
