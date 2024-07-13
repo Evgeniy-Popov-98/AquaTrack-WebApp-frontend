@@ -47,7 +47,7 @@ const UserBar = ({ name, avatar }) => {
                 className={clsx(css.staticPositionIcon, {
                     [css.activeRotateIcon]: userBarPopover,
                 })} 
-                width="16" height="16">
+                >
                 <use href={`${sprite}#icon-chevron-down`} />
             </svg>
         </button>

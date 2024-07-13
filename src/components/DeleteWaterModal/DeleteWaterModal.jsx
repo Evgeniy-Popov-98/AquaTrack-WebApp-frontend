@@ -11,7 +11,7 @@ const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal}) => {
                 <p  className={css.text}>Are you sure you want to delete the entry?</p>
             </div>
             <div className={css.buttonBox}>
-                <button className={css.btnLogOut}>Delete</button>
+                <button className={css.btnDelete}>Delete</button>
                 <button className={css.btnCancel} onClick={()=>closeDeleteWaterModal()}>Cancel</button>
             </div>
         </div>

@@ -17,17 +17,18 @@
 
   .userBarPopover {
     position: absolute;
-  top: 55px;
-  left: 0px;
-  width: 137px;
-  border-radius: 15px;
-  padding: 14px 20px;
-  z-index: 15;
-  background-color: white;
-  opacity: 0;
-  transform: translateY(-10px);
-  visibility: hidden;
-  transition: 0.3s;
+    top: 55px;
+    left: 0px;
+    width: 137px;
+    border-radius: 15px;
+    padding: 14px 20px;
+    z-index: 15;
+    box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.1);
+    background-color:  #fff;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: 0.3s;
   }
 
   .active {
@@ -40,11 +41,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-family: var(--font-family);
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-size: 14px;
   line-height: 129%;
-  color: var(--main);
+  color: #323f47;
 }
 
 .popoverItem {
@@ -70,4 +71,22 @@
 
 .popoverItem:hover>.iconColor {
   fill: black;
+}
+
+@media screen and (min-width: 768px) {
+  .userBarPopover {
+    top: 65px;
+    width: 157px;
+  }
+
+  .active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .popoverContent {
+    font-size: 15px;
+    line-height: 149%;
+  }
 }
