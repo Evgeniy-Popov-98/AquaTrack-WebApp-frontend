@@ -46,5 +46,8 @@
     <symbol id="icon-edit-2" viewBox="0 0 32 32">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.6" d="M22.666 4a3.766 3.766 0 0 1 4.109-.817 3.781 3.781 0 0 1 2.041 2.04 3.764 3.764 0 0 1 0 2.886 3.756 3.756 0 0 1-.817 1.223l-18 18-7.333 2 2-7.333 18-18z"/>
     </symbol>
+    <symbol id="icon-circle" viewBox="0 0 32 32">
+    <path fill="#9be1a0" style="fill: var(--color1, #9be1a0)" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
+    </symbol>
   </defs>
 </svg>
