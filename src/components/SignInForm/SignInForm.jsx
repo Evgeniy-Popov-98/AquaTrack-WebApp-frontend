@@ -4,6 +4,8 @@ import css from './SignInForm.module.css';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
+import icons from '../../assets/icons/icons.svg'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -15,6 +17,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignInForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -25,15 +29,20 @@ const SignInForm = () => {
     alert(JSON.stringify(d));
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className={css.formContainer}>
       <Logo />
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={css.formTitle}>Sign In</h2>
-        <div className={css.inputWrap}>
+        <div className={css.labelWrap}>
           <label className={css.formLabel}>
             Email
             <input
+              type='email'
               className={css.formInput}
               {...register('email')}
               placeholder="Enter your email"
@@ -44,11 +53,25 @@ const SignInForm = () => {
           </label>
           <label className={css.formLabel}>
             Password
-            <input
-              className={css.formInput}
-              {...register('password')}
-              placeholder="Enter your password"
-            />
+            <div className={css.inputWrap}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className={css.formInput}
+                {...register('password')}
+                placeholder="Enter your password"
+              />
+              <span className={css.icon} onClick={togglePasswordVisibility}>
+                {showPassword ? (
+                  <svg width="20" height="20">
+                    <use href={`${icons}#icon-eye`} />
+                  </svg>
+                ) : (
+                  <svg width="20" height="20">
+                    <use href={`${icons}#icon-eye-off`} />
+                  </svg>
+                )}
+              </span>
+            </div>
             {errors.password && (
               <p className={css.error}>{errors.password.message}</p>
             )}

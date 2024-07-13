@@ -1,7 +1,7 @@
 .advantageContainer {
   border-radius: 30px;
-  width: 311px;
-  height: 112px;
+  width: 343px;
+  height: 353px;
   background-image: url(../../assets/images/home-mob.jpg);
   background-position: center;
   background-repeat: no-repeat;
@@ -22,15 +22,39 @@
   display: flex;
   border-radius: 30px;
   padding: 10px 14px;
-  width: 132px;
-  height: 28px;
+  width: 160px;
+  height: 48px;
   box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.1);
   background: #ffffff;
-  margin-bottom: 8px;
+  
 }
 
 .customersList {
+  width: 120px;
   display: flex;
+  position: relative;
+}
+
+.customersList li {
+  position: absolute;
+}
+
+.customersList li:nth-child(1) {
+  left: 0px;
+  top: 0;
+  z-index: 3;
+}
+
+.customersList li:nth-child(2) {
+  left: 17px;
+  top: 0;
+  z-index: 2;
+}
+
+.customersList li:nth-child(3) {
+  left: 34px;
+  top: 0;
+  z-index: 1;
 }
 
 .customersParagraf {
@@ -47,13 +71,17 @@
 .paragrafContainer {
   display: flex;
   flex-wrap: wrap;
-  width: 200px;
+  width: 168px;
   gap: 4px;
   margin-left: auto;
 }
 
 .paragrafHabit {
-  width: 63px;
+  display: flex;
+  gap: 4px;
+  width: 81px;
+  justify-content: center;
+  align-items: center;
   border-radius: 30px;
   padding: 9px 12px;
   background-color: #323f47;
@@ -68,7 +96,7 @@
 .paragrafView {
   border-radius: 30px;
   padding: 9px 12px;
-  width: 65px;
+  width: 83px;
   background-color: #9be1a0;
   color: #323f47;
   font-weight: 700;
@@ -81,7 +109,7 @@
 .paragrafPersonal {
   border-radius: 30px;
   padding: 9px 12px;
-  width: 90px;
+  width: 108px;
   background-color: #ffffff;
   font-weight: 700;
   font-size: 8px;
@@ -93,8 +121,8 @@
 
 @media screen and (min-width: 768px) {
   .advantageContainer {
-    width: 640px;
-    height: 131px;
+    width: 704px;
+    height: 446px;
     background-image: url(../../assets/images/home-tab.jpg);
     padding: 283px 32px 32px;
   }
@@ -106,18 +134,66 @@
       background-image: url(../../assets/images/home-tab-2x.jpg);
     }
   }
+
+  .customersContainer {
+    width: 237px;
+    height: 67px;
+    padding: 10px 20px;
+  }
+
+  .customersParagraf {
+    font-size: 15px;
+    line-height: 1.49;
+  }
+
+  .customersList {
+  width: 200px;
+  display: flex;
+  position: relative;
+}
+
+.customersList li:nth-child(2) {
+  left: 30px;
+}
+
+.customersList li:nth-child(3) {
+  left: 60px;
+}
+
+  .paragrafContainer {
+    width: 242px;
+    gap: 10px;
+  }
+
+  .paragrafHabit {
+    width: 111px;
+    padding: 11px 16px;
+    font-size: 12px;
+  }
+
+  .paragrafView {
+    width: 121px;
+    font-size: 12px;
+    padding: 11px 16px;
+  }
+
+  .paragrafPersonal {
+    width: 158px;
+    font-size: 12px;
+    padding: 11px 16px;
+  }
 }
 
 @media screen and (min-width: 1440px) {
   .advantageContainer {
-    width: 608px;
-    height: 167px;
+    width: 672px;
+    height: 736px;
     background-image: url(../../assets/images/home.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
-    padding: 537px 16px 32px;
+    padding: 537px 32px 64px;
     margin: 0 auto;
   }
 
@@ -127,6 +203,12 @@
     .advantageContainer {
       background-image: url(../../assets/images/home-2x.jpg);
     }
+  }
+}
+
+@media screen and (max-width: 677px) {
+  .customersContainer {
+    margin-bottom: 8px;
   }
 }
 

@@ -1,6 +1,6 @@
 .welcomeContainer {
-  width: 311px;
-  height: 320px;
+  width: 343px;
+  height: 411px;
   border-radius: 30px;
   background-color: #f0eff4;
   padding: 24px 16px 67px;
@@ -26,7 +26,6 @@
 
 .linkSignUp {
   width: 116px;
-  height: 46px;
   border-radius: 30px;
   font-weight: 700;
   font-size: 14px;
@@ -37,11 +36,21 @@
   background-color: #9be1a0;
   padding: 14px 19px;
   margin-right: 10px;
+  transition: background-color 300ms ease-in-out;
+}
+
+.linkSignUp:hover,
+.linkSignUp:focus {
+  background-color: #87d28d;
+}
+
+.linkSignUp:disabled {
+  background-color: transparent;
+  color: #bcbcbc;
 }
 
 .linkSignIn {
   width: 104px;
-  height: 46px;
   border: 1px solid #323f47;
   border-radius: 30px;
   color: #323f47;
@@ -51,21 +60,68 @@
   letter-spacing: -0.01em;
   text-align: center;
   padding: 14px 28px;
+  transition: border-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.linkSignIn:hover,
+.linkSignIn:focus {
+  border-color: #87d28d;
+  color: #87d28d;
+}
+
+.linkSignIn:disabled {
+  background-color: #bcbcbc;
+  color: #bcbcbc;
 }
 
 @media screen and (min-width: 768px) {
   .welcomeContainer {
-    width: 640px;
-    height: 416px;
+    width: 704px;
+    height: 498px;
     padding: 32px 32px 50px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 50px;
+  }
+
+  .title {
+    font-size: 64px;
+    line-height: 1.09;
+    margin-bottom: 32px;
+  }
+
+  .linkSignUp {
+    width: 169px;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 18px 40px;
+  }
+
+  .linkSignIn {
+    width: 135px;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 18px 40px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .welcomeContainer {
-    width: 608px;
-    height: 672px;
+    width: 672px;
+    height: 736px;
     padding: 32px;
+  }
+
+  .subtitle {
+    margin-top: 132px;
+  }
+
+  .title {
+    font-size: 80px;
+    line-height: 0.95;
   }
 }
 

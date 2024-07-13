@@ -1,6 +1,6 @@
 .formContainer {
-  width: 311px;
-  height: 732px;
+  width: 343px;
+  height: 780px;
   border-radius: 30px;
   background-color: #f0eff4;
   padding: 24px 16px;
@@ -21,7 +21,7 @@
   margin-top: 126px;
 }
 
-.inputWrap {
+.labelWrap {
   margin-bottom: 32px;
 }
 
@@ -44,8 +44,13 @@
   border: 1px solid rgba(47, 47, 47, 0.2);
   border-radius: 15px;
   padding: 16px;
-  width: 279px;
+  width: 311px;
+  outline: transparent;
   background-color: transparent;
+}
+
+.formInput:focus {
+  border-color: rgba(47, 47, 47, 0.4);
 }
 
 .formInput::placeholder {
@@ -53,6 +58,10 @@
   line-height: 1.29;
   letter-spacing: -0.01em;
   color: rgba(47, 47, 47, 0.6);
+}
+
+.icon {
+  display: none;
 }
 
 .formBtn {
@@ -67,6 +76,12 @@
   text-align: center;
   color: #323f47;
   margin-bottom: 16px;
+  transition: background-color 300ms ease-in-out;
+}
+
+.formBtn:hover,
+.formBtn:focus {
+  background-color: #87d28d;
 }
 
 .error {
@@ -94,8 +109,8 @@
   .formContainer {
     display: flex;
     flex-direction: column;
-    width: 640px;
-    height: 896px;
+    width: 704px;
+    height: 960px;
     padding: 32px 32px;
   }
 
@@ -119,9 +134,15 @@
     margin-bottom: 20px;
   }
 
+  .inputWrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
   .formInput {
     padding: 16px;
-    width: 402px;
+    width: 436px;
     background-color: transparent;
   }
 
@@ -130,12 +151,24 @@
     line-height: 1.5;
   }
 
+  .icon {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    right: 16px;
+    cursor: pointer;
+  }
+
+  .icon svg {
+    fill: transparent;
+    stroke: #2f2f2f;
+  }
+
   .formBtn {
     padding: 18px 189px;
-    font-weight: 700;
     font-size: 16px;
     line-height: 1.5;
-    letter-spacing: -0.01em;
   }
 
   .formLink {
@@ -146,8 +179,8 @@
 
 @media screen and (min-width: 1440px) {
   .formContainer {
-    width: 608px;
-    height: 672px;
+    width: 672px;
+    height: 736px;
   }
 
   .form {
