@@ -4,22 +4,24 @@ import * as yup from 'yup';
 import UserSettingsAvatar from './UserSettingsAvatar';
 import css from './UserSettingsForm.module.css';
 
-// const dailyNormaRecomendCalculation = (gender, weight = 0, sport = 0) => {
-//   if (!weight) return 1.8;
-//   switch (gender) {
-//     case 'female':
-//       return (weight * 0.03 + sport * 0.4).toFixed(1);
-//     case 'male':
-//       return (weight * 0.04 + sport * 0.6).toFixed(1);
-//   }
-// };
-
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
 
+const convertingToNumber = str => {
+  return Math.floor(parseFloat(str) * 10) / 10;
+};
+
+const dailyNormaRecomendCalculation = (gender, weight, sport) => {
+  if (!weight) return 1.8;
+  if (!sport) sport = 0;
+  const baseValue = gender === 'female' ? 0.03 : 0.04;
+  const sportValue = gender === 'female' ? 0.4 : 0.6;
+  return (weight * baseValue + sport * sportValue).toFixed(1);
+};
+
 const schema = yup.object().shape({
-  name: yup.string(),
+  username: yup.string().notRequired(),
   gender: yup.string().oneOf(['female', 'male']),
-  email: yup.string().email(),
+  email: yup.string().email().notRequired(),
   weight: yup
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
@@ -44,19 +46,63 @@ export default function UserSettingsForm() {
     resolver: yupResolver(schema),
     defaultValues: {
       gender: 'female',
-      name: '',
+      username: null,
       weight: null,
       sportTime: null,
       dailyNorma: null,
     },
   });
 
+  const genderValue = watch('gender');
+  const weightNumber = convertingToNumber(watch('weight'));
+  const sportTimeNumber = convertingToNumber(watch('sportTime'));
+  const dayliNormaNumber = convertingToNumber(watch('dayliNorma'));
+
+  const dayliNormaRecomended = dailyNormaRecomendCalculation(
+    genderValue,
+    weightNumber,
+    sportTimeNumber
+  );
+
   const onSubmit = data => {
     console.log(data);
-    // const formData = new FormData();
-    // Object.keys(data).forEach(key => formData.append(key, data[key]));
 
-    // console.log(...formData);
+    const formData = new FormData();
+
+    Object.keys(data).forEach(key => {
+      switch (key) {
+        case 'gender':
+          return formData.append(key, data[key]);
+        case 'username':
+          if (data[key]) {
+            formData.append(key, data[key]);
+          }
+          break;
+        case 'email':
+          if (data[key]) {
+            formData.append(key, data[key]);
+          }
+          break;
+        case 'weight':
+          if (weightNumber) {
+            formData.append(key, weightNumber);
+          }
+          break;
+        case 'sportTime':
+          if (sportTimeNumber) {
+            formData.append(key, sportTimeNumber);
+          }
+          break;
+        case 'dayliNorma':
+          if (data[key]) {
+            return formData.append(key, dayliNormaNumber);
+          } else {
+            return formData.append(key, dayliNormaRecomended);
+          }
+      }
+    });
+
+    console.log(...formData);
   };
 
   // useEffect(() => {
@@ -68,19 +114,6 @@ export default function UserSettingsForm() {
   //     });
   //   }, 2000);
   // }, [reset]);
-
-  const genderInput = watch('gender');
-  const weightInput = watch('weight');
-  const sportTimeInput = watch('sportTime');
-  //   console.log('genderInput', genderInput, typeof genderInput);
-  //   console.log('weightInput', weightInput, typeof weightInput);
-  //   console.log('sportTimeInput', sportTimeInput, typeof sportTimeInput);
-
-  //   const dailyNormaRecomend = dailyNormaRecomendCalculation(
-  //     genderInput,
-  //     weightInput,
-  //     sportTimeInput
-  //   );
 
   return (
     <div>
@@ -95,8 +128,8 @@ export default function UserSettingsForm() {
 
         <div>
           <label>Your name</label>
-          <input {...register('name')} />
-          <p className={css.errorMessage}>{errors.name?.message}</p>
+          <input {...register('username')} />
+          <p className={css.errorMessage}>{errors.username?.message}</p>
         </div>
 
         <div>
@@ -125,30 +158,31 @@ export default function UserSettingsForm() {
             <p>!Active time in hours</p>
           </div>
         </div>
+
         <div>
           <label>Your weight in kilograms:</label>
-          <input type="number" {...register('weight')} />
+          <input type="string" {...register('weight')} />
           <p className={css.errorMessage}>{errors.weight?.message}</p>
         </div>
 
         <div>
           <label>The time of active participation in sports:</label>
-          <input type="number" {...register('sportTime')} />
+          <input type="string" {...register('sportTime')} />
           <p className={css.errorMessage}>{errors.sportTime?.message}</p>
         </div>
 
         <div>
-          <p>
-            {/* The required amount of water in liters per day: {dailyNormaRecomend} l */}
-            The required amount of water in liters per day: l
+          <p style={{ color: 'blue' }}>
+            The required amount of water in liters per day:
+            {dayliNormaRecomended}l
           </p>
           <label>Write down how much water you will drink:</label>
           <input
-            type="number"
-            {...register('dailyNorma')}
-            //   placeholder={dailyNormaRecomend}
+            type="string"
+            {...register('dayliNorma')}
+            placeholder={dayliNormaRecomended}
           />
-          <p className={css.errorMessage}>{errors.waterAmount?.message}</p>
+          <p>{errors.dayliNorma?.message}</p>
         </div>
 
         <button type="submit">Save</button>
