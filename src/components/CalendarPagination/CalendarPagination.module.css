@@ -22,7 +22,7 @@
   width: 18px;
   height: 18px;
   padding: 0;
-  /* background-color: transparent; */
+  background-color: transparent;
 }
 
 .icon {
@@ -37,5 +37,6 @@
   }
   .CalendarPagination p {
     font-size: 16px;
+    width: 140px; /* поставила фіксовану ширину щоб не скакав, потрібно уточнювати у ментора */
   }
 }
