@@ -62,6 +62,7 @@ const SignUpForm = () => {
             Password
             <div className={css.inputWrap}>
               <input
+                type={showPassword ? 'text' : 'password'}
                 className={css.formInput}
                 {...register('password')}
                 placeholder="Enter your password"
@@ -86,6 +87,7 @@ const SignUpForm = () => {
             Repear password
             <div className={css.inputWrap}>
               <input
+                type={showPassword ? 'text' : 'password'}
                 className={css.formInput}
                 {...register('repeatPassword')}
                 placeholder="Repeat your password"

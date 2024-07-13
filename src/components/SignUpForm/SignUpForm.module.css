@@ -171,6 +171,10 @@
     line-height: 1.5;
   }
 
+  .error {
+    font-size: 12px;
+  }
+
   .formLink {
     font-size: 16px;
     line-height: 1.5;
