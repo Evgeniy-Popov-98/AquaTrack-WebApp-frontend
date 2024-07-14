@@ -1,3 +1,56 @@
-.errorMessage {
-  color: red;
+.settingsContainer {
+  width: 343px;
+  padding: 40px 20px;
+
+  --bold-color: #323f47;
+  --primary-color: #2f2f2f;
+  --accent-color: #9be1a0;
+  --error-color: red;
+
+  --bold-font-size: 16px;
+  --primary-font-size: 14px;
+  /* --bold: 500; */
+
+  --section-gap: 24px;
+  --block-gap: 14px;
+
+  color: var(--primary-color);
+  font-size: var(--primary-font-size);
+
+  border: 1px solid blue;
 }
+
+.errorMessage {
+  color: var(--error-color);
+}
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  margin-top: 40px;
+}
+
+.settingLabel {
+  color: var(--bold-color);
+  font-size: var(--bold-font-size);
+  font-weight: bold;
+}
+
+/* Gender */
+.settingsGender {
+  border: 1px solid blue;
+  width: 172px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--block-gap);
+}
+.radioButton {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+/* .settingsNameEmail{} */
+/* .settingsDailyNormaText{} */
+/* .settingsWeightSport{} */

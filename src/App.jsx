@@ -1,12 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import SharedLayout from './SharedLayout';
-
 import './App.css';
 
 function App() {
-
-
   return (
     <Routes>
       <Route path="/" element={<SharedLayout />}>
@@ -17,7 +14,6 @@ function App() {
       </Route>
     </Routes>
   );
-
 }
 
 export default App;

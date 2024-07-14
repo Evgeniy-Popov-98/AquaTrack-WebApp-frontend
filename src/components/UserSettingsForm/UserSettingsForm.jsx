@@ -116,28 +116,37 @@ export default function UserSettingsForm() {
   // }, [reset]);
 
   return (
-    <div>
+    <div className={css.settingsContainer}>
       <UserSettingsAvatar />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Your gender identity</label>
-          <input type="radio" value="female" {...register('gender')} /> Woman
-          <input type="radio" value="male" {...register('gender')} /> Man
-          <p className={css.errorMessage}>{errors.gender?.message}</p>
+      <form onSubmit={handleSubmit(onSubmit)} className={css.settingsForm}>
+        <div className={css.settingsGender}>
+          <label className={css.settingLabel}>Your gender identity</label>
+          <div className={css.radioButton}>
+            <input type="radio" value="female" {...register('gender')} />
+            {/* <span className="radioButtonChoice">*</span> */}
+            Woman
+            <input type="radio" value="male" {...register('gender')} />
+            {/* <span className="radioButtonChoice">*</span> */}
+            Man
+          </div>
+        </div>
+        <p className={css.errorMessage}>{errors.gender?.message}</p>
+
+        <div className={css.settingsNameEmail}>
+          <div>
+            <label>Your name</label>
+            <input {...register('username')} />
+            <p className={css.errorMessage}>{errors.username?.message}</p>
+          </div>
+
+          <div>
+            <label>Email</label>
+            <input {...register('email')} />
+            <p className={css.errorMessage}>{errors.email?.message}</p>
+          </div>
         </div>
 
-        <div>
-          <label>Your name</label>
-          <input {...register('username')} />
-          <p className={css.errorMessage}>{errors.username?.message}</p>
-        </div>
-
-        <div>
-          <label>Email</label>
-          <input {...register('email')} />
-          <p className={css.errorMessage}>{errors.email?.message}</p>
-        </div>
-        <div>
+        <div className={css.settingsDailyNormaText}>
           <h2>My daily norma</h2>
           <div>
             <div>
@@ -159,16 +168,18 @@ export default function UserSettingsForm() {
           </div>
         </div>
 
-        <div>
-          <label>Your weight in kilograms:</label>
-          <input type="string" {...register('weight')} />
-          <p className={css.errorMessage}>{errors.weight?.message}</p>
-        </div>
+        <div className={css.settingsWeightSport}>
+          <div>
+            <label>Your weight in kilograms:</label>
+            <input type="string" {...register('weight')} />
+            <p className={css.errorMessage}>{errors.weight?.message}</p>
+          </div>
 
-        <div>
-          <label>The time of active participation in sports:</label>
-          <input type="string" {...register('sportTime')} />
-          <p className={css.errorMessage}>{errors.sportTime?.message}</p>
+          <div>
+            <label>The time of active participation in sports:</label>
+            <input type="string" {...register('sportTime')} />
+            <p className={css.errorMessage}>{errors.sportTime?.message}</p>
+          </div>
         </div>
 
         <div>
