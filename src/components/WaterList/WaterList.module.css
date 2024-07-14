@@ -1,0 +1,48 @@
+.container {
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #323f47 #ffffff;
+  padding: 24px;
+}
+.list {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    overflow-x: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #323f47 #ffffff;
+    padding: 10px;
+  }
+  .list {
+    gap: 32px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+  }
+  .list {
+    gap: 16px;
+  }
+}
