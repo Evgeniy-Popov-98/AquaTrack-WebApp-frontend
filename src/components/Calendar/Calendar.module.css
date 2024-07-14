@@ -1,0 +1,22 @@
+.Calendar {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 303px;
+  gap: 20px 18px;
+  width: 100%;
+}
+
+.list {
+  width: calc((100% - 6 * 18px) / 7);
+}
+
+@media screen and (min-width: 768px) {
+  .Calendar {
+    width: 100%;
+    gap: 15px 48px;
+  }
+
+  .list {
+    width: calc((100% - 7 * 48px) / 8);
+  }
+}
