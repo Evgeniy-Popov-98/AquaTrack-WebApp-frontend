@@ -7,6 +7,8 @@ import Loader from './components/Loader/Loader.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsRefreshing } from './redux/auth/selectors.js';
 import { refreshUser } from './redux/auth/operations.js';
+import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute.jsx';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
 const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
@@ -29,10 +31,38 @@ function App() {
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/signin" element={<SignInPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/tracker" element={<TrackerPage />} />
+          <Route
+            index
+            element={
+              <RestrictedRoute>
+                <HomePage />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              <RestrictedRoute>
+                <SignInPage />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <RestrictedRoute>
+                <SignUpPage />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="/tracker"
+            element={
+              <PrivateRoute>
+                <TrackerPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
