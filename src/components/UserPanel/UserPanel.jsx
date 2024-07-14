@@ -13,12 +13,9 @@ const userData = {
 
 const UserPanel = () => {
   //   const userData = useSelector(selectUserData);
-  //   const [name, email, avatar] = userData;
-
-  const { name, email, avatar } = userData;
+  const {name, email, avatar} = userData;
 
   let userName;
-
   if (name) {
     userName = name;
   } else {

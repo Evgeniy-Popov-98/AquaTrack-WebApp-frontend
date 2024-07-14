@@ -18,7 +18,7 @@ const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal, waterI
                 <button className={css.btnDelete} onClick={()=>{
                   closeDeleteWaterModal();
                   dispatch(deleteContact(waterId))}}>Delete</button>
-                <button className={css.btnCancel} onClick={()=>closeDeleteWaterModal()}>Cancel</button>
+                <button className={css.btnCancel} onClick={()=>closeDeleteWaterModal(false)}>Cancel</button>
             </div>
         </div>
     </Modal>

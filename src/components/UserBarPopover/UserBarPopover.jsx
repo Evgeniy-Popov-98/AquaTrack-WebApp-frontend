@@ -1,23 +1,25 @@
+import { useState } from 'react';
 import clsx from 'clsx';
-
 import sprite from '../../assets/icons/icons.svg';
+
+import UserSettingModal from '../UserSettingsModal/UserSettingsModal.jsx';
+import LogOutModal from '../LogOutModal/LogOutModal.jsx';
+
 
 import css from './UserBarPopover.module.css';
 
-const UserBarPopover = ({
-  userBarPopover,
-  closeUserBarPopover,
-  openSettingModal,
-  openLogOutModal,
-}) => {
+const UserBarPopover = ({ userBarPopover, closeUserBarPopover }) => {
+  const [settingModalIsOpen, setSettingModalIsOpen] = useState(false);
+  const [logOutModalIsOpen, setLogOutModalIsOpen] = useState(false);
+
   function openSetting() {
-    openSettingModal();
-    closeUserBarPopover();
+    setSettingModalIsOpen(true);
+    closeUserBarPopover(false);
   }
 
-  function logOut() {
-    openLogOutModal();
-    closeUserBarPopover();
+  function openLogOut() {
+    setLogOutModalIsOpen(true);
+    closeUserBarPopover(false);
   }
 
   return (
@@ -26,7 +28,7 @@ const UserBarPopover = ({
         className={clsx(css.backdropPopover, {
           [css.activeBackdropPopover]: userBarPopover,
         })}
-        onClick={() => closeUserBarPopover()}
+        onClick={() => closeUserBarPopover(false)}
       ></div>
       <div
         className={clsx(css.userBarPopover, {
@@ -44,7 +46,7 @@ const UserBarPopover = ({
             className={clsx(css.popoverItem, {
               [css.textColor]: true,
             })}
-            onClick={() => logOut()}
+            onClick={() => openLogOut()}
           >
             <svg className={css.iconColor} width="16" height="16">
               <use href={`${sprite}#icon-log-out`} />
@@ -53,6 +55,14 @@ const UserBarPopover = ({
           </li>
         </ul>
       </div>
+      <UserSettingModal
+    settingModalIsOpen={settingModalIsOpen}
+    closeSettingModal={setSettingModalIsOpen}
+  />
+  <LogOutModal
+    logOutModalIsOpen={logOutModalIsOpen}
+    closeLogOutModal={setLogOutModalIsOpen}
+  />
     </>
   );
 };

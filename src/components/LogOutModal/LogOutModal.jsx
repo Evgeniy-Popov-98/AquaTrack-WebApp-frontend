@@ -18,7 +18,7 @@ const LogOutModal = ({logOutModalIsOpen, closeLogOutModal}) => {
                 <button className={css.btnLogOut} onClick={()=>{
                   closeLogOutModal();
                   dispatch(logout())}}>Log out</button>
-                <button className={css.btnCancel} onClick={()=>closeLogOutModal()}>Cancel</button>
+                <button className={css.btnCancel} onClick={()=>closeLogOutModal(false)}>Cancel</button>
             </div>
         </div>
     </Modal>
