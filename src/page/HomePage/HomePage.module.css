@@ -1,0 +1,15 @@
+@media screen and (max-width: 1439px) {
+  .homeContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .homeContainer {
+    width: max-content;
+    display: flex;
+    gap: 32px;
+    margin: 0 auto;
+  }
+}
