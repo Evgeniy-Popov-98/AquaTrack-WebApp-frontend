@@ -1,9 +1,23 @@
+import { useState } from 'react';
+import WaterModal from '../WaterModal/WaterModal';
 import css from './AddWaterBtn.module.css';
 
 const AddWaterBtn = () => {
+  const [showWaterModal, setShowWaterModal] = useState(false);
+  const [operationType, setOperationType] = useState('add');
+
+  const onOpenWaterModal = (type) => {
+    setOperationType(type);
+    setShowWaterModal(true);
+  };
+
+  const onCloseWaterModal = () => {
+    setShowWaterModal(false);
+  };
+
   return (
     <div >
-      <button className={css.addWaterBtn} type="button">
+      <button className={css.addWaterBtn} onClick={() => onOpenWaterModal('edit')}>
           <svg
           className={css.addWaterIcon}
           width="16"
@@ -26,6 +40,13 @@ const AddWaterBtn = () => {
         </svg>
         Add water
       </button>
+      {showWaterModal && (
+        <WaterModal
+          waterModalOpen={showWaterModal}
+          closeWaterModal={onCloseWaterModal}
+          operationType={operationType}
+        />
+      )}
     </div>
   );
 };
