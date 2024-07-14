@@ -1,0 +1,11 @@
+.waterMainInfoContainer {
+  border-radius: 30px;
+  width: 343px;
+  height: 415px;
+  background-color: #9be1a0;
+  margin: 16px auto;
+  position: relative;
+  background-image: url('../../assets/images/transparent_bottle_for_water 1x.png');
+  background-repeat: no-repeat;
+  background-position: bottom 30px right 40px;
+}

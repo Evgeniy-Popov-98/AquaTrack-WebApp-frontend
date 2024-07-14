@@ -1,0 +1,16 @@
+.signInContainer {
+  width: max-content;
+  display: flex;
+  gap: 32px;
+  margin: 0 auto;
+}
+
+.advSection {
+  display: none;
+}
+
+@media screen and (min-width: 1440px) {
+  .advSection {
+    display: flex;
+  }
+}

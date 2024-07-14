@@ -1,8 +1,12 @@
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/auth/operations";
+
 import Modal from "../Modal/Modal.jsx"
 
 import css from "./LogOutModal.module.css";
 
 const LogOutModal = ({logOutModalIsOpen, closeLogOutModal}) => {
+  const dispatch = useDispatch();
   return (
     <Modal modalIsOpen={logOutModalIsOpen} closeModal={closeLogOutModal}>
         <div className={css.box}>
@@ -11,8 +15,10 @@ const LogOutModal = ({logOutModalIsOpen, closeLogOutModal}) => {
                 <p  className={css.text}>Do you really want to leave?</p>
             </div>
             <div className={css.buttonBox}>
-                <button className={css.btnLogOut}>Log out</button>
-                <button className={css.btnCancel} onClick={()=>closeLogOutModal()}>Cancel</button>
+                <button className={css.btnLogOut} onClick={()=>{
+                  closeLogOutModal();
+                  dispatch(logout())}}>Log out</button>
+                <button className={css.btnCancel} onClick={()=>closeLogOutModal(false)}>Cancel</button>
             </div>
         </div>
     </Modal>
