@@ -1,7 +1,12 @@
+// ! error.dailyNorma
+// email from backend
+// відправка formData на backend
+
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import UserSettingsAvatar from './UserSettingsAvatar';
+import clsx from 'clsx';
 import css from './UserSettingsForm.module.css';
 
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
@@ -118,85 +123,125 @@ export default function UserSettingsForm() {
   return (
     <div className={css.settingsContainer}>
       <UserSettingsAvatar />
-      <form onSubmit={handleSubmit(onSubmit)} className={css.settingsForm}>
-        <div className={css.settingsGender}>
-          <label className={css.settingLabel}>Your gender identity</label>
-          <div className={css.radioButton}>
-            <input type="radio" value="female" {...register('gender')} />
-            {/* <span className="radioButtonChoice">*</span> */}
-            Woman
-            <input type="radio" value="male" {...register('gender')} />
-            {/* <span className="radioButtonChoice">*</span> */}
-            Man
-          </div>
-        </div>
-        <p className={css.errorMessage}>{errors.gender?.message}</p>
-
-        <div className={css.settingsNameEmail}>
-          <div>
-            <label>Your name</label>
-            <input {...register('username')} />
-            <p className={css.errorMessage}>{errors.username?.message}</p>
-          </div>
-
-          <div>
-            <label>Email</label>
-            <input {...register('email')} />
-            <p className={css.errorMessage}>{errors.email?.message}</p>
-          </div>
-        </div>
-
-        <div className={css.settingsDailyNormaText}>
-          <h2>My daily norma</h2>
-          <div>
-            <div>
-              <p>For woman:</p>
-              <p>V=(M*0,03) + (T*0,4)</p>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={css.settingsForm}>
+          <div className={css.settingsGender}>
+            <label className={css.settingLabel}>Your gender identity</label>
+            <div className={css.radioButton}>
+              <input type="radio" value="female" {...register('gender')} />
+              {/* <span className="radioButtonChoice">*</span> */}
+              Woman
+              <input type="radio" value="male" {...register('gender')} />
+              {/* <span className="radioButtonChoice">*</span> */}
+              Man
             </div>
-            <div>
-              <p>For man:</p>
-              <p>V=(M*0,04) + (T*0,6)</p>
+            <p className={css.errorMessage}>{errors.gender?.message}</p>
+          </div>
+
+          <div className={css.settingsNameEmailWrap}>
+            <div className={css.settingsNameEmail}>
+              <label className={css.settingLabel}>Your name</label>
+              <input
+                {...register('username')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.username,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.username?.message}</p>
             </div>
 
-            <p>
+            <div className={css.settingsNameEmail}>
+              <label className={css.settingLabel}>Email</label>
+              <input
+                {...register('email')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.email,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.email?.message}</p>
+            </div>
+          </div>
+
+          <div className={css.settingsDailyNormaText}>
+            <p className={css.settingLabel}>My daily norma</p>
+
+            <div className={css.normaCalculationExample}>
+              <div className={css.normaCalculationGender}>
+                <p>For woman:</p>
+                <p className={css.normaCalculationFormula}>
+                  V=(M*0,03) + (T*0,4)
+                </p>
+              </div>
+              <div className={css.normaCalculationGender}>
+                <p>For man:</p>
+                <p className={css.normaCalculationFormula}>
+                  V=(M*0,04) + (T*0,6)
+                </p>
+              </div>
+            </div>
+
+            <p className={css.normaCalculationText}>
               * V is the volume of the water norm in liters per day, M is your
               body weight, T is the time of active sports, or another type of
               activity commensurate in terms of loads (in the absence of these,
               you must set 0)
             </p>
+
             <p>!Active time in hours</p>
           </div>
-        </div>
 
-        <div className={css.settingsWeightSport}>
-          <div>
-            <label>Your weight in kilograms:</label>
-            <input type="string" {...register('weight')} />
-            <p className={css.errorMessage}>{errors.weight?.message}</p>
+          <div className={css.settingsWeightSport}>
+            <div>
+              <label>Your weight in kilograms:</label>
+              <input
+                type="string"
+                {...register('weight')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.weight,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.weight?.message}</p>
+            </div>
+
+            <div>
+              <label>The time of active participation in sports:</label>
+              <input
+                type="string"
+                {...register('sportTime')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.sportTime,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.sportTime?.message}</p>
+            </div>
           </div>
 
-          <div>
-            <label>The time of active participation in sports:</label>
-            <input type="string" {...register('sportTime')} />
-            <p className={css.errorMessage}>{errors.sportTime?.message}</p>
+          <div className={css.settingsDailyNorma}>
+            <div>
+              <p>The required amount of water in liters per day:</p>
+              <p className={css.dayliNormaRecomended}>
+                {' '}
+                {dayliNormaRecomended}L
+              </p>
+            </div>
+
+            <div>
+              <label>Write down how much water you will drink:</label>
+              <input
+                type="string"
+                {...register('dayliNorma')}
+                placeholder={dayliNormaRecomended}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.dailyNorma,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.dailyNorma?.message}</p>
+            </div>
           </div>
         </div>
-
-        <div>
-          <p style={{ color: 'blue' }}>
-            The required amount of water in liters per day:
-            {dayliNormaRecomended}l
-          </p>
-          <label>Write down how much water you will drink:</label>
-          <input
-            type="string"
-            {...register('dayliNorma')}
-            placeholder={dayliNormaRecomended}
-          />
-          <p>{errors.dayliNorma?.message}</p>
-        </div>
-
-        <button type="submit">Save</button>
+        <button type="submit" className={css.formBtn}>
+          Save
+        </button>
       </form>
     </div>
   );
