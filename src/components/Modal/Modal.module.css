@@ -18,3 +18,7 @@
     stroke: black;
     transition: stroke 0.3s;
   }
+
+  .closeIcon:hover {
+    stroke: #9be1a0;
+  }
