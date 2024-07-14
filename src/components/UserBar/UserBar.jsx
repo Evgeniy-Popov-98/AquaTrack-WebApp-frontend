@@ -1,7 +1,7 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 import avatarBase from '../../assets/images/avatarBase.png';
 import sprite from '../../assets/icons/icons.svg';
-import { useState } from "react";
+import { useState } from 'react';
 
 import UserBarPopover from '../UserBarPopover/UserBarPopover';
 import UserSettingModal from '../UserSettingsModal/UserSettingsModal.jsx';
@@ -15,19 +15,19 @@ const UserBar = ({ name, avatar }) => {
   const [logOutModalIsOpen, setLogOutModalIsOpen] = useState(false);
 
   function openUserBarPopover() {
-    setUserBarPopover(true)
+    setUserBarPopover(true);
   }
 
   function closeUserBarPopover() {
-    setUserBarPopover(false)
+    setUserBarPopover(false);
   }
 
   function openSettingModal() {
-    setSettingModalIsOpen(true)
+    setSettingModalIsOpen(true);
   }
 
   function closeSettingModal() {
-    setSettingModalIsOpen(false)
+    setSettingModalIsOpen(false);
   }
 
   function openLogOutModal() {
@@ -38,30 +38,39 @@ const UserBar = ({ name, avatar }) => {
     setLogOutModalIsOpen(false);
   }
 
-  return (  
+  return (
     <div className={css.boxUserBar}>
-        <button className={css.btnUserBar} onClick={()=> openUserBarPopover()}>
-            <p className={css.userName}>{name}</p>
-            <img className={css.avatar} src={avatar ? avatar : avatarBase} alt="avatar" />
-            <svg 
-                className={clsx(css.staticPositionIcon, {
-                    [css.activeRotateIcon]: userBarPopover,
-                })} 
-                >
-                <use href={`${sprite}#icon-chevron-down`} />
-            </svg>
-        </button>
-        <UserBarPopover userBarPopover={userBarPopover} 
-                        closeUserBarPopover={closeUserBarPopover} 
-                        openSettingModal={openSettingModal}
-                        openLogOutModal={openLogOutModal}/>
-        <UserSettingModal settingModalIsOpen={settingModalIsOpen}
-                          closeSettingModal={closeSettingModal}/>
-        <LogOutModal logOutModalIsOpen={logOutModalIsOpen} 
-                     closeLogOutModal={closeLogOutModal}
-        />  
+      <button className={css.btnUserBar} onClick={() => openUserBarPopover()}>
+        <p className={css.userName}>{name}</p>
+        <img
+          className={css.avatar}
+          src={avatar ? avatar : avatarBase}
+          alt="avatar"
+        />
+        <svg
+          className={clsx(css.staticPositionIcon, {
+            [css.activeRotateIcon]: userBarPopover,
+          })}
+        >
+          <use href={`${sprite}#icon-chevron-down`} />
+        </svg>
+      </button>
+      <UserBarPopover
+        userBarPopover={userBarPopover}
+        closeUserBarPopover={closeUserBarPopover}
+        openSettingModal={openSettingModal}
+        openLogOutModal={openLogOutModal}
+      />
+      <UserSettingModal
+        settingModalIsOpen={settingModalIsOpen}
+        closeSettingModal={closeSettingModal}
+      />
+      <LogOutModal
+        logOutModalIsOpen={logOutModalIsOpen}
+        closeLogOutModal={closeLogOutModal}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default UserBar
+export default UserBar;
