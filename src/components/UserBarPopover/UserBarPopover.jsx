@@ -8,7 +8,7 @@ import LogOutModal from '../LogOutModal/LogOutModal.jsx';
 
 import css from './UserBarPopover.module.css';
 
-const UserBarPopover = ({ userBarPopover, closeUserBarPopover }) => {
+const UserBarPopover = ({ userBarPopover, closeUserBarPopover, width }) => {
   const [settingModalIsOpen, setSettingModalIsOpen] = useState(false);
   const [logOutModalIsOpen, setLogOutModalIsOpen] = useState(false);
 
@@ -30,7 +30,7 @@ const UserBarPopover = ({ userBarPopover, closeUserBarPopover }) => {
         })}
         onClick={() => closeUserBarPopover(false)}
       ></div>
-      <div
+      <div style={{ width, }}
         className={clsx(css.userBarPopover, {
           [css.active]: userBarPopover,
         })}
