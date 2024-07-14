@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import icons from '../../assets/icons/icons.svg';
 import { useDispatch } from 'react-redux';
+import { register } from '../../redux/auth/operations.js';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -25,15 +26,15 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
 
   const {
-    register,
+    register: registerInput,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
-  const onSubmit = (value, action) => {
-    console.log('Form values:', value);
-    dispatch(register(value));
-    action.resetForm();
+  const onSubmit = data => {
+    const { email, password } = data;
+    const formData = { email, password };
+    dispatch(register(formData));
   };
 
   const togglePasswordVisibility = () => {
@@ -51,7 +52,7 @@ const SignUpForm = () => {
             <input
               type="email"
               className={css.formInput}
-              {...register('email')}
+              {...registerInput('email')}
               placeholder="Enter your email"
             />
             {errors.email && (
@@ -64,7 +65,7 @@ const SignUpForm = () => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 className={css.formInput}
-                {...register('password')}
+                {...registerInput('password')}
                 placeholder="Enter your password"
               />
               <span className={css.icon} onClick={togglePasswordVisibility}>
@@ -89,7 +90,7 @@ const SignUpForm = () => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 className={css.formInput}
-                {...register('repeatPassword')}
+                {...registerInput('repeatPassword')}
                 placeholder="Repeat your password"
               />
               <span className={css.icon} onClick={togglePasswordVisibility}>
