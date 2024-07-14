@@ -1,5 +1,6 @@
 import ModalReact from 'react-modal';
-import { IoClose } from "react-icons/io5";
+
+import sprite from '../../assets/icons/icons.svg';
 
 import css from "./Modal.module.css";
 
@@ -14,7 +15,9 @@ const Modal = ({modalIsOpen, closeModal, children }) => {
       ariaHideApp={false}
     >
       <button className={css.closeBtn} onClick={() => closeModal()}>
-        <IoClose className={css.closeIcon} />
+        <svg className={css.closeIcon} width="16" height="16">
+          <use href={`${sprite}#icon-close`} />
+        </svg>
       </button>
       {children}
     </ModalReact>

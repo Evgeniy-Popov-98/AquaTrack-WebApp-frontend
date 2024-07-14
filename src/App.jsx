@@ -1,4 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
+import LogOutModal from './components/LogOutModal/LogOutModal.jsx';
+import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import SharedLayout from './SharedLayout';
 
@@ -13,6 +15,16 @@ const TrackerPage = lazy(() => import('./page/TrackerPage/TrackerPage'));
 
 function App() {
   return (
+  // <button onClick={()=>openLogOutModal()}>LogOut</button>
+  //   <LogOutModal 
+  //   logOutModalIsOpen={logOutModalIsOpen} 
+  //       closeLogOutModal={closeLogOutModal} />
+      
+
+      
+
+    
+  
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>

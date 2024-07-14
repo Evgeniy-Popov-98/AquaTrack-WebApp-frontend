@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import WaterDetailedInfo from '../../components/WaterDetailedInfo/WaterDetailedInfo';
 import WaterMainInfo from '../../components/WaterMainInfo/WaterMainInfo';
+import WaterDetailedInfo from '../../components/WaterDetailedInfo/WaterDetailedInfo';
 
 import css from './TrackerPage.module.css';
 
