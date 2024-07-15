@@ -14,6 +14,8 @@ import { refreshUser } from './redux/auth/operations.js';
 // import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute.jsx';
 // import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 
+import UserSettingsForm from './components/UserSettingsForm/UserSettingsForm.jsx';
+
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
 const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
 const SignUpPage = lazy(() => import('./page/SignUpPage/SignUpPage'));
@@ -102,7 +104,7 @@ function App() {
               </PrivateRoute>
             }
           /> */}
-
+          <Route path="/settings" element={<UserSettingsForm />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

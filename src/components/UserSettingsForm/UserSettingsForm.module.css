@@ -39,7 +39,7 @@
 }
 
 .settingsForm {
-  /* border: 1px solid pink; */
+  border: 1px solid pink;
   width: 303px;
   height: 949px;
   display: flex;
@@ -48,6 +48,11 @@
   margin-top: 40px;
 }
 
+.settingsFormDesktop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+}
 .settingLabel {
   color: var(--color-main);
   font-size: var(--font-size-main);
@@ -56,7 +61,7 @@
 }
 
 .settingInput {
-  width: 100%;
+  width: 303px;
   height: 46px;
   outline: none;
   font-size: var(--font-size-main-text);
