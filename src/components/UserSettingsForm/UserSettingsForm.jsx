@@ -1,4 +1,3 @@
-// ! error.dailyNorma
 // email from backend
 // відправка formData на backend
 
@@ -62,9 +61,9 @@ export default function UserSettingsForm() {
   const genderValue = watch('gender');
   const weightNumber = convertingToNumber(watch('weight'));
   const sportTimeNumber = convertingToNumber(watch('sportTime'));
-  const dayliNormaNumber = convertingToNumber(watch('dayliNorma'));
+  const dailyNormaNumber = convertingToNumber(watch('dailyNorma'));
 
-  const dayliNormaRecomended = dailyNormaRecomendCalculation(
+  const dailyNormaRecomended = dailyNormaRecomendCalculation(
     genderValue,
     weightNumber,
     sportTimeNumber
@@ -99,11 +98,11 @@ export default function UserSettingsForm() {
             formData.append(key, sportTimeNumber);
           }
           break;
-        case 'dayliNorma':
+        case 'dailyNorma':
           if (data[key]) {
-            return formData.append(key, dayliNormaNumber);
+            return formData.append(key, dailyNormaNumber);
           } else {
-            return formData.append(key, dayliNormaRecomended);
+            return formData.append(key, dailyNormaRecomended);
           }
       }
     });
@@ -222,9 +221,8 @@ export default function UserSettingsForm() {
           <div className={css.settingsDailyNorma}>
             <div>
               <p>The required amount of water in liters per day:</p>
-              <p className={css.dayliNormaRecomended}>
-                {' '}
-                {dayliNormaRecomended}L
+              <p className={css.dailyNormaRecomended}>
+                {dailyNormaRecomended}L
               </p>
             </div>
 
@@ -232,8 +230,8 @@ export default function UserSettingsForm() {
               <label>Write down how much water you will drink:</label>
               <input
                 type="string"
-                {...register('dayliNorma')}
-                placeholder={dayliNormaRecomended}
+                {...register('dailyNorma')}
+                placeholder={dailyNormaRecomended}
                 className={clsx(css.settingInput, {
                   [css.error]: errors.dailyNorma,
                 })}
