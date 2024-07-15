@@ -1,27 +1,35 @@
 /* 
  !custon radio-button
  !background-color checked input
- !custom ! and *V
+
  */
 
 .settingsContainer {
-  width: 343px;
+  border-radius: 15px;
   padding: 40px 20px;
+  width: 343px;
+  height: 1302px;
 
-  --color-bold: #323f47;
-  --color-primary: #2f2f2f;
+  --color-main: #323f47;
+  --color-main-text: #2f2f2f;
   --color-accent: #9be1a0;
-  --color-input: #2f2f2f26;
+  --color-input: rgba(47, 47, 47, 0.15);
   --color-error: red;
 
-  --font-size-bold: 16px;
-  --font-size-primary: 14px;
+  --font-size-main: 16px;
+  --font-size-main-text: 14px;
+
+  --font-weight-main: 700;
+  --font-weight-main-text: 400;
 
   --gap-section: 24px;
   --gap-inside-section: 14px;
 
-  color: var(--color-primary);
-  font-size: var(--font-size-primary);
+  color: var(--color-main-text);
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-main-text);
+  line-height: 129%;
+  letter-spacing: -0.01em;
 
   /* border: 1px solid blue; */
 }
@@ -32,6 +40,8 @@
 
 .settingsForm {
   /* border: 1px solid pink; */
+  width: 303px;
+  height: 949px;
   display: flex;
   flex-direction: column;
   gap: var(--gap-section);
@@ -39,26 +49,29 @@
 }
 
 .settingLabel {
-  color: var(--color-bold);
-  font-size: var(--font-size-bold);
-  font-weight: bold;
+  color: var(--color-main);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-main);
+  line-height: 125%;
 }
 
 .settingInput {
   width: 100%;
   height: 46px;
   outline: none;
-  font-size: var(--font-size-primary);
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-main-text);
   background-color: white;
   border-radius: 15px;
   border: 1px solid var(--color-input);
-  color: var(--color-primary);
-  padding: 14px 16px;
+  color: var(--color-main-text);
+  padding: 14px 337px 14px 16px;
+  margin-top: 8px;
   transition: border-color 0.3s, color 0.3s;
 }
 
 .settingInput:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-main-text);
 }
 .settingInput.error {
   border-color: var(--color-error);
@@ -68,16 +81,42 @@
 /*********** Gender ***********/
 .settingsGender {
   /* border: 1px solid blue; */
-  width: 172px;
+  width: 166px;
+  height: 54px;
   display: flex;
   flex-direction: column;
 }
+
 .radioButton {
   margin-top: var(--gap-inside-section);
   display: flex;
   flex-direction: row;
   gap: 20px;
 }
+
+.customRadio {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* .customRadio input[type='radio'] {
+  display: none;
+}
+
+.customRadio input[type='radio'] + .customRadioButton {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background: url(?????) no-repeat center center;
+  margin-right: 10px;
+}
+
+.customRadio input[type='radio']:checked + .customRadioButton {
+  background: url(radioButton.png),
+    url(radioButtonChecked.png) no-repeat center center;
+} */
 
 /********** settingsNameEmail**********/
 .settingsNameEmailWrap {
@@ -117,7 +156,7 @@
 
 .normaCalculationFormula {
   color: var(--color-accent);
-  font-weight: bold;
+  font-weight: var(--font-weight-main);
 }
 
 .normaCalculationTextAccent {
@@ -129,7 +168,7 @@
   border-radius: 15px;
   border: 1px solid var(--color-input);
   color: rgba(47, 47, 47, 0.6);
-  font-size: var(--font-size-primary);
+  font-size: var(--font-size-main-text);
 }
 
 /****** settingsWeightSport *******/
@@ -149,7 +188,7 @@
 }
 .dailyNormaRecomended {
   color: var(--color-accent);
-  font-weight: bold;
+  font-weight: var(--font-weight-main);
 }
 
 /***********button Save*************/
@@ -159,8 +198,8 @@
   height: 46px;
   border-radius: 30px;
   padding: 14px 40px;
-  color: var(--color-bold);
-  font-size: var(--font-size-primary);
+  color: var(--color-main);
+  font-size: var(--font-size-main-text);
   background-color: var(--color-accent);
   transition: background-color 0.3s, color 0.3s;
 }
@@ -168,4 +207,62 @@
 .formBtn:hover {
   background-color: #31e13c;
   color: black;
+}
+
+/********min-width: 768px*************/
+@media only screen and (min-width: 768px) {
+  .settingsContainer {
+    padding: 40px;
+    width: 648px;
+    height: 1336px;
+
+    --font-size-main: 18px;
+    --font-size-main-text: 16px;
+
+    line-height: 150%;
+  }
+
+  .settingsForm {
+    width: 568px;
+    height: 934px;
+  }
+
+  .settingsGender {
+    width: 187px;
+    height: 62px;
+  }
+  .settingLabel {
+    line-height: 133%;
+  }
+
+  .normaCalculationExample {
+    display: flex;
+    flex-direction: row;
+    width: 368px;
+    height: 52px;
+    gap: 28px;
+    padding: 0;
+  }
+  .dailyNormaRecomended {
+    font-size: 15px;
+  }
+
+  .formBtn {
+    width: 141px;
+    height: 56px;
+    padding: 16px 50px;
+  }
+}
+
+/*************min-width: 1440px*******************/
+@media (min-width: 1440px) {
+  .settingsContainer {
+    width: 920px;
+    height: 996px;
+  }
+
+  .settingsForm {
+    width: 840px;
+    height: 594px;
+  }
 }
