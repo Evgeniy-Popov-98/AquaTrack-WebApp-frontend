@@ -6,7 +6,6 @@ import SharedLayout from './SharedLayout';
 import './App.css';
 // import NotFound from './page/NotFound/NotFound.jsx';
 import Loader from './components/Loader/Loader.jsx';
-import UserSettingsForm from './components/UserSettingsForm/UserSettingsForm.jsx';
 import RestrictedRoute from './routs/RestrictedRoute';
 import { PrivateRoute } from './routs/PrivateRoute';
 import { useDispatch, useSelector } from 'react-redux';
