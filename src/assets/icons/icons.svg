@@ -50,5 +50,11 @@
     <symbol id="icon-circle" viewBox="0 0 32 32">
     <path fill="#9be1a0" style="fill: var(--color1, #9be1a0)" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
     </symbol>
+    <symbol id="icon-chevronLeft" viewBox="0 0 32 32">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="3.5556" d="M20 24l-8-8 8-8"></path>
+</symbol>
+<symbol id="icon-chevronRight" viewBox="0 0 32 32">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="3.5556" d="M12 24l8-8-8-8"></path>
+</symbol>
   </defs>
 </svg>
