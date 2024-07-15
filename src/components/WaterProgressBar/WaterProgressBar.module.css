@@ -14,7 +14,6 @@
   padding: 12px;
 }
 .data {
-  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   line-height: 100%;
   font-size: 14px;
@@ -49,6 +48,7 @@
 
 .progressPercentage {
   display: flex;
+  justify-content: space-between;
   width: 174px;
   height: 10px;
   margin-top: 8px;
@@ -59,20 +59,75 @@
   line-height: 100%;
   color: rgba(47, 47, 47, 0.6);
 }
-.progressPercentage li:first-child {
-  margin-right: 66px;
-}
 
-.progressPercentage li:last-child {
-  margin-left: 49px;
-}
-
-/* .progressPercentageMove {
+.progressPercentageMove {
   position: absolute;
-  bottom: 5px; 
-  left: 107px; 
-  margin-top: 4px; 
-  font-size: 10px; 
-  color: #323f47; 
-  font-weight: 700; 
-} */
+  margin-top: 9px;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 100%;
+  color: #9be1a0;
+}
+
+@media screen and (min-width: 768px) {
+  section {
+    min-width: 768px;
+    padding: 32px;
+  }
+  .waterProgressBarContainer {
+    width: 295px;
+    height: 106px;
+    bottom: 150px;
+    left: 204px;
+  }
+  .progressBarInfo {
+    padding: 20px;
+    width: 255px;
+    height: 66px;
+  }
+  .data {
+    font-size: 15px;
+    line-height: 149%;
+  }
+  .progressBarContainer {
+    width: 255px;
+  }
+  .progressEllipse {
+    top: 50%;
+  }
+  .progressPercentage {
+    width: 255px;
+    height: 23px;
+    margin-top: 4px;
+  }
+  .progressPercentage li {
+    font-size: 12px;
+    line-height: 187%;
+  }
+  /* .progressPercentage li:first-child {
+    margin-right: 103px;
+  }
+
+  .progressPercentage li:last-child {
+    margin-left: 85px;
+  } */
+  .progressPercentageMove {
+    font-size: 10px;
+    line-height: 180%;
+    margin-top: 7px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  section {
+    min-width: 1440px;
+  }
+
+  .waterProgressBarContainer {
+    bottom: 180px;
+    left: 188px;
+  }
+  .progressPercentageMove {
+    margin-top: 8px;
+  }
+}
