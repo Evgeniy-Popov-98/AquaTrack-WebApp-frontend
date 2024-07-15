@@ -120,6 +120,10 @@
   font-weight: bold;
 }
 
+.normaCalculationTextAccent {
+  color: var(--color-accent);
+  margin-right: 4px;
+}
 .normaCalculationText {
   padding: 16px;
   border-radius: 15px;

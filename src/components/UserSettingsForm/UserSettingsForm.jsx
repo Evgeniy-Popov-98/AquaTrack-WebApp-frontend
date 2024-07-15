@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import UserSettingsAvatar from './UserSettingsAvatar';
 import clsx from 'clsx';
+import sprite from '../../assets/icons/icons.svg';
 import css from './UserSettingsForm.module.css';
 
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
@@ -129,10 +130,11 @@ export default function UserSettingsForm() {
             <label className={css.settingLabel}>Your gender identity</label>
             <div className={css.radioButton}>
               <input type="radio" value="female" {...register('gender')} />
-              {/* <span className="radioButtonChoice">*</span> */}
+              <svg width="16" height="16">
+                <use href={`${sprite}#icon-radio-button`} />
+              </svg>
               Woman
               <input type="radio" value="male" {...register('gender')} />
-              {/* <span className="radioButtonChoice">*</span> */}
               Man
             </div>
             <p className={css.errorMessage}>{errors.gender?.message}</p>
@@ -181,10 +183,11 @@ export default function UserSettingsForm() {
             </div>
 
             <p className={css.normaCalculationText}>
-              * V is the volume of the water norm in liters per day, M is your
-              body weight, T is the time of active sports, or another type of
-              activity commensurate in terms of loads (in the absence of these,
-              you must set 0)
+              <span className={css.normaCalculationTextAccent}>*</span>V is the
+              volume of the water norm in liters per day, M is your body weight,
+              T is the time of active sports, or another type of activity
+              commensurate in terms of loads (in the absence of these, you must
+              set 0)
             </p>
 
             <p>!Active time in hours</p>
