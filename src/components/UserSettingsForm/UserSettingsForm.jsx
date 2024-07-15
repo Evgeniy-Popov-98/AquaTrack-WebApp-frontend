@@ -125,134 +125,130 @@ export default function UserSettingsForm() {
       <UserSettingsAvatar />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={css.settingsForm}>
-          <div className={css.settingsFormDesktop}>
-            <div className={css.settingsGender}>
-              <p className={css.settingLabel}>Your gender identity</p>
+          <div className={css.settingsGender}>
+            <p className={css.settingLabel}>Your gender identity</p>
 
-              <div className={css.radioButton}>
-                <label className={css.customRadio}>
-                  <input type="radio" value="female" {...register('gender')} />
-                  <span className={css.customRadioButton}></span>
-                  Woman
-                </label>
-                <label className={css.customRadio}>
-                  <input type="radio" value="male" {...register('gender')} />
-                  <span className={css.customRadioButton}></span>
-                  Man
-                </label>
-              </div>
-
-              <p className={css.errorMessage}>{errors.gender?.message}</p>
+            <div className={css.radioButton}>
+              <label className={css.customRadio}>
+                <input type="radio" value="female" {...register('gender')} />
+                <span className={css.customRadioButton}></span>
+                Woman
+              </label>
+              <label className={css.customRadio}>
+                <input type="radio" value="male" {...register('gender')} />
+                <span className={css.customRadioButton}></span>
+                Man
+              </label>
             </div>
 
-            <div className={css.settingsNameEmailWrap}>
-              <div className={css.settingsNameEmail}>
-                <label className={css.settingLabel}>Your name</label>
-                <input
-                  {...register('username')}
-                  className={clsx(css.settingInput, {
-                    [css.error]: errors.username,
-                  })}
-                />
-                <p className={css.errorMessage}>{errors.username?.message}</p>
-              </div>
+            <p className={css.errorMessage}>{errors.gender?.message}</p>
+          </div>
 
-              <div className={css.settingsNameEmail}>
-                <label className={css.settingLabel}>Email</label>
-                <input
-                  {...register('email')}
-                  className={clsx(css.settingInput, {
-                    [css.error]: errors.email,
-                  })}
-                />
-                <p className={css.errorMessage}>{errors.email?.message}</p>
-              </div>
+          <div className={css.settingsNameEmailWrap}>
+            <div className={css.labelInput}>
+              <label className={css.settingLabel}>Your name</label>
+              <input
+                {...register('username')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.username,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.username?.message}</p>
             </div>
 
-            <div className={css.settingsDailyNormaText}>
-              <p className={css.settingLabel}>My daily norma</p>
-
-              <div className={css.normaCalculationExample}>
-                <div className={css.normaCalculationGender}>
-                  <p>For woman:</p>
-                  <p className={css.normaCalculationFormula}>
-                    V=(M*0,03) + (T*0,4)
-                  </p>
-                </div>
-                <div className={css.normaCalculationGender}>
-                  <p>For man:</p>
-                  <p className={css.normaCalculationFormula}>
-                    V=(M*0,04) + (T*0,6)
-                  </p>
-                </div>
-              </div>
-
-              <p className={css.normaCalculationText}>
-                <span className={css.normaCalculationTextAccent}>*</span>V is
-                the volume of the water norm in liters per day, M is your body
-                weight, T is the time of active sports, or another type of
-                activity commensurate in terms of loads (in the absence of
-                these, you must set 0)
-              </p>
-
-              <p>
-                <svg width="16" height="16">
-                  <use href={`${sprite}#icon-exclamation`} />
-                </svg>
-                Active time in hours
-              </p>
+            <div className={css.labelInput}>
+              <label className={css.settingLabel}>Email</label>
+              <input
+                {...register('email')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.email,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.email?.message}</p>
             </div>
           </div>
 
-          <div className={css.settingsFormDesktop}>
-            <div className={css.settingsWeightSport}>
-              <div>
-                <label>Your weight in kilograms:</label>
-                <input
-                  type="string"
-                  {...register('weight')}
-                  className={clsx(css.settingInput, {
-                    [css.error]: errors.weight,
-                  })}
-                />
-                <p className={css.errorMessage}>{errors.weight?.message}</p>
-              </div>
+          <div className={css.settingsDailyNormaText}>
+            <p className={css.settingLabel}>My daily norma</p>
 
-              <div>
-                <label>The time of active participation in sports:</label>
-                <input
-                  type="string"
-                  {...register('sportTime')}
-                  className={clsx(css.settingInput, {
-                    [css.error]: errors.sportTime,
-                  })}
-                />
-                <p className={css.errorMessage}>{errors.sportTime?.message}</p>
+            <div className={css.normaCalculationExample}>
+              <div className={css.normaCalculationGender}>
+                <p>For woman:</p>
+                <p className={css.normaCalculationFormula}>
+                  V=(M*0,03) + (T*0,4)
+                </p>
+              </div>
+              <div className={css.normaCalculationGender}>
+                <p>For man:</p>
+                <p className={css.normaCalculationFormula}>
+                  V=(M*0,04) + (T*0,6)
+                </p>
               </div>
             </div>
 
-            <div className={css.settingsDailyNorma}>
-              <div>
-                <p>The required amount of water in liters per day:</p>
-                <p className={css.dailyNormaRecomended}>
-                  {dailyNormaRecomended}L
-                </p>
-              </div>
+            <p className={css.normaCalculationText}>
+              <span className={css.normaCalculationTextAccent}>*</span>V is the
+              volume of the water norm in liters per day, M is your body weight,
+              T is the time of active sports, or another type of activity
+              commensurate in terms of loads (in the absence of these, you must
+              set 0)
+            </p>
 
-              <div>
-                <label className={css.settingLabel}>
-                  Write down how much water you will drink:
-                </label>
-                <input
-                  type="string"
-                  {...register('dailyNorma')}
-                  placeholder={dailyNormaRecomended}
-                  className={clsx(css.settingInput, {
-                    [css.error]: errors.dailyNorma,
-                  })}
-                />
-                <p className={css.errorMessage}>{errors.dailyNorma?.message}</p>
-              </div>
+            <p>
+              <svg width="16" height="16">
+                <use href={`${sprite}#icon-exclamation`} />
+              </svg>
+              Active time in hours
+            </p>
+          </div>
+
+          <div className={css.settingsWeightSport}>
+            <div className={css.labelInput}>
+              <label>Your weight in kilograms:</label>
+              <input
+                type="string"
+                {...register('weight')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.weight,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.weight?.message}</p>
+            </div>
+
+            <div className={css.labelInput}>
+              <label>The time of active participation in sports:</label>
+              <input
+                type="string"
+                {...register('sportTime')}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.sportTime,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.sportTime?.message}</p>
+            </div>
+          </div>
+
+          <div className={css.settingsDailyNormaRequired}>
+            <div className={css.dailyNormaRecomendedWrap}>
+              <p>The required amount of water in liters per day:</p>
+              <p className={css.dailyNormaRecomended}>
+                {dailyNormaRecomended}L
+              </p>
+            </div>
+
+            <div>
+              <label className={css.settingLabel}>
+                Write down how much water you will drink:
+              </label>
+              <input
+                type="string"
+                {...register('dailyNorma')}
+                placeholder={dailyNormaRecomended}
+                className={clsx(css.settingInput, {
+                  [css.error]: errors.dailyNorma,
+                })}
+              />
+              <p className={css.errorMessage}>{errors.dailyNorma?.message}</p>
             </div>
           </div>
         </div>
