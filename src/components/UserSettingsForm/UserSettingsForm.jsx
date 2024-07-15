@@ -126,16 +126,21 @@ export default function UserSettingsForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={css.settingsForm}>
           <div className={css.settingsGender}>
-            <label className={css.settingLabel}>Your gender identity</label>
+            <p className={css.settingLabel}>Your gender identity</p>
+
             <div className={css.radioButton}>
-              <input type="radio" value="female" {...register('gender')} />
-              <svg width="16" height="16">
-                <use href={`${sprite}#icon-radio-button`} />
-              </svg>
-              Woman
-              <input type="radio" value="male" {...register('gender')} />
-              Man
+              <label className={css.customRadio}>
+                <input type="radio" value="female" {...register('gender')} />
+                <span className={css.customRadioButton}></span>
+                Woman
+              </label>
+              <label className={css.customRadio}>
+                <input type="radio" value="male" {...register('gender')} />
+                <span className={css.customRadioButton}></span>
+                Man
+              </label>
             </div>
+
             <p className={css.errorMessage}>{errors.gender?.message}</p>
           </div>
 
@@ -189,7 +194,12 @@ export default function UserSettingsForm() {
               set 0)
             </p>
 
-            <p>!Active time in hours</p>
+            <p>
+              <svg width="16" height="16">
+                <use href={`${sprite}#icon-exclamation`} />
+              </svg>
+              Active time in hours
+            </p>
           </div>
 
           <div className={css.settingsWeightSport}>
@@ -227,7 +237,9 @@ export default function UserSettingsForm() {
             </div>
 
             <div>
-              <label>Write down how much water you will drink:</label>
+              <label className={css.settingLabel}>
+                Write down how much water you will drink:
+              </label>
               <input
                 type="string"
                 {...register('dailyNorma')}
