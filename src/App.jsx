@@ -1,4 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
+import LogOutModal from './components/LogOutModal/LogOutModal.jsx';
+import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
 import SharedLayout from './SharedLayout';
 
@@ -28,6 +30,11 @@ function App() {
   //   <b>Refreshing user...</b>
   // ) : (
   return (
+    // <button onClick={()=>openLogOutModal()}>LogOut</button>
+    //   <LogOutModal
+    //   logOutModalIsOpen={logOutModalIsOpen}
+    //       closeLogOutModal={closeLogOutModal} />
+
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>

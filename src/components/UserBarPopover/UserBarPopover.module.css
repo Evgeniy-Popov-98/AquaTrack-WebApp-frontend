@@ -1,0 +1,90 @@
+.backdropPopover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: transparent;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .activeBackdropPopover {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .userBarPopover {
+    position: absolute;
+    top: 55px;
+    left: 0px;
+    border-radius: 15px;
+    padding: 14px 20px;
+    z-index: 15;
+    box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.1);
+    background-color:  #fff;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  .active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+.popoverContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 129%;
+  color: #323f47;
+}
+
+.popoverItem {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.textColor {
+  color: rgba(50, 63, 71, 0.4);
+  transition: 0.3s;
+}
+
+.iconColor {
+  fill: rgba(50, 63, 71, 0.4);
+  transition: 0.3s;
+}
+
+.popoverItem:hover.textColor {
+  color: black;
+}
+
+.popoverItem:hover>.iconColor {
+  fill: black;
+}
+
+@media screen and (min-width: 768px) {
+  .userBarPopover {
+    top: 65px;
+  }
+
+  .active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .popoverContent {
+    font-size: 15px;
+    line-height: 149%;
+  }
+}

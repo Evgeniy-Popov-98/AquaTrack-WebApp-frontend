@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-// import WaterMainInfo from '../../components/WaterMainInfo/WaterMainInfo';
-// import WaterDetailedInfo from '../../components/WaterDetailedInfo/WaterDetailedInfo';
+
+import WaterDetailedInfo from '../../components/WaterDetailedInfo/WaterDetailedInfo';
+import WaterMainInfo from '../../components/WaterMainInfo/WaterMainInfo';
+
 import css from './TrackerPage.module.css';
 
 const TrackerPage = () => {
@@ -10,8 +12,8 @@ const TrackerPage = () => {
         <Helmet>
           <title>Tracker</title>
         </Helmet>
-        {/* <WaterMainInfo />
-        <WaterDetailedInfo /> */}
+        <WaterMainInfo />
+        <WaterDetailedInfo />
       </div>
     </>
   );
