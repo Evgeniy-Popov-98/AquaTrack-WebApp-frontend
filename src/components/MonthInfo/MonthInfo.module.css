@@ -1,0 +1,21 @@
+.wrapTittle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.wrapTittle h3 {
+  color: rgb(50, 63, 71);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -1%;
+  text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+  .wrapTittle h3 {
+    font-size: 28px;
+    line-height: 1.14;
+  }
+}

@@ -1,0 +1,42 @@
+.CalendarPagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.CalendarPagination p {
+  color: rgb(50, 63, 71);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -1%;
+  text-align: center;
+  width: 125px; /* поставила фіксовану ширину щоб не скакав, потрібно уточнювати у ментора */
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  background-color: transparent;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  fill: black;
+}
+
+@media screen and (min-width: 768px) {
+  .CalendarPagination {
+    gap: 20px;
+  }
+  .CalendarPagination p {
+    font-size: 16px;
+    width: 140px; /* поставила фіксовану ширину щоб не скакав, потрібно уточнювати у ментора */
+  }
+}

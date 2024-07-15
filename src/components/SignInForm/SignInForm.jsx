@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
-import icons from '../../assets/icons/icons.svg'
+import icons from '../../assets/icons/icons.svg';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/auth/operations.js';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -18,15 +20,17 @@ const validationSchema = Yup.object().shape({
 
 const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const {
-    register,
+    register: registerInput,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
-  const onSubmit = d => {
-    alert(JSON.stringify(d));
+  const onSubmit = (data) => {
+    dispatch(login(data));
+    console.log('Form values:', data);
   };
 
   const togglePasswordVisibility = () => {
@@ -42,9 +46,9 @@ const SignInForm = () => {
           <label className={css.formLabel}>
             Email
             <input
-              type='email'
+              type="email"
               className={css.formInput}
-              {...register('email')}
+              {...registerInput('email')}
               placeholder="Enter your email"
             />
             {errors.email && (
@@ -57,7 +61,7 @@ const SignInForm = () => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 className={css.formInput}
-                {...register('password')}
+                {...registerInput('password')}
                 placeholder="Enter your password"
               />
               <span className={css.icon} onClick={togglePasswordVisibility}>

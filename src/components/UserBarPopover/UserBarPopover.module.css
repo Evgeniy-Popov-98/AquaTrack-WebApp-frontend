@@ -19,7 +19,6 @@
     position: absolute;
     top: 55px;
     left: 0px;
-    width: 137px;
     border-radius: 15px;
     padding: 14px 20px;
     z-index: 15;
@@ -76,7 +75,6 @@
 @media screen and (min-width: 768px) {
   .userBarPopover {
     top: 65px;
-    width: 157px;
   }
 
   .active {
