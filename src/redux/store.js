@@ -1,23 +1,26 @@
 import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
+import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist'
 import { configureStore } from '@reduxjs/toolkit';
 import { authReducer } from './auth/slice.js';
 import { timerReducer } from './timer/slice.js';
 
-const persistConfig = {
-  key: 'root',
+const authPeristConfig = {
+  key: 'auth',
   storage,
+  whitelist: ['token'],
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
-
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    auth: persistedReducer,
+    auth: persistReducer(authPeristConfig, authReducer),
     countDownTimer: timerReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-const persistor = persistStore(store);
-
-export { store, persistor };
+export const persistor = persistStore(store);
