@@ -15,12 +15,16 @@ const UserPanel = () => {
   //   const userData = useSelector(selectUserData);
   const {name, email, avatar} = userData;
 
+  function uppercaseFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   let userName;
   if (name) {
-    userName = name;
+    userName = uppercaseFirstLetter(name);
   } else {
     const index = email.indexOf('@');
-    userName = email.slice(0, index);
+    userName = uppercaseFirstLetter(email.slice(0, index));
   }
 
   return (

@@ -1,0 +1,171 @@
+/* 
+ !custon radio-button
+ !background-color checked input
+ !custom ! and *V
+ */
+
+.settingsContainer {
+  width: 343px;
+  padding: 40px 20px;
+
+  --color-bold: #323f47;
+  --color-primary: #2f2f2f;
+  --color-accent: #9be1a0;
+  --color-input: #2f2f2f26;
+  --color-error: red;
+
+  --font-size-bold: 16px;
+  --font-size-primary: 14px;
+
+  --gap-section: 24px;
+  --gap-inside-section: 14px;
+
+  color: var(--color-primary);
+  font-size: var(--font-size-primary);
+
+  /* border: 1px solid blue; */
+}
+
+.errorMessage {
+  color: var(--color-error);
+}
+
+.settingsForm {
+  /* border: 1px solid pink; */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+  margin-top: 40px;
+}
+
+.settingLabel {
+  color: var(--color-bold);
+  font-size: var(--font-size-bold);
+  font-weight: bold;
+}
+
+.settingInput {
+  width: 100%;
+  height: 46px;
+  outline: none;
+  font-size: var(--font-size-primary);
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid var(--color-input);
+  color: var(--color-primary);
+  padding: 14px 16px;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.settingInput:focus {
+  border-color: var(--color-primary);
+}
+.settingInput.error {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+/*********** Gender ***********/
+.settingsGender {
+  /* border: 1px solid blue; */
+  width: 172px;
+  display: flex;
+  flex-direction: column;
+}
+.radioButton {
+  margin-top: var(--gap-inside-section);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+/********** settingsNameEmail**********/
+.settingsNameEmailWrap {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-inside-section);
+}
+
+.settingsNameEmail {
+  /* border: 1px solid green; */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/******* settingsDailyNormaText ********/
+.settingsDailyNormaText {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-inside-section);
+}
+
+.normaCalculationExample {
+  /* border: 1px solid violet; */
+  width: 154px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.normaCalculationGender {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.normaCalculationFormula {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.normaCalculationTextAccent {
+  color: var(--color-accent);
+  margin-right: 4px;
+}
+.normaCalculationText {
+  padding: 16px;
+  border-radius: 15px;
+  border: 1px solid var(--color-input);
+  color: rgba(47, 47, 47, 0.6);
+  font-size: var(--font-size-primary);
+}
+
+/****** settingsWeightSport *******/
+.settingsWeightSport {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-inside-section);
+}
+
+/********* settingsDailyNorma *******/
+.settingsDailyNorma {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-inside-section);
+}
+.dailyNormaRecomended {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+/***********button Save*************/
+.formBtn {
+  margin-top: 40px;
+  width: 116px;
+  height: 46px;
+  border-radius: 30px;
+  padding: 14px 40px;
+  color: var(--color-bold);
+  font-size: var(--font-size-primary);
+  background-color: var(--color-accent);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.formBtn:hover {
+  background-color: #31e13c;
+  color: black;
+}
