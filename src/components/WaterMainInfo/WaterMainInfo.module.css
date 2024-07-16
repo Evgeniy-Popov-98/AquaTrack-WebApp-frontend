@@ -9,3 +9,31 @@
   background-repeat: no-repeat;
   background-position: bottom 30px right 40px;
 }
+
+@media screen and (min-width: 768px) {
+  section {
+    min-width: 768px;
+    padding: 32px;
+  }
+
+  .waterMainInfoContainer {
+    width: 704px;
+    height: 578px;
+    background-size: 374px 477px;
+    background-position: bottom 32px right 165px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  section {
+    min-width: 1440px;
+    padding: 32px;
+  }
+
+  .waterMainInfoContainer {
+    width: 672px;
+    height: 736px;
+    background-size: 472px 604px;
+    background-position: bottom 40px right 100px;
+  }
+}
