@@ -23,7 +23,7 @@ const CalendarPagination = ({ currentDate, setActiveIndex }) => {
       <p>{currentDate}</p>
       <button className={s.btn} onClick={() => handleChangeMonth(1)}>
         <svg className={s.icon} width={18} height={18}>
-          <use href={`${icons}#icon-chevronRight`} />
+          <use href={`${icons}#icon-chevron-right`} />
         </svg>
       </button>
     </div>

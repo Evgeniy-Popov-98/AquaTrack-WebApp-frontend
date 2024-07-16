@@ -12,6 +12,7 @@ import {
 import { configureStore } from '@reduxjs/toolkit';
 import { authReducer } from './auth/slice.js';
 import { timerReducer } from './timer/slice.js';
+import { waterReducer } from './water/slice.js';
 import { calendarReducer } from './calendar/slice.js';
 
 const authPeristConfig = {
@@ -22,6 +23,7 @@ const authPeristConfig = {
 
 export const store = configureStore({
   reducer: {
+    water: waterReducer,
     auth: persistReducer(authPeristConfig, authReducer),
     countDownTimer: timerReducer,
     calendar: calendarReducer,
