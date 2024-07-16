@@ -2,12 +2,15 @@ import s from './CalendarPagination.module.css';
 import icons from '../../assets/icons/icons.svg';
 import { useDispatch } from 'react-redux';
 import { changeMonth } from '../../redux/calendar/slice.js';
+import { useDateFC } from '../../helpers/utils.js';
 
-const CalendarPagination = ({ currentDate }) => {
+const CalendarPagination = ({ currentDate, setActiveIndex }) => {
+  const { numberOfMonth } = useDateFC();
   const dispatch = useDispatch();
 
   const handleChangeMonth = offset => {
     dispatch(changeMonth(offset));
+    setActiveIndex(numberOfMonth - 1);
   };
 
   return (

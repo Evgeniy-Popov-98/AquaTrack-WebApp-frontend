@@ -2,12 +2,13 @@ import { useDispatch } from 'react-redux';
 import s from './CalendarItem.module.css';
 import { setDate } from '../../redux/calendar/slice.js';
 import { useDateFC } from '../../helpers/utils.js';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
-  const { year, month, numberOfMonth } = useDateFC();
+  const { year, month } = useDateFC();
 
   const isClicked = activeIndex === idx;
+
   const dispatch = useDispatch();
   const btn = useRef();
 
@@ -16,13 +17,6 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
   const styleNorma = procentage >= 100 ? s.btn : s.normaInComplete;
 
   let styleClick = isClicked ? s.btnClicked : styleNorma;
-
-  useEffect(() => {
-    if (numberOfMonth === day) {
-      setActiveIndex(idx);
-      dispatch(setDate({ year, month, date }));
-    }
-  }, [day, numberOfMonth, dispatch, setActiveIndex, year, month, date, idx]);
 
   const handleClick = () => {
     setActiveIndex(idx);
