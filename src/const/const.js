@@ -33,3 +33,10 @@ export const getDaysInMonth = (monthIndex, year) => {
       return 30;
   }
 };
+
+// export const monthName = getMonthName(new Date(currentDate).getMonth());
+// export const year = new Date(currentDate).getFullYear();
+// export const daysInMonth = getDaysInMonth(
+//   new Date(currentDate).getMonth(),
+//   year
+// );

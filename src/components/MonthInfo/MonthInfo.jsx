@@ -2,31 +2,20 @@ import Calendar from '../Calendar/Calendar.jsx';
 import CalendarPagination from '../CalendarPagination/CalendarPagination.jsx';
 import s from './MonthInfo.module.css';
 import { getDaysInMonth, getMonthName } from '../../const/const.js';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectCalendar } from '../../redux/calendar/selector.js';
 
 const MonthInfo = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
-  const handleMonthChange = offset => {
-    setCurrentDate(prevDate => {
-      const newDate = new Date(prevDate);
-      newDate.setMonth(prevDate.getMonth() + offset);
-      return newDate;
-    });
-  };
-
-  const monthName = getMonthName(currentDate.getMonth());
-  const year = currentDate.getFullYear();
-  const daysInMonth = getDaysInMonth(currentDate.getMonth(), year);
+  const currentDate = useSelector(selectCalendar);
+  const monthName = getMonthName(new Date(currentDate).getMonth());
+  const year = new Date(currentDate).getFullYear();
+  const daysInMonth = getDaysInMonth(new Date(currentDate).getMonth(), year);
 
   return (
     <section className={`s.MonthInfo container`}>
       <div className={s.wrapTittle}>
         <h3>Month</h3>
-        <CalendarPagination
-          currentDate={`${monthName}, ${year}`}
-          handleMonthChange={handleMonthChange}
-        />
+        <CalendarPagination currentDate={`${monthName}, ${year}`} />
       </div>
       <Calendar daysInMonth={daysInMonth} />
     </section>
