@@ -130,13 +130,38 @@ export default function UserSettingsForm() {
 
             <div className={css.radioButton}>
               <label className={css.customRadio}>
-                <input type="radio" value="female" {...register('gender')} />
-                <span className={css.customRadioButton}></span>
+                <input
+                  className={css.inputRadio}
+                  type="radio"
+                  value="female"
+                  name="gender"
+                  {...register('gender')}
+                />
+                <svg width="18" height="18">
+                  <use
+                    href={`${sprite}#icon-radio-button-${
+                      genderValue === 'female' ? 'checked' : 'unchecked'
+                    }`}
+                  ></use>
+                </svg>
                 Woman
               </label>
-              <label className={css.customRadio}>
-                <input type="radio" value="male" {...register('gender')} />
-                <span className={css.customRadioButton}></span>
+
+              <label className={`${css.customRadio} ${css.text}`}>
+                <input
+                  className={css.inputRadio}
+                  type="radio"
+                  value="male"
+                  name="gender"
+                  {...register('gender')}
+                />
+                <svg width="18" height="18">
+                  <use
+                    href={`${sprite}#icon-radio-button-${
+                      genderValue === 'male' ? 'checked' : 'unchecked'
+                    }`}
+                  ></use>
+                </svg>
                 Man
               </label>
             </div>
