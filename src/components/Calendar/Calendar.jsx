@@ -1,5 +1,3 @@
-// import { useState } from 'react';
-
 import CalendarItem from '../CalendarItem/CalendarItem.jsx';
 import s from './Calendar.module.css';
 

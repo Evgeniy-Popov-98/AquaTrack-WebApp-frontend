@@ -3,14 +3,15 @@ import { useDateFC } from '../../helpers/utils.js';
 
 const ChooseDate = () => {
   const { numberOfMonth, monthName, currentDate } = useDateFC();
-  const today = new Date().toISOString().slice(0, 10);
-
-  console.log('today: ', today);
-  console.log('currentDate: ', currentDate);
+  const today = new Date().toLocaleDateString(navigator.language, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
 
   return (
     <div className={s.ChooseDate}>
-      {currentDate.includes(today) ? 'Today' : `${numberOfMonth}, ${monthName}`}
+      {currentDate === today ? 'Today' : `${numberOfMonth}, ${monthName}`}
     </div>
   );
 };

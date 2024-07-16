@@ -94,14 +94,14 @@ function App() {
               </RestrictedRoute>
             }
           /> */}
-          {/* <Route
+          <Route
             path="/tracker"
             element={
-              // <PrivateRoute>
-              <TrackerPage />
-              // </PrivateRoute>
+              <PrivateRoute>
+                <TrackerPage />
+              </PrivateRoute>
             }
-          /> */}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -13,6 +13,7 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
   const btn = useRef();
 
   const date = idx + 1;
+
   const procentage = 100;
   const styleNorma = procentage >= 100 ? s.btn : s.normaInComplete;
 
