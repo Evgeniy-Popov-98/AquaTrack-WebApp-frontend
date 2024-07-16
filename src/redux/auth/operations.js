@@ -112,4 +112,12 @@ export const refreshUser = createAsyncThunk(
   }
 );
 
-export const logout = {};
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    await instance.post("/users/logout");
+    clearToken();
+    return;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.message);
+  }
+});

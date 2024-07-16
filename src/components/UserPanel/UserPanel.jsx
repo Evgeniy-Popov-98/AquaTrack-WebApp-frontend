@@ -1,5 +1,5 @@
 // import { useSelector } from 'react-redux';
-// import { selectUserData } from '../../redux/auth/selectors';
+// import { selectUser } from '../../redux/auth/selectors';
 
 import UserBar from '../UserBar/UserBar.jsx';
 
@@ -12,7 +12,8 @@ const userData = {
 }; // тимчасовий юзер для тесту
 
 const UserPanel = () => {
-  //   const userData = useSelector(selectUserData);
+  // const userData = useSelector(selectUser);
+  // console.log(userData);
   const {name, email, avatar} = userData;
 
   function uppercaseFirstLetter(str) {
