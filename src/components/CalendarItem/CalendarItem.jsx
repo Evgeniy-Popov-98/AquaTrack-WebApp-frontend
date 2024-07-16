@@ -14,7 +14,7 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
 
   const date = idx + 1;
 
-  const procentage = 100;
+  const procentage = 0;
   const styleNorma = procentage >= 100 ? s.btn : s.normaInComplete;
 
   let styleClick = isClicked ? s.btnClicked : styleNorma;

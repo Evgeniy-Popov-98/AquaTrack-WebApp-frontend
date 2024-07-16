@@ -32,11 +32,6 @@ function App() {
   //   <b>Refreshing user...</b>
   // ) : (
   return (
-    // <button onClick={()=>openLogOutModal()}>LogOut</button>
-    //   <LogOutModal
-    //   logOutModalIsOpen={logOutModalIsOpen}
-    //       closeLogOutModal={closeLogOutModal} />
-
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
@@ -67,39 +62,8 @@ function App() {
           <Route
             path="/tracker"
             element={
-              <PrivateRoute redirectTo="/" component={<TrackerPage />} />
-            }
-          />
-          {/* <Route
-            index
-            element={
-              <RestrictedRoute>
-                <HomePage />
-              </RestrictedRoute>
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              <RestrictedRoute>
-                <SignInPage />
-              </RestrictedRoute>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <RestrictedRoute>
-                <SignUpPage />
-              </RestrictedRoute>
-            }
-          /> */}
-          <Route
-            path="/tracker"
-            element={
-              <PrivateRoute>
-                <TrackerPage />
-              </PrivateRoute>
+              <TrackerPage />
+              //   <PrivateRoute redirectTo="/" component={<TrackerPage />} />
             }
           />
           <Route path="*" element={<NotFound />} />
