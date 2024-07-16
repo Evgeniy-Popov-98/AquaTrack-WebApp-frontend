@@ -1,4 +1,4 @@
-/* .trackContainer {
+.trackContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,4 +25,4 @@
         width: 1440px;
         gap: 32px;
     }
-} */
+}

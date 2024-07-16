@@ -35,3 +35,31 @@
   stroke: #fff;
   transition: stroke 0.3s ease-in-out;
 }
+
+@media screen and (min-width: 768px) {
+  section {
+    min-width: 768px;
+    padding: 32px;
+  }
+
+  .addWaterBtn {
+    padding: 18px 30px;
+    width: 178px;
+    height: 60px;
+    font-size: 16px;
+    line-height: 150%;
+    bottom: 64px;
+    right: 32px;
+  }
+
+  .addWaterIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  section {
+    min-width: 1440px;
+  }
+}

@@ -27,3 +27,36 @@
   font-family: 'Poppins', sans-serif;
   color: rgba(47, 47, 47, 0.6);
 }
+
+@media screen and (min-width: 768px) {
+  section {
+    min-width: 768px;
+    padding: 32px;
+  }
+  .waterDailyNormaContainer {
+    top: 157px;
+    left: 32px;
+    width: 129px;
+    height: 78px;
+  }
+  .literDesctiption {
+    font-size: 12px;
+    line-height: 187%;
+  }
+  .liter {
+    font-size: 15px;
+    line-height: 149%;
+  }
+  .textContainer {
+    padding: 14px 18px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  section {
+    min-width: 1440px;
+  }
+  .waterDailyNormaContainer {
+    left: 64px;
+  }
+}
