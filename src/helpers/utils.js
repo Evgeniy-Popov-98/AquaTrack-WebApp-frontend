@@ -12,13 +12,23 @@ export const displayFebruaryDays = year => {
 
 export const useDateFC = () => {
   const currentDate = useSelector(selectCalendar);
-  const monthName = getMonthName(new Date(currentDate).getMonth());
-  const month = new Date(currentDate).getMonth();
-  const numberOfMonth = new Date(currentDate).getDate();
-  const year = new Date(currentDate).getFullYear();
-  const daysInMonth = getDaysInMonth(new Date(currentDate).getMonth(), year);
+
+  // Використовуємо Date без форматування, щоб уникнути помилок з інвалідними датами
+  const date = new Date(currentDate);
+  const locale = navigator.language;
+
+  const monthName = getMonthName(date.getMonth());
+  const month = date.getMonth();
+  const numberOfMonth = date.getDate();
+  const year = date.getFullYear();
+  const daysInMonth = getDaysInMonth(date.getMonth(), year);
+
   return {
-    currentDate,
+    currentDate: date.toLocaleDateString(locale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }),
     monthName,
     year,
     daysInMonth,
