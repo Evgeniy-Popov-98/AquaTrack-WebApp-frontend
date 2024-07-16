@@ -1,11 +1,7 @@
-import { useState } from 'react';
-
 import CalendarItem from '../CalendarItem/CalendarItem.jsx';
 import s from './Calendar.module.css';
 
-const Calendar = ({ daysInMonth }) => {
-  const [activeIndex, setActiveIndex] = useState(null);
-
+const Calendar = ({ daysInMonth, setActiveIndex, activeIndex }) => {
   const days = Array.from({ length: daysInMonth }, (v, k) => k + 1);
 
   return (
