@@ -9,7 +9,8 @@ const MonthInfo = () => {
   const { monthName, year, daysInMonth } = useDateFC();
 
   return (
-    <section className={`s.MonthInfo container`}>
+    <>
+      {/* <section className={`s.MonthInfo container`}> */}
       <div className={s.wrapTittle}>
         <h3>Month</h3>
         <CalendarPagination
@@ -22,7 +23,8 @@ const MonthInfo = () => {
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       />
-    </section>
+      {/* </section> */}
+    </>
   );
 };
 

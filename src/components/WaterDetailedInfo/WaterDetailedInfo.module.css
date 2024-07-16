@@ -1,7 +1,8 @@
-/* .trackContainerItem {
+.trackContainerItem {
   border-radius: 30px;
   padding: 16px;
-  background-color: var(--background-color);
+  background-color: #f0eff4;
+  /* background-color: var(--background-color); */
   max-width: 343px;
   min-width: 288px;
   width: 100%;
@@ -23,4 +24,4 @@
     width: 672px;
     height: 736px;
   }
-} */
+}
