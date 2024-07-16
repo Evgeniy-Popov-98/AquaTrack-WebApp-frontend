@@ -7,8 +7,8 @@ import { updateWater } from "../water/operations.js";
 import toast from "react-hot-toast";
 
 const initialState = {
-  waterDaily: null,
-  waterMonthly: null,
+  waterDaily: [],
+  waterMonthly: [],
   loading: false,
   error: null,
 };

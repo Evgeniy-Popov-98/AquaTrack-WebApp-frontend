@@ -2,6 +2,8 @@ import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import css from './WaterForm.module.css';
+import { useDispatch } from 'react-redux';
+import { addWater } from '../../redux/water/operations';
 
 const schema = yup.object().shape({
   amountLiters: yup
@@ -13,6 +15,8 @@ const schema = yup.object().shape({
 });
 
 const WaterForm = ({ closeWaterModal }) => {
+  const dispatch = useDispatch();
+
   const {
     control,
     handleSubmit,
@@ -28,8 +32,9 @@ const WaterForm = ({ closeWaterModal }) => {
   });
 
   const onSubmit = data => {
-    //console.log('Form data:', data);
-    closeWaterModal();
+    dispatch(addWater(data)).then(() => {
+      closeWaterModal();
+    });
   };
 
   const increaseAmount = () => {
@@ -41,6 +46,7 @@ const WaterForm = ({ closeWaterModal }) => {
     const currentAmount = parseInt(getValues('amountLiters'), 10);
     setValue('amountLiters', Math.max(10, currentAmount - 10));
   };
+
   return (
     <form className={css.waterForm} onSubmit={handleSubmit(onSubmit)}>
       <div>
