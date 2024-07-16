@@ -3,7 +3,7 @@ import icons from '../../assets/icons/icons.svg';
 
 const UserSettingsAvatar = () => {
   const defaultAvatar = '/src/assets/images/Ellipse 14.jpg';
-  console.log('hi');
+
   return (
     <div className={css.avatarContainer}>
       <img src={defaultAvatar} alt="Avatar" className={css.avatar} />

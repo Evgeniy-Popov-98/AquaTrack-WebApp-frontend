@@ -1,18 +1,26 @@
 import s from './CalendarPagination.module.css';
 import icons from '../../assets/icons/icons.svg';
+import { useDispatch } from 'react-redux';
+import { changeMonth } from '../../redux/calendar/slice.js';
 
-const CalendarPagination = ({ currentDate, handleMonthChange }) => {
+const CalendarPagination = ({ currentDate }) => {
+  const dispatch = useDispatch();
+
+  const handleChangeMonth = offset => {
+    dispatch(changeMonth(offset));
+  };
+
   return (
     <div className={s.CalendarPagination}>
-      <button className={s.btn} onClick={() => handleMonthChange(-1)}>
+      <button className={s.btn} onClick={() => handleChangeMonth(-1)}>
         <svg className={s.icon} width={18} height={18}>
-          <use href={`${icons}#icon-chevron-left`} />
+          <use href={`${icons}#icon-chevronLeft`} />
         </svg>
       </button>
       <p>{currentDate}</p>
-      <button className={s.btn} onClick={() => handleMonthChange(1)}>
+      <button className={s.btn} onClick={() => handleChangeMonth(1)}>
         <svg className={s.icon} width={18} height={18}>
-          <use href={`${icons}#icon-chevron-right`} />
+          <use href={`${icons}#icon-chevronRight`} />
         </svg>
       </button>
     </div>
