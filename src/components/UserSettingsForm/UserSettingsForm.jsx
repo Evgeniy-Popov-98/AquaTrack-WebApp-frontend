@@ -4,7 +4,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import UserSettingsAvatar from './UserSettingsAvatar';
+import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
 import sprite from '../../assets/icons/icons.svg';
 import css from './UserSettingsForm.module.css';
@@ -15,7 +15,7 @@ const convertingToNumber = str => {
   return Math.floor(parseFloat(str) * 10) / 10;
 };
 
-const dailyNormaRecomendCalculation = (gender, weight, sport) => {
+const dailyWaterRecomendCalculation = (gender, weight, sport) => {
   if (!weight) return 1.8;
   if (!sport) sport = 0;
   const baseValue = gender === 'female' ? 0.03 : 0.04;
@@ -24,18 +24,18 @@ const dailyNormaRecomendCalculation = (gender, weight, sport) => {
 };
 
 const schema = yup.object().shape({
-  username: yup.string().notRequired(),
+  name: yup.string().notRequired(),
   gender: yup.string().oneOf(['female', 'male']),
   email: yup.string().email().notRequired(),
   weight: yup
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
     .notRequired(),
-  sportTime: yup
+  activeSportsTime: yup
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
     .notRequired(),
-  dailyNorma: yup
+  dailyWaterIntake: yup
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
     .notRequired(),
@@ -51,22 +51,22 @@ export default function UserSettingsForm() {
     resolver: yupResolver(schema),
     defaultValues: {
       gender: 'female',
-      username: null,
+      name: null,
       weight: null,
-      sportTime: null,
-      dailyNorma: null,
+      activeSportsTime: null,
+      dailyWaterIntake: null,
     },
   });
 
   const genderValue = watch('gender');
   const weightNumber = convertingToNumber(watch('weight'));
-  const sportTimeNumber = convertingToNumber(watch('sportTime'));
-  const dailyNormaNumber = convertingToNumber(watch('dailyNorma'));
+  const activeSportsTimeNumber = convertingToNumber(watch('activeSportsTime'));
+  const dailyWaterIntakeNumber = convertingToNumber(watch('dailyWaterIntake'));
 
-  const dailyNormaRecomended = dailyNormaRecomendCalculation(
+  const dailyWaterRecomended = dailyWaterRecomendCalculation(
     genderValue,
     weightNumber,
-    sportTimeNumber
+    activeSportsTimeNumber
   );
 
   const onSubmit = data => {
@@ -78,7 +78,7 @@ export default function UserSettingsForm() {
       switch (key) {
         case 'gender':
           return formData.append(key, data[key]);
-        case 'username':
+        case 'name':
           if (data[key]) {
             formData.append(key, data[key]);
           }
@@ -93,16 +93,16 @@ export default function UserSettingsForm() {
             formData.append(key, weightNumber);
           }
           break;
-        case 'sportTime':
-          if (sportTimeNumber) {
-            formData.append(key, sportTimeNumber);
+        case 'activeSportsTime':
+          if (activeSportsTimeNumber) {
+            formData.append(key, activeSportsTimeNumber);
           }
           break;
-        case 'dailyNorma':
+        case 'dailyWaterIntake':
           if (data[key]) {
-            return formData.append(key, dailyNormaNumber);
+            return formData.append(key, dailyWaterIntakeNumber);
           } else {
-            return formData.append(key, dailyNormaRecomended);
+            return formData.append(key, dailyWaterRecomended);
           }
       }
     });
@@ -148,12 +148,12 @@ export default function UserSettingsForm() {
             <div className={css.labelInput}>
               <label className={css.settingLabel}>Your name</label>
               <input
-                {...register('username')}
+                {...register('name')}
                 className={clsx(css.settingInput, {
-                  [css.error]: errors.username,
+                  [css.error]: errors.name,
                 })}
               />
-              <p className={css.errorMessage}>{errors.username?.message}</p>
+              <p className={css.errorMessage}>{errors.name?.message}</p>
             </div>
 
             <div className={css.labelInput}>
@@ -219,36 +219,40 @@ export default function UserSettingsForm() {
               <label>The time of active participation in sports:</label>
               <input
                 type="string"
-                {...register('sportTime')}
+                {...register('activeSportsTime')}
                 className={clsx(css.settingInput, {
-                  [css.error]: errors.sportTime,
+                  [css.error]: errors.activeSportsTime,
                 })}
               />
-              <p className={css.errorMessage}>{errors.sportTime?.message}</p>
+              <p className={css.errorMessage}>
+                {errors.activeSportsTime?.message}
+              </p>
             </div>
           </div>
 
-          <div className={css.settingsDailyNormaRequired}>
-            <div className={css.dailyNormaRecomendedWrap}>
+          <div className={css.settingsDailyNormaInput}>
+            <div className={css.dailyNormaRecomended}>
               <p>The required amount of water in liters per day:</p>
-              <p className={css.dailyNormaRecomended}>
-                {dailyNormaRecomended}L
+              <p className={css.dailyNormaRecomendedNumber}>
+                {dailyWaterRecomended}L
               </p>
             </div>
 
-            <div>
+            <div className={css.labelInput}>
               <label className={css.settingLabel}>
                 Write down how much water you will drink:
               </label>
               <input
                 type="string"
-                {...register('dailyNorma')}
-                placeholder={dailyNormaRecomended}
+                {...register('dailyWaterIntake')}
+                placeholder={dailyWaterRecomended}
                 className={clsx(css.settingInput, {
-                  [css.error]: errors.dailyNorma,
+                  [css.error]: errors.dailyWaterIntake,
                 })}
               />
-              <p className={css.errorMessage}>{errors.dailyNorma?.message}</p>
+              <p className={css.errorMessage}>
+                {errors.dailyWaterIntake?.message}
+              </p>
             </div>
           </div>
         </div>

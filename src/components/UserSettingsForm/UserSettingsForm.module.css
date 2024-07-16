@@ -1,5 +1,5 @@
 /* 
- !custon radio-button
+ !custom radio-button
  !background-color checked input
 
  */
@@ -120,7 +120,7 @@
 .settingsNameEmailWrap,
 .settingsWeightSport,
 .settingsDailyNormaText,
-.settingsDailyNormaRequired {
+.settingsDailyNormaInput {
   display: flex;
   flex-direction: column;
   gap: var(--gap-inside-section);
@@ -164,7 +164,7 @@
 }
 
 /********* settingsDailyNormaRequired *******/
-.dailyNormaRecomended {
+.dailyNormaRecomendedNumber {
   color: var(--color-accent);
   font-weight: var(--font-weight-main);
 }
@@ -222,12 +222,12 @@
     gap: 28px;
     padding: 0;
   }
-  .dailyNormaRecomendedWrap {
+  .dailyNormaRecomended {
     display: flex;
     flex-direction: row;
     gap: 6px;
   }
-  .dailyNormaRecomended {
+  .dailyNormaRecomendedNumber {
     font-size: 15px;
   }
 
@@ -271,7 +271,7 @@
     grid-row: 2;
   }
 
-  .settingsDailyNormaRequired {
+  .settingsDailyNormaInput {
     grid-column: 2;
     grid-row: 3;
   }
