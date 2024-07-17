@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
   baseURL: 'https://aquatrack-webapp-backend.onrender.com',
@@ -32,14 +33,11 @@ export const login = createAsyncThunk(
   'auth/login',
   async (formData, thunkApi) => {
     try {
-      const { data } = await instance.post('/users/login', formData);
-      console.log(data);
+      const { data } = await apiRequest('post', '/users/login', formData);
       setToken(data.data.accessToken);
-      console.log('Login successful, token:', data.data.accessToken);
-
       return data.data;
-    } catch (e) {
-      return thunkApi.rejectWithValue(e.message);
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -52,13 +50,19 @@ export const refreshUser = createAsyncThunk(
       const token = state.auth.accessToken;
       const userId = state.auth.user.userId;
 
+      if (token === null) {
+        return thunkApi.rejectWithValue('Unable to fetch user');
+      }
+
       setToken(token);
 
       const { data } = await instance.get(`/users/${userId}`);
 
+      setToken(token);
+
       return data;
-    } catch (e) {
-      return thunkApi.rejectWithValue(e.message);
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -67,8 +71,9 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await instance.post('/users/logout');
     clearToken();
+
     return;
-  } catch (e) {
-    return thunkAPI.rejectWithValue(e.message);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
   }
 });
