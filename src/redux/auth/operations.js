@@ -3,10 +3,12 @@ import axios from 'axios';
 
 export const instance = axios.create({
   baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  // baseURL: 'http://localhost:3000',
 });
 
 export const setToken = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  console.log('Token set:', instance.defaults.headers.common.Authorization);
 };
 
 export const clearToken = () =>
@@ -17,9 +19,9 @@ export const register = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await instance.post('/users/register', formData);
-      setToken(data.token);
+      setToken(data.data.accessToken);
 
-      return data;
+      return data.data;
     } catch (e) {
       return thunkApi.rejectWithValue(e.message);
     }
@@ -31,9 +33,11 @@ export const login = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await instance.post('/users/login', formData);
-      setToken(data.token);
+      console.log(data);
+      setToken(data.data.accessToken);
+      console.log('Login successful, token:', data.data.accessToken);
 
-      return data;
+      return data.data;
     } catch (e) {
       return thunkApi.rejectWithValue(e.message);
     }
@@ -45,10 +49,11 @@ export const refreshUser = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       const state = thunkApi.getState();
-      const token = state.auth.token;
-      const userId = state.auth.user.id;
+      const token = state.auth.accessToken;
+      const userId = state.auth.user.userId;
 
       setToken(token);
+
       const { data } = await instance.get(`/users/${userId}`);
 
       return data;
@@ -58,9 +63,9 @@ export const refreshUser = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    await instance.post("/users/logout");
+    await instance.post('/users/logout');
     clearToken();
     return;
   } catch (e) {
