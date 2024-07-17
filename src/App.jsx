@@ -9,7 +9,7 @@ import Loader from './components/Loader/Loader.jsx';
 import RestrictedRoute from './routs/RestrictedRoute';
 import { PrivateRoute } from './routs/PrivateRoute';
 import { useDispatch, useSelector } from 'react-redux';
-// import { selectIsRefreshing } from './redux/auth/selectors.js';
+import { selectIsRefreshing } from './redux/auth/selectors.js';
 import { useAuth } from './hooks/useAuth.js';
 import { selectToken } from './redux/auth/selectors.js';
 import { refreshUser } from './redux/auth/operations.js';
@@ -44,45 +44,37 @@ function App() {
     <Loader />
   ) : (
     // <Suspense fallback={<Loader />}>
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route
-            index
-            element={
-              <RestrictedRoute redirectTo="/tracker" component={<HomePage />} />
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              <RestrictedRoute
-                redirectTo="/tracker"
-                component={<SignInPage />}
-              />
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <RestrictedRoute
-                redirectTo="/tracker"
-                component={<SignUpPage />}
-              />
-            }
-          />
-          <Route
-            path="/tracker"
-            element={
-              // <TrackerPage />
-              <PrivateRoute redirectTo="/" component={<TrackerPage />} />
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-      //{' '}
-    </Suspense>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route
+          index
+          element={
+            <RestrictedRoute redirectTo="/tracker" component={<HomePage />} />
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <RestrictedRoute redirectTo="/tracker" component={<SignInPage />} />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <RestrictedRoute redirectTo="/tracker" component={<SignUpPage />} />
+          }
+        />
+        <Route
+          path="/tracker"
+          element={
+            // <TrackerPage />
+            <PrivateRoute redirectTo="/" component={<TrackerPage />} />
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+    // </Suspense>
   );
 }
 
