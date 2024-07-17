@@ -13,6 +13,67 @@ export const setToken = token => {
 export const clearToken = () =>
   (instance.defaults.headers.common.Authorization = '');
 
+export const register = createAsyncThunk(
+  'auth/register',
+  async (formData, thunkApi) => {
+    try {
+      const { data } = await apiRequest('post', '/users/register', formData);
+
+      setToken(data.data.accessToken);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (formData, thunkApi) => {
+    try {
+      const { data } = await apiRequest('post', '/users/login', formData);
+      setToken(data.data.accessToken);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const refreshUser = createAsyncThunk(
+  'auth/refresh-tokens',
+  async (_, thunkApi) => {
+    try {
+      const state = thunkApi.getState();
+      const token = state.auth.token;
+
+      if (token === null) {
+        return thunkApi.rejectWithValue('Unable to fetch user');
+      }
+
+      setToken(token);
+
+      const { data } = await apiRequest('post', `/refresh-tokens`);
+
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  try {
+    await apiRequest('post', '/users/logout');
+
+    clearToken();
+
+    return;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
 // export const register = createAsyncThunk(
 //   'auth/register',
 //   async (formData, thunkApi) => {
@@ -68,67 +129,3 @@ export const clearToken = () =>
 //     return thunkAPI.rejectWithValue(e.message);
 //   }
 // });
-
-export const register = createAsyncThunk(
-  'auth/register',
-  async (formData, thunkApi) => {
-    const { data, error } = await apiRequest(
-      'post',
-      '/users/register',
-      formData
-    );
-
-    if (data) {
-      setToken(data.token);
-      return data;
-    } else {
-      return thunkApi.rejectWithValue(error);
-    }
-  }
-);
-
-export const login = createAsyncThunk(
-  'auth/login',
-  async (formData, thunkApi) => {
-    const { data, error } = await apiRequest('post', '/users/login', formData);
-    if (data) {
-      setToken(data.token);
-      return data;
-    } else {
-      return thunkApi.rejectWithValue(error);
-    }
-  }
-);
-
-export const refreshUser = createAsyncThunk(
-  'auth/refresh-tokens',
-  async (_, thunkApi) => {
-    const state = thunkApi.getState();
-    const token = state.auth.token;
-    const userId = state.auth.user.id;
-
-    if (token === null) {
-      return thunkApi.rejectWithValue('Unable to fetch user');
-    }
-
-    setToken(token);
-    const { data, error } = await apiRequest('get', `/users/${userId}`);
-
-    if (data) {
-      return data;
-    } else {
-      return thunkApi.rejectWithValue(error);
-    }
-  }
-);
-
-export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-  const { data, error } = await apiRequest('post', '/users/logout');
-
-  if (data) {
-    clearToken();
-    return;
-  } else {
-    return thunkAPI.rejectWithValue(error);
-  }
-});
