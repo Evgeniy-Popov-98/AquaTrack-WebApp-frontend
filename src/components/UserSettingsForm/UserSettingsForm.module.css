@@ -88,33 +88,20 @@
 .radioButton {
   margin-top: var(--gap-inside-section);
   display: flex;
-  flex-direction: row;
   gap: 20px;
 }
 
 .customRadio {
   display: flex;
+  gap: 10px;
   align-items: center;
-  margin-bottom: 10px;
+
   cursor: pointer;
 }
 
-/* .customRadio input[type='radio'] {
+.inputRadio {
   display: none;
 }
-
-.customRadio input[type='radio'] + .customRadioButton {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  background: url(?????) no-repeat center center;
-  margin-right: 10px;
-}
-
-.customRadio input[type='radio']:checked + .customRadioButton {
-  background: url(radioButton.png),
-    url(radioButtonChecked.png) no-repeat center center;
-} */
 
 /********** settingsNameEmail**********/
 .settingsNameEmailWrap,

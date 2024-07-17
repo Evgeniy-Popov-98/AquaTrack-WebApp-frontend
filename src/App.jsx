@@ -23,18 +23,13 @@ const TrackerPage = lazy(() => import('./page/TrackerPage/TrackerPage'));
 const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
 function App() {
-  // const dispatch = useDispatch();
-  // const { isRefreshing } = useSelector(selectIsRefreshing);
-
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  // }, [dispatch]);
-
-  // return isRefreshing ? (
-  //   <b>Refreshing user...</b>
-  // ) : (
-
   const dispatch = useDispatch();
+  const { isRefreshing } = useSelector(selectIsRefreshing);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
   const { isCurrent } = useAuth();
 
   const token = useSelector(selectToken);
@@ -49,6 +44,7 @@ function App() {
     <Loader />
   ) : (
     // <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route
@@ -79,13 +75,14 @@ function App() {
             path="/tracker"
             element={
               // <TrackerPage />
-                <PrivateRoute redirectTo="/" component={<TrackerPage />} />
+              <PrivateRoute redirectTo="/" component={<TrackerPage />} />
             }
           />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    // </Suspense>
+      //{' '}
+    </Suspense>
   );
 }
 

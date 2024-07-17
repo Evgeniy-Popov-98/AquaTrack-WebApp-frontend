@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   user: {
     email: null,
   },
-  token: null,
+  accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
   loading: false,
@@ -34,7 +34,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.isLoggedIn = true;
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.accessToken = action.payload.accessToken;
       })
       .addCase(register.rejected, handleRejected)
       //login
@@ -43,7 +43,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.isLoggedIn = true;
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, handleRejected)
       //refresh
