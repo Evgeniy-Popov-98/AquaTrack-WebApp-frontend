@@ -43,24 +43,37 @@ export const login = createAsyncThunk(
 );
 
 export const refreshUser = createAsyncThunk(
-  'auth/refresh-tokens',
+  'auth/refresh',
   async (_, thunkApi) => {
     try {
       const state = thunkApi.getState();
       const token = state.auth.accessToken;
-      const userId = state.auth.user.userId;
 
-      if (token === null) {
+      if (!token) {
         return thunkApi.rejectWithValue('Unable to fetch user');
       }
 
-      setToken(token);
-
-      const { data } = await instance.get(`/users/${userId}`);
+      const { data } = await instance.post(`/users/refresh-tokens`);
 
       setToken(token);
 
       return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const verifyGoogleOAuth = createAsyncThunk(
+  'auth/google',
+  async (code, thunkApi) => {
+    try {
+      const { data } = await instance.post('/users/verify-google-oauth', {
+        code,
+      });
+      setToken(data.data.accessToken);
+
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }

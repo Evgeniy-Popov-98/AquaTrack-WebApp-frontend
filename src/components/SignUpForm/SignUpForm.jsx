@@ -7,7 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import icons from '../../assets/icons/icons.svg';
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations.js';
+import { register, verifyGoogleOAuth } from '../../redux/auth/operations.js';
+import { toast, Toaster } from 'react-hot-toast';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -15,7 +16,7 @@ const validationSchema = Yup.object().shape({
     .required('Email is required'),
   password: Yup.string()
     .required('Password is required')
-    .min(6, 'Password must be at least 6 characters long'),
+    .min(8, 'Password must be at least 8 characters long'),
   repeatPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Repeat Password is required'),
@@ -31,18 +32,36 @@ const SignUpForm = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
-  const onSubmit = data => {
-    const { email, password } = data;
-    const formData = { email, password };
-    dispatch(register(formData));
+  const onSubmit = async data => {
+    try {
+      const { email, password } = data;
+      const formData = { email, password };
+      await dispatch(register(formData)).unwrap();
+    } catch (error) {
+      toast.error('Register failed: ' + (error.message || 'Unexpected error'));
+    }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleVerifyOAuth = code => {
+    dispatch(verifyGoogleOAuth(code));
+  };
+
   return (
     <div className={css.formContainer}>
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          error: { duration: 2000 },
+        }}
+      />
       <Logo />
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={css.formTitle}>Sign Up</h2>
@@ -113,6 +132,7 @@ const SignUpForm = () => {
         <button className={css.formBtn} type="submit">
           Sign Up
         </button>
+
         <p className={css.formLink}>
           Already have account?&nbsp;
           <Link className={css.linkSignIn} to="/signin">
@@ -120,6 +140,12 @@ const SignUpForm = () => {
           </Link>
         </p>
       </form>
+      <button className={css.googleBtn} onClick={handleVerifyOAuth}>
+        Continue with{' '}
+        <svg width="20" height="20">
+          <use href={`${icons}#icon-google`} />
+        </svg>
+      </button>
     </div>
   );
 };

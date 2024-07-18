@@ -7,7 +7,7 @@ import css from './TrackerPage.module.css';
 
 const TrackerPage = () => {
   return (
-    <>
+    <section>
       <div className={css.trackContainer}>
         <Helmet>
           <title>Tracker</title>
@@ -15,7 +15,7 @@ const TrackerPage = () => {
         <WaterMainInfo />
         <WaterDetailedInfo />
       </div>
-    </>
+    </section>
   );
 };
 

@@ -24,17 +24,13 @@ const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
 function App() {
   const dispatch = useDispatch();
-  const { isRefreshing } = useSelector(selectIsRefreshing);
-
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
 
   const { isCurrent } = useAuth();
 
   const token = useSelector(selectToken);
 
   useEffect(() => {
+    console.log('Token:', token);
     if (token) {
       dispatch(refreshUser());
     }
@@ -43,8 +39,7 @@ function App() {
   return isCurrent ? (
     <Loader />
   ) : (
-    // <Suspense fallback={<Loader />}>
-    <Suspense fallback={<Loader />}>
+    // return(
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route
@@ -81,8 +76,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-      //{' '}
-    </Suspense>
+      
+   
   );
 }
 

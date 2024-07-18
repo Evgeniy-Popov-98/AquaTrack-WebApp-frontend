@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, refreshUser, register } from './operations';
+import { login, refreshUser, register, verifyGoogleOAuth } from './operations';
 
 const INITIAL_STATE = {
   user: {
+    _id: null,
     email: null,
   },
   accessToken: null,
@@ -46,6 +47,15 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, handleRejected)
+      //google
+      .addCase(verifyGoogleOAuth.pending, handlePending)
+      .addCase(verifyGoogleOAuth.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        state.user = action.payload.user;
+        state.accessToken = action.payload.accessToken;
+      })
+      .addCase(verifyGoogleOAuth.rejected, handleRejected)
       //refresh
       .addCase(refreshUser.pending, handlePending, state => {
         state.isRefreshing = true;
