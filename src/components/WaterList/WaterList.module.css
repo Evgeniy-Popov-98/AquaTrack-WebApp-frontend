@@ -1,0 +1,59 @@
+.waterList {
+  width: 608px;
+  height: 174px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  overflow: scroll;
+}
+
+.waterCard {
+  width: 192px;
+  height: 86px;
+
+  padding: 20px;
+  border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  background-color: #fff;
+}
+
+.bottleIcon {
+  width: 45px;
+  height: 45px;
+}
+
+.containerText {
+  width: 52px;
+  height: 46px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerIcon {
+  width: 16px;
+  height: 46px;
+}
+
+.button {
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+}
+
+.setingsIcon {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  stroke: black;
+}
