@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 // import LogOutModal from './components/LogOutModal/LogOutModal.jsx';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import SharedLayout from './SharedLayout';
 import './App.css';
 // import NotFound from './page/NotFound/NotFound.jsx';
@@ -26,9 +26,9 @@ function App() {
   const dispatch = useDispatch();
   const { isRefreshing } = useSelector(selectIsRefreshing);
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
 
   const { isCurrent } = useAuth();
 
