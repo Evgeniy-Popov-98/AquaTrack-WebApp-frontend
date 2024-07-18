@@ -9,7 +9,7 @@ import Loader from './components/Loader/Loader.jsx';
 import RestrictedRoute from './routs/RestrictedRoute';
 import { PrivateRoute } from './routs/PrivateRoute';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsRefreshing } from './redux/auth/selectors.js';
+// import { selectIsRefreshing } from './redux/auth/selectors.js';
 import { useAuth } from './hooks/useAuth.js';
 import { selectToken } from './redux/auth/selectors.js';
 import { refreshUser } from './redux/auth/operations.js';
@@ -24,11 +24,11 @@ const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
 function App() {
   const dispatch = useDispatch();
-  const { isRefreshing } = useSelector(selectIsRefreshing);
+  // const { isRefreshing } = useSelector(selectIsRefreshing);
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
 
   const { isCurrent } = useAuth();
 
