@@ -7,7 +7,7 @@
 .settingsContainer {
   border-radius: 15px;
   padding: 40px 20px;
-  width: 343px;
+  max-width: 343px;
 
   --color-main: #323f47;
   --color-main-text: #2f2f2f;
@@ -30,7 +30,6 @@
   line-height: 129%;
   letter-spacing: -0.01em;
   margin: 0 auto;
-  /* background-color: pink; */
 }
 
 .errorMessage {
@@ -38,12 +37,11 @@
 }
 
 .settingsForm {
-  width: 303px;
+  max-width: 303px;
   display: flex;
   flex-direction: column;
   gap: var(--gap-section);
   margin-top: 40px;
-  /* background-color: gray; */
 }
 
 .settingLabel {
@@ -82,7 +80,6 @@
   height: 54px;
   display: flex;
   flex-direction: column;
-  /* background-color: yellowgreen; */
 }
 
 .radioButton {
@@ -111,7 +108,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-inside-section);
-  /* background-color: yellowgreen; */
 }
 
 .labelInput {

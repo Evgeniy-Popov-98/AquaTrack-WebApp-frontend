@@ -110,16 +110,6 @@ export default function UserSettingsForm() {
     console.log(...formData);
   };
 
-  // useEffect(() => {
-  //   you can do async server request and fill up form: email
-  //   setTimeout(() => {
-  //     reset({
-  //       firstName: 'bill',
-  //       lastName: 'luo',
-  //     });
-  //   }, 2000);
-  // }, [reset]);
-
   return (
     <div className={css.settingsContainer}>
       <UserSettingsAvatar />
