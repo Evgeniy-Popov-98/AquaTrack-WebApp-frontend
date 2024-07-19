@@ -1,7 +1,6 @@
 .container {
   overflow-x: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: #323f47 #ffffff;
+  overflow-y: hidden;
   padding: 24px;
 }
 
@@ -13,7 +12,9 @@
 }
 
 .container::-webkit-scrollbar {
-  height: 28px;
+  border-radius: 9px;
+  height: 8px;
+  background-color: #fff;
 }
 
 .container::-webkit-scrollbar-track {
@@ -21,7 +22,9 @@
 }
 
 .container::-webkit-scrollbar-thumb {
-  border-radius: 5px;
+  border-radius: 9px;
+  height: 8px;
+  background-color: #323f47;
 }
 
 .container::-webkit-scrollbar-thumb:hover {
