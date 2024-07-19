@@ -1,6 +1,23 @@
-import css from './WaterItem.module.css';
+import { useState } from 'react';
 
-const WaterItem = () => {
+import WaterModal from '../WaterModal/WaterModal';
+
+import css from './WaterItem.module.css';
+// import sprite from '../../assets/icons/icons.svg';
+
+const WaterItem = ({ amountLiters, time }) => {
+  const [showWaterModal, setShowWaterModal] = useState(false);
+  const [operationType, setOperationType] = useState('add');
+
+  const onOpenWaterModal = type => {
+    setOperationType(type);
+    setShowWaterModal(true);
+  };
+
+  const onCloseWaterModal = () => {
+    setShowWaterModal(false);
+  };
+
   return (
     <li className={css.item}>
       <div className={css.container}>
@@ -10,22 +27,32 @@ const WaterItem = () => {
           </svg>
         </div>
         <div className={css.info}>
-          <p className={css.volume}>250 ml</p>
-          <p className={css.time}>7:00 am</p>
+          <p className={css.volume}>{amountLiters} ml</p>
+          <p className={css.time}>{time} am</p>
         </div>
         <div className={css.icons}>
-          <button className={css.btn} onClick={() => {}}>
+          <button className={css.btn} onClick={() => onOpenWaterModal('edit')}>
             <svg width={14} height={14} stroke="#323f47" fill="white">
               <use href="/src/assets/icons/icons.svg#icon-edit-2" />
             </svg>
           </button>
-          <button className={css.btn} onClick={() => {}}>
+          <button
+            className={css.btn}
+            onClick={() => onOpenWaterModal('delete')}
+          >
             <svg width={14} height={14} stroke="#323f47" fill="white">
               <use href="/src/assets/icons/icons.svg#icon-trash-04" />
             </svg>
           </button>
         </div>
       </div>
+      {showWaterModal && (
+        <WaterModal
+          waterModalOpen={showWaterModal}
+          closeWaterModal={onCloseWaterModal}
+          operationType={operationType}
+        />
+      )}
     </li>
   );
 };
