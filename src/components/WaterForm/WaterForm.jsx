@@ -3,8 +3,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import css from './WaterForm.module.css';
 import { useDispatch } from 'react-redux';
-import { addWater, getWaterDaily } from '../../redux/water/operations';
 import icons from '../../assets/icons/icons.svg';
+import { addWater } from '../../redux/water/operations';
 
 const schema = yup.object().shape({
   amountOfWater: yup
@@ -16,7 +16,7 @@ const schema = yup.object().shape({
   date: yup.string().required('Time is required'),
 });
 
-const WaterForm = ({ closeWaterModal, water,date }) => {
+const WaterForm = ({ closeWaterModal, water }) => {
   const dispatch = useDispatch();
 
   const defaultValues = water
@@ -50,7 +50,6 @@ const WaterForm = ({ closeWaterModal, water,date }) => {
     try {
     const result = await dispatch(addWater(dataToSend));
     if (result.meta.requestStatus === 'fulfilled') {
-      await dispatch(getWaterDaily(date));
       closeWaterModal(); 
     }
   } catch (error) {
