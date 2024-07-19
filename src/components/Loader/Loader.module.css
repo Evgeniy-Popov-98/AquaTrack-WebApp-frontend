@@ -1,7 +1,3 @@
-/* .noLoaderActive {
-  visibility: hidden;
-} */
-
 .loaderActive {
   position: fixed;
   top: 0;
