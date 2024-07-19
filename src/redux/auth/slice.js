@@ -1,5 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, refreshUser, register, logout, getUser, updateUser } from './operations';
+import {
+  login,
+  refreshUser,
+  register,
+  logout,
+  getUser,
+  updateUser,
+} from './operations';
 
 const INITIAL_STATE = {
   user: {
@@ -100,8 +107,8 @@ const authSlice = createSlice({
         state.user.dailyWaterIntake = action.payload.user.dailyWaterIntake;
         state.user.avatar = action.payload.user.avatar;
       })
-      .addCase(updateUser.rejected, handleRejected)
-    }
+      .addCase(updateUser.rejected, handleRejected);
+  },
 });
 
 export const authReducer = authSlice.reducer;
