@@ -1,12 +1,10 @@
 .trackContainerItem {
   border-radius: 30px;
-  padding: 16px;
+  padding: 40px 20px;
   background-color: #f0eff4;
-  /* background-color: var(--background-color); */
-  max-width: 343px;
-  min-width: 288px;
-  width: 100%;
+  width: 343px;
   height: 770px;
+  margin: 0 auto;
 }
 
 @media only screen and (min-width: 768px) {

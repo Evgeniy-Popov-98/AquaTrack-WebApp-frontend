@@ -1,12 +1,23 @@
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contacts/operations.js";
 
 import Modal from "../Modal/Modal.jsx"
 
 import css from "./DeleteWaterModal.module.css";
+import { deleteWater } from "../../redux/water/operations.js";
 
 const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal, waterId}) => {
   const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    const response = await dispatch(deleteWater(waterId));
+
+    if (response.meta.requestStatus === 'fulfilled') closeDeleteWaterModal();
+  };
+
+  const handleClose = () => {
+    closeDeleteWaterModal();
+  };
+
   return (
     <Modal modalIsOpen={deleteWaterModalIsOpen} closeModal={closeDeleteWaterModal}>
         <div className={css.box}>
@@ -15,10 +26,8 @@ const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal, waterI
                 <p  className={css.text}>Are you sure you want to delete the entry?</p>
             </div>
             <div className={css.buttonBox}>
-                <button className={css.btnDelete} onClick={()=>{
-                  closeDeleteWaterModal();
-                  dispatch(deleteContact(waterId))}}>Delete</button>
-                <button className={css.btnCancel} onClick={()=>closeDeleteWaterModal(false)}>Cancel</button>
+                <button className={css.btnDelete} onClick={handleDelete}>Delete</button>
+                <button className={css.btnCancel} onClick={handleClose}>Cancel</button>
             </div>
         </div>
     </Modal>

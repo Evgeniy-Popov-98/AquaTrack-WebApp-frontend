@@ -1,0 +1,25 @@
+.waterList {
+  display: flex;
+  gap: 8px;
+  height: 74px;
+  margin-bottom: 24px;
+}
+
+.waterListContainer {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.waterListContainer::-webkit-scrollbar {
+  border-radius: 9px;
+  width: 303px;
+  height: 8px;
+  background-color: #fff;
+}
+
+.waterListContainer::-webkit-scrollbar-thumb {
+  border-radius: 9px;
+  width: 150px;
+  height: 8px;
+  background-color: #323f47;
+}

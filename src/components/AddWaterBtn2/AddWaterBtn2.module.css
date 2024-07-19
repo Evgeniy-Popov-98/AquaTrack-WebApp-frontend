@@ -1,17 +1,11 @@
 .addWaterBtn2 {
   display: flex;
-  text-align: center;
-  justify-self: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
   font-weight: 700;
+  font-size: 16px;
   line-height: 150%;
   letter-spacing: -0.01em;
-  position: absolute;
-  top: 16px;
-  right: 16px;
   background-color: inherit;
-  width: 124px;
   height: 30px;
   color: #323f47;
   border: none;

@@ -1,0 +1,53 @@
+.waterCard {
+  border-radius: 15px;
+  padding: 18px 14px;
+  width: 149px;
+  height: 74px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.waterGlass {
+  fill: #9be1a0;
+}
+
+.waterData {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 49px;
+  height: 32px;
+}
+
+.waterAmount {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+}
+
+.waterTime {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
+  color: rgba(47, 47, 47, 0.6);
+}
+.waterChangeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.waterChange {
+  background-color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  fill: none;
+  stroke: #323f47;
+}
