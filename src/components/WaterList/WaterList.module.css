@@ -4,6 +4,7 @@
   scrollbar-color: #323f47 #ffffff;
   padding: 24px;
 }
+
 .list {
   display: flex;
   gap: 8px;
@@ -12,7 +13,7 @@
 }
 
 .container::-webkit-scrollbar {
-  height: 8px;
+  height: 28px;
 }
 
 .container::-webkit-scrollbar-track {
@@ -29,9 +30,6 @@
 
 @media screen and (min-width: 768px) {
   .container {
-    overflow-x: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: #323f47 #ffffff;
     padding: 10px;
   }
   .list {

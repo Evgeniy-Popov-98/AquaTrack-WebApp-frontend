@@ -51,6 +51,7 @@ export const deleteWater = createAsyncThunk(
   'water/deleteWater',
   async (id, thunkAPI) => {
     try {
+      console.log(id);
       const response = await instance.delete(`/water/${id}`);
       return response.data;
     } catch (e) {
@@ -63,6 +64,7 @@ export const updateWater = createAsyncThunk(
   'water/updateWater',
   async (data, thunkAPI) => {
     try {
+      console.log(data.id);
       const response = await instance.patch(`/water/${data.id}`, {
         amountOfWater: data.amountLiters,
         date: data.time,

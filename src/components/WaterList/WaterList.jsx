@@ -13,7 +13,11 @@ const WaterList = () => {
       <ul className={css.list}>
         {waterDaily.map(item => (
           <li className={css.waterCard} key={item.id}>
-            <WaterItem amountLiters={item.amountLiters} time={item.time} />
+            <WaterItem
+              amountLiters={item.amountLiters}
+              time={item.time}
+              waterId={item.id}
+            />
           </li>
         ))}
       </ul>
