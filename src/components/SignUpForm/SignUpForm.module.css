@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 126px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .labelWrap {
@@ -76,7 +76,6 @@
   letter-spacing: -0.01em;
   text-align: center;
   color: #323f47;
-  margin-bottom: 16px;
   transition: background-color 300ms ease-in-out;
 }
 
@@ -121,6 +120,7 @@
   text-align: center;
   padding: 16px 88px;
   margin: 0 auto;
+  margin-bottom: 16px;
   transition: border-color 300ms ease-in-out, color 300ms ease-in-out;
 }
 
@@ -142,7 +142,7 @@
   .form {
     margin: 0 auto;
     margin-top: 171px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .formTitle {
@@ -207,6 +207,7 @@
   }
 
   .googleBtn {
+    gap: 8px;
     padding: 18px 146px;
     font-size: 16px;
     line-height: 1.5;

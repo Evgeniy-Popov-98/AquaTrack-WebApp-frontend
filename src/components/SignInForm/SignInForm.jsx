@@ -97,12 +97,6 @@ const SignInForm = () => {
         <button className={css.formBtn} type="submit">
           Sign In
         </button>
-        <p className={css.formLink}>
-          Don&apos;t have an account?&nbsp;
-          <Link className={css.linkSignUp} to="/signup">
-            Sign Up
-          </Link>
-        </p>
       </form>
       <button className={css.googleBtn}>
         Continue with{' '}
@@ -110,6 +104,12 @@ const SignInForm = () => {
           <use href={`${icons}#icon-google`} />
         </svg>
       </button>
+      <p className={css.formLink}>
+        Don&apos;t have an account?&nbsp;
+        <Link className={css.linkSignUp} to="/signup">
+          Sign Up
+        </Link>
+      </p>
     </div>
   );
 };

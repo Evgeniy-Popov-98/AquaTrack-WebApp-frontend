@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import RestrictedRoute from './routs/RestrictedRoute';
@@ -15,6 +15,7 @@ import SharedLayout from './SharedLayout';
 // import { selectIsRefreshing } from './redux/auth/selectors.js';
 
 import './App.css';
+import GoogleAuthCallback from './helpers/googleAuthCallback.js';
 
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
 const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
@@ -24,11 +25,11 @@ const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
 function App() {
   const dispatch = useDispatch();
-  const { isRefreshing } = useSelector(selectIsRefreshing);
+  // const { isRefreshing } = useSelector(selectIsRefreshing);
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
 
   const { isCurrent } = useAuth();
 
@@ -41,50 +42,49 @@ function App() {
     }
   }, [dispatch, token]);
 
-  return isCurrent ? (
-    <Loader />
-  ) : (
-    // <Suspense fallback={<Loader />}>
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route
-            index
-            element={
-              <RestrictedRoute redirectTo="/tracker" component={<HomePage />} />
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              <RestrictedRoute
-                redirectTo="/tracker"
-                component={<SignInPage />}
-              />
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <RestrictedRoute
-                redirectTo="/tracker"
-                component={<SignUpPage />}
-              />
-            }
-          />
-          <Route
-            path="/tracker"
-            element={
-              // <TrackerPage />
-              <PrivateRoute redirectTo="/" component={<TrackerPage />} />
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-      //{' '}
-    </Suspense>
-  );
+   return isCurrent ? (
+     <Loader />
+   ) : (
+     // <Suspense fallback={<Loader />}>
+     <Routes>
+       <Route path="/confirm-google-auth" component={GoogleAuthCallback} />
+       <Route path="/" element={<SharedLayout />}>
+         <Route
+           index
+           element={
+             <RestrictedRoute redirectTo="/tracker" component={<HomePage />} />
+           }
+         />
+         <Route
+           path="/signin"
+           element={
+             <RestrictedRoute
+               redirectTo="/tracker"
+               component={<SignInPage />}
+             />
+           }
+         />
+         <Route
+           path="/signup"
+           element={
+             <RestrictedRoute
+               redirectTo="/tracker"
+               component={<SignUpPage />}
+             />
+           }
+         />
+         <Route
+           path="/tracker"
+           element={
+             //  <TrackerPage />
+             <PrivateRoute redirectTo="/" component={<TrackerPage />} />
+           }
+         />
+         <Route path="*" element={<NotFound />} />
+       </Route>
+     </Routes>
+     // </Suspense>
+   );
 }
 
 export default App;

@@ -6,8 +6,9 @@ import {
   logout,
   getUser,
   updateUser,
+  verifyGoogleOAuth,
+  getAuthUrl,
 } from './operations';
-import { login, refreshUser, register, verifyGoogleOAuth } from './operations';
 
 const INITIAL_STATE = {
   user: {
@@ -23,6 +24,7 @@ const INITIAL_STATE = {
   isRefreshing: false,
   loading: false,
   error: null,
+  url: ''
 };
 
 const handlePending = state => {
@@ -59,7 +61,15 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, handleRejected)
-      //google
+      // //google-url
+      .addCase(getAuthUrl.pending, handlePending)
+      .addCase(getAuthUrl.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        state.url = action.payload;
+      })
+      .addCase(getAuthUrl.rejected, handleRejected)
+      //google-verify
       .addCase(verifyGoogleOAuth.pending, handlePending)
       .addCase(verifyGoogleOAuth.fulfilled, (state, action) => {
         state.loading = false;

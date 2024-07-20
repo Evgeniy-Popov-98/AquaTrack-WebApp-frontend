@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import icons from '../../assets/icons/icons.svg';
 import { useDispatch } from 'react-redux';
-import { register, verifyGoogleOAuth } from '../../redux/auth/operations.js';
+import { getAuthUrl, register } from '../../redux/auth/operations.js';
 import { toast, Toaster } from 'react-hot-toast';
 
 const validationSchema = Yup.object().shape({
@@ -46,8 +46,25 @@ const SignUpForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleVerifyOAuth = code => {
-    dispatch(verifyGoogleOAuth(code));
+  // const handleGoogleOAuth = () => {
+  //   dispatch(getAuthUrl());
+  // };
+
+  const handleGoogleOAuth = async () => {
+    try {
+      const resultAction = await dispatch(getAuthUrl());
+      if (getAuthUrl.fulfilled.match(resultAction)) {
+        const url = resultAction.payload;
+        console.log('Redirecting to:', url);
+        window.location.replace(url);
+      } else {
+        console.error('Failed to get auth URL:', resultAction.payload);
+      }
+    } catch (error) {
+      toast.error(
+        'Error handling Google OAuth: ' + (error.message || 'Unexpected error')
+      );
+    }
   };
 
   return (
@@ -132,20 +149,19 @@ const SignUpForm = () => {
         <button className={css.formBtn} type="submit">
           Sign Up
         </button>
-
-        <p className={css.formLink}>
-          Already have account?&nbsp;
-          <Link className={css.linkSignIn} to="/signin">
-            Sign In
-          </Link>
-        </p>
       </form>
-      <button className={css.googleBtn} onClick={handleVerifyOAuth}>
-        Continue with{' '}
+      <button className={css.googleBtn} onClick={handleGoogleOAuth}>
+        Continue with
         <svg width="20" height="20">
           <use href={`${icons}#icon-google`} />
         </svg>
       </button>
+      <p className={css.formLink}>
+        Already have account?&nbsp;
+        <Link className={css.linkSignIn} to="/signin">
+          Sign In
+        </Link>
+      </p>
     </div>
   );
 };
