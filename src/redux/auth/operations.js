@@ -3,14 +3,12 @@ import axios from 'axios';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  //   baseURL: 'http://localhost:3000',
 });
 
 export const setToken = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  // const jwt = `Bearer ${token}`;
-  // console.log('Token set:', jwt);
 };
 
 export const clearToken = () =>

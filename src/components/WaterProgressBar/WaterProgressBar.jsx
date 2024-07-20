@@ -49,6 +49,7 @@ const WaterProgressBar = ({ progress }) => {
     <div className={css.waterProgressBarContainer}>
       <div className={css.progressBarInfo}>
         <p className={css.data}>Today</p>
+        {/* <ChooseDate className={css.data} /> */}
 
         <div className={css.progressBarContainer} ref={containerRef}>
           <div

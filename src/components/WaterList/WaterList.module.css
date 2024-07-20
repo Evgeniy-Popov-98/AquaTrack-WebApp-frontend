@@ -11,6 +11,15 @@
   align-items: center;
 }
 
+.item {
+  border-radius: 15px;
+  background-color: #ffffff;
+  width: 149px;
+  height: 74px;
+  display: flex;
+  padding: 18px 14px;
+}
+
 .container::-webkit-scrollbar {
   border-radius: 9px;
   height: 8px;
@@ -34,6 +43,13 @@
 @media screen and (min-width: 768px) {
   .list {
     gap: 32px;
+  }
+
+  .item {
+    width: 192px;
+    padding: 20px;
+    width: 192px;
+    height: 86px;
   }
 }
 
