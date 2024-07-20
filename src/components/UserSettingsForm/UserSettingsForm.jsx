@@ -1,5 +1,6 @@
 // email from backend
 // відправка formData на backend
+// email тільки для читання
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -29,7 +30,7 @@ const dailyWaterRecomendCalculation = (gender, weight, sport) => {
 const schema = yup.object().shape({
   name: yup.string().notRequired(),
   gender: yup.string().oneOf(['female', 'male']),
-  email: yup.string().email().notRequired(),
+  // email: yup.string().email().notRequired(),
   weight: yup
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
@@ -47,7 +48,6 @@ const schema = yup.object().shape({
 export default function UserSettingsForm() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  console.log(user);
 
   const {
     register,
@@ -57,17 +57,12 @@ export default function UserSettingsForm() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      // gender: user.gender || 'female',
-      // name: user.name,
-      // email: user.email,
-      // weight: user.weight || null,
-      // activeSportsTime: user.activeSportsTime || null,
+      gender: user.gender || 'female',
+      name: user.name || null,
+      // email: user.email ,
+      weight: user.weight || null,
+      activeSportsTime: user.activeSportsTime || null,
       dailyWaterIntake: user.dailyWaterIntake || null,
-      gender: 'female',
-      name: user.name,
-      weight: null,
-      activeSportsTime: null,
-      // dailyWaterIntake: null,
     },
   });
 
@@ -83,40 +78,96 @@ export default function UserSettingsForm() {
   );
 
   const onSubmit = data => {
-    console.log('data', data);
-
     const formData = new FormData();
 
+    // Object.keys(data).forEach(key => {
+    //   switch (key) {
+    //     case 'gender':
+    //       return formData.append(key, data[key]);
+    //     case 'name':
+    //       if (data[key]) {
+    //         if (data[key] !== user.name) {
+    //           formData.append(key, data[key]);
+    //         }
+    //       }
+    //       break;
+    //     // case 'email':
+    //     //   if (data[key]) {
+    //     //     formData.append(key, data[key]);
+    //     //   }
+    //     //   break;
+    //     case 'weight':
+    //       if (data[key]) {
+    //         if (weightNumber !== user.weight) {
+    //           formData.append(key, weightNumber);
+    //         }
+    //       }
+    //       break;
+    //     case 'activeSportsTime':
+    //       if (data[key]) {
+    //         if (activeSportsTimeNumber !== user.activeSportsTime) {
+    //           formData.append(key, activeSportsTimeNumber);
+    //         }
+    //       }
+    //       break;
+    //     case 'dailyWaterIntake':
+    //       if (data[key]) {
+    //         if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
+    //           return formData.append(key, dailyWaterIntakeNumber);
+    //         } else {
+    //           break;
+    //         }
+    //       } else {
+    //         return formData.append(key, dailyWaterRecomended);
+    //       }
+    //   }
+    // });
+
     Object.keys(data).forEach(key => {
+      const value = data[key];
+      if (!value) {
+        if (key !== 'dailyWaterIntake') {
+          return;
+        }
+      }
+
       switch (key) {
         case 'gender':
-          return formData.append(key, data[key]);
-        case 'name':
-          if (data[key]) {
-            formData.append(key, data[key]);
-          }
+          formData.append(key, value);
           break;
-        case 'email':
-          if (data[key]) {
-            formData.append(key, data[key]);
+        case 'name':
+          if (value !== user.name) {
+            formData.append(key, value);
           }
           break;
         case 'weight':
-          if (weightNumber) {
+          if (weightNumber !== user.weight) {
             formData.append(key, weightNumber);
           }
           break;
         case 'activeSportsTime':
-          if (activeSportsTimeNumber) {
+          if (activeSportsTimeNumber !== user.activeSportsTime) {
             formData.append(key, activeSportsTimeNumber);
           }
           break;
         case 'dailyWaterIntake':
+          // if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
+          //   formData.append(key, dailyWaterIntakeNumber);
+          // } else if (!value) {
+          //   formData.append(key, dailyWaterRecomended);
+          // }
+          // break;
           if (data[key]) {
-            return formData.append(key, dailyWaterIntakeNumber);
+            if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
+              return formData.append(key, dailyWaterIntakeNumber);
+            } else {
+              break;
+            }
           } else {
             return formData.append(key, dailyWaterRecomended);
           }
+        default:
+          break;
       }
     });
 
@@ -188,13 +239,14 @@ export default function UserSettingsForm() {
 
             <div className={css.labelInput}>
               <label className={css.settingLabel}>Email</label>
-              <input
+              {/* <input
                 {...register('email')}
                 className={clsx(css.settingInput, {
                   [css.error]: errors.email,
                 })}
               />
-              <p className={css.errorMessage}>{errors.email?.message}</p>
+              <p className={css.errorMessage}>{errors.email?.message}</p> */}
+              <input value={user.email} readOnly className={css.settingInput} />
             </div>
           </div>
 
