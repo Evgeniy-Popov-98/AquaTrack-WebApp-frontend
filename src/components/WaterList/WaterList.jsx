@@ -1,17 +1,26 @@
 import { useSelector } from 'react-redux';
+import { selectWaterDaily } from '../../redux/water/selectors';
+
+import WaterItem from '../WaterItem/WaterItem';
+
 import css from './WaterList.module.css';
 
 const WaterList = () => {
-  const waterDaily = useSelector(state => state.water.waterDaily);
+  const waterDaily = useSelector(selectWaterDaily);
 
   return (
-    <div className={css.waterList}>
-      {waterDaily.map(item => (
-        <div key={item.id} className={css.waterCard}>
-          <p>{item.amountLiters} ml</p>
-          <p>{item.time}</p>
-        </div>
-      ))}
+    <div className={css.container}>
+      <ul className={css.list}>
+        {waterDaily.map(item => (
+          <li className={css.waterCard} key={item.id}>
+            <WaterItem
+              amountLiters={item.amountLiters}
+              time={item.time}
+              waterId={item.id}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import css from './Loader.module.css';
 
 const Loader = ({ loading }) => {
   return (
-    <div className={css.loader}>
+    <div className={loading && css.loaderActive}>
       <Comment
         visible={loading}
         height="80"
