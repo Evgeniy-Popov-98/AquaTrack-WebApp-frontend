@@ -3,14 +3,12 @@ import axios from 'axios';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  // baseURL: 'http://localhost:3000',
+  baseURL: 'https://aqua-track-web-app-frontend.vercel.app/',
+  //    baseURL: 'http://localhost:3000',
 });
 
 export const setToken = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  // const jwt = `Bearer ${token}`;
-  // console.log('Token set:', jwt);
 };
 
 export const clearToken = () =>
@@ -52,36 +50,7 @@ export const refreshUser = createAsyncThunk(
       const token = state.auth.accessToken;
       if (!token) throw new Error('No token found');
       setToken(token);
-      const { data } = await instance.post('/users/refresh-tokens');
-      setToken(data.data.accessToken);
-
-      return data.data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const getAuthUrl = createAsyncThunk(
-  'auth/google-url',
-  async (_, thunkApi) => {
-    try {
-      const {data} = await instance.post('/users/get-oauth-url');
-      
-      return data.data.url;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const verifyGoogleOAuth = createAsyncThunk(
-  'auth/google-verify',
-  async ({ code }, thunkApi) => {
-    try {
-      const { data } = await instance.post('/users/verify-google-oauth', {
-        code,
-      });
+      const {data} = await instance.post("/users/refresh-tokens");
       setToken(data.data.accessToken);
 
       return data.data;
