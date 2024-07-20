@@ -1,14 +1,5 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  // baseURL: 'http://localhost:3000',
-});
-
-export const setToken = token => {
-  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+import { instance } from '../auth/operations';
 
 export const getWaterDaily = createAsyncThunk(
   'water/getWaterDaily',

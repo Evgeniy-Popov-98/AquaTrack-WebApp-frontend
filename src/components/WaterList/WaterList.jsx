@@ -18,30 +18,19 @@ const WaterList = ({ date }) => {
     }
   }, [dispatch, date]);
 
-  //   return (
-  //     <div className={css.waterListContainer}>
-  //       <ul className={css.waterList}>
-  //         {Array.isArray(waterDailyItems.data) &&
-  //           waterDailyItems.data.map(item => (
-  //             <li key={item._id} className={css.waterCard}>
-  //               <WaterItem item={item} />
-  //             </li>
-  //           ))}
-  // const WaterList = () => {
-  //   const waterDaily = useSelector(selectWaterDaily);
-
   return (
     <div className={css.container}>
       <ul className={css.list}>
-        {waterDailyItems.map(item => (
-          <li className={css.waterCard} key={item.id}>
-            <WaterItem
-              amountLiters={item.amountLiters}
-              time={item.time}
-              waterId={item.id}
-            />
-          </li>
-        ))}
+        {Array.isArray(waterDailyItems.data) &&
+          waterDailyItems.data.map(item => (
+            <li className={css.item} key={item._id}>
+              <WaterItem
+                amountOfWater={item.amountOfWater}
+                date={item.date}
+                waterId={item._id}
+              />
+            </li>
+          ))}
       </ul>
     </div>
   );

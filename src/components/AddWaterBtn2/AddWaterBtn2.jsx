@@ -2,8 +2,6 @@ import { useState } from 'react';
 import WaterModal from '../WaterModal/WaterModal';
 
 import css from './AddWaterBtn2.module.css';
-import { useState } from 'react';
-import WaterModal from '../WaterModal/WaterModal';
 //import icons from '../../assets/icons/icons.svg';
 
 const AddWaterBtn2 = () => {
