@@ -131,12 +131,18 @@ export default function UserSettingsForm() {
 
     dispatch(updateUser(formData));
   };
+  const hasErrors = !!errors.weight || !!errors.activeSportsTime;
 
   return (
     <div className={css.settingsContainer}>
       <UserSettingsAvatar />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={css.settingsForm}>
+        {/* <div className={css.settingsForm}> */}
+        <div
+          className={clsx(css.settingsForm, {
+            [css.settingsFormError]: hasErrors,
+          })}
+        >
           <div className={css.settingsGender}>
             <p className={css.settingLabel}>Your gender identity</p>
 

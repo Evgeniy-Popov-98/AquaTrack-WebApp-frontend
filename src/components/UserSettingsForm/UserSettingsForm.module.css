@@ -1,9 +1,3 @@
-/* 
- !custom radio-button
- !background-color checked input
-
- */
-
 .settingsContainer {
   width: 100%;
 
@@ -226,10 +220,6 @@
 
 /*************min-width: 1440px*******************/
 @media (min-width: 1440px) {
-  /* .settingsContainer {
-    width: 840px;
-  } */
-
   .settingsForm {
     width: 840px;
     display: grid;
@@ -238,6 +228,27 @@
     grid-column-gap: 40px;
     grid-row-gap: 24px;
   }
+
+  .settingsFormError {
+    grid-template-rows: 62px 270px 305px;
+  }
+
+  .settingsFormError .labelInput {
+    height: 1250px;
+  }
+
+  .labelInput {
+    height: 88px;
+  }
+
+  /* .settingsGender,
+  .settingsNameEmailWrap,
+  .settingsDailyNormaText,
+  .settingsWeightSport,
+  .settingsDailyNormaInput {
+    background-color: aqua;
+    border: 1px solid blue;
+  } */
 
   .settingsGender {
     grid-column: 1;
