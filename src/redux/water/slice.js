@@ -1,16 +1,21 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { getWaterDaily, getWaterMonthly, addWater, deleteWater } from './operations';
+import {
+  getWaterDaily,
+  getWaterMonthly,
+  addWater,
+  deleteWater,
+} from './operations';
 import { isSameDay } from 'date-fns';
 
 const initialState = {
   waterItemsOfDay: {
     dateOrMonth: '',
-    data: []
+    data: [],
   },
   waterItemsOfMonthly: [],
   allWaterByDay: 0,
   date: null,
-  loading: false,
+  //   loading: false,
   error: null,
 };
 
@@ -20,7 +25,7 @@ const waterSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(addWater.fulfilled, (state, action) => {
-        state.loading = false;
+        // state.loading = false;
 
         const newItem = action.payload;
         if (newItem) {
@@ -42,26 +47,28 @@ const waterSlice = createSlice({
         }
       })
       .addCase(getWaterDaily.fulfilled, (state, action) => {
-        state.loading = false;
+        // state.loading = false;
         // Ensure payload structure matches state structure
         state.waterItemsOfDay = action.payload || { dateOrMonth: '', data: [] };
-        state.allWaterByDay = state.waterItemsOfDay.data.reduce((total, item) => total + item.amountOfWater, 0);
+        state.allWaterByDay = state.waterItemsOfDay.data.reduce(
+          (total, item) => total + item.amountOfWater,
+          0
+        );
       })
       .addCase(deleteWater.fulfilled, (state, action) => {
         state.waterItemsOfDay.data = state.waterItemsOfDay.data.filter(
-          (waterItem) => waterItem._id !== action.payload._id
+          waterItem => waterItem._id !== action.payload._id
         );
         // Update allWaterByDay to reflect changes
-        state.allWaterByDay = state.waterItemsOfDay.data.reduce((total, item) => total + item.amountOfWater, 0);
+        state.allWaterByDay = state.waterItemsOfDay.data.reduce(
+          (total, item) => total + item.amountOfWater,
+          0
+        );
       })
       .addMatcher(
-        isAnyOf(
-          addWater.pending,
-          getWaterDaily.pending,
-          deleteWater.pending
-        ),
+        isAnyOf(addWater.pending, getWaterDaily.pending, deleteWater.pending),
         state => {
-          state.loading = true;
+          //   state.loading = true;
           state.error = null;
         }
       )
@@ -72,7 +79,7 @@ const waterSlice = createSlice({
           deleteWater.rejected
         ),
         (state, action) => {
-          state.loading = false;
+          //   state.loading = false;
           state.error = action.error?.message || 'An error occurred';
         }
       );

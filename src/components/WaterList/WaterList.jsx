@@ -18,11 +18,12 @@ const WaterList = ({ date }) => {
   return (
     <div className={css.waterListContainer}>
       <ul className={css.waterList}>
-        {Array.isArray(waterDailyItems.data) && waterDailyItems.data.map(item => (
-          <li key={item._id} className={css.waterCard}>
-            <WaterItem item={item} />
-          </li>
-        ))}
+        {Array.isArray(waterDailyItems.data) &&
+          waterDailyItems.data.map(item => (
+            <li key={item._id} className={css.waterCard}>
+              <WaterItem item={item} />
+            </li>
+          ))}
       </ul>
     </div>
   );
