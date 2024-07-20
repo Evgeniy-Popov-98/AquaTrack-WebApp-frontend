@@ -1,17 +1,15 @@
-// email from backend
-// відправка formData на backend
-// email тільки для читання
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
 import sprite from '../../assets/icons/icons.svg';
-import css from './UserSettingsForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/auth/selectors';
 import { updateUser } from '../../redux/auth/operations';
+import toast, { Toaster } from 'react-hot-toast';
+
+import css from './UserSettingsForm.module.css';
 
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
 
@@ -128,13 +126,38 @@ export default function UserSettingsForm() {
     });
 
     console.log(...formData);
-
-    dispatch(updateUser(formData));
+    try {
+      dispatch(updateUser(formData));
+      toast.success('The form has been sent successfully!');
+    } catch (error) {
+      toast.error('Something wrong!');
+    }
   };
+
   const hasErrors = !!errors.weight || !!errors.activeSportsTime;
 
   return (
     <div className={css.settingsContainer}>
+      <Toaster
+        position="bottom-left"
+        reverseOrder={false}
+        toastOptions={{
+          success: {
+            style: {
+              border: '3px solid #9be1a0',
+              padding: '16px',
+              color: '#323f47',
+            },
+          },
+          error: {
+            style: {
+              border: '3px solid red',
+              padding: '16px',
+              color: '#323f47',
+            },
+          },
+        }}
+      />
       <UserSettingsAvatar />
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* <div className={css.settingsForm}> */}
