@@ -9,6 +9,7 @@ import icons from '../../assets/icons/icons.svg';
 import { useDispatch } from 'react-redux';
 import { getAuthUrl, register } from '../../redux/auth/operations.js';
 import { toast, Toaster } from 'react-hot-toast';
+import clsx from 'clsx';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -30,6 +31,8 @@ const SignUpForm = () => {
     register: registerInput,
     handleSubmit,
     formState: { errors },
+    setValue,
+    clearErrors,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async data => {
@@ -58,6 +61,15 @@ const SignUpForm = () => {
     }
   };
 
+  const handleChange = field => {
+    return e => {
+      setValue(field, e.target.value);
+      if (errors[field]) {
+        clearErrors(field);
+      }
+    };
+  };
+
   return (
     <div className={css.formContainer}>
       <Toaster
@@ -77,9 +89,11 @@ const SignUpForm = () => {
           <label className={css.formLabel}>
             Email
             <input
-              type="email"
-              className={css.formInput}
+              className={clsx(css.formInput, {
+                [css.errorInput]: errors.email,
+              })}
               {...registerInput('email')}
+              onChange={handleChange('email')}
               placeholder="Enter your email"
             />
             {errors.email && (
@@ -91,8 +105,11 @@ const SignUpForm = () => {
             <div className={css.inputWrap}>
               <input
                 type={showPassword ? 'text' : 'password'}
-                className={css.formInput}
+                className={clsx(css.formInput, {
+                  [css.errorInput]: errors.password,
+                })}
                 {...registerInput('password')}
+                onChange={handleChange('password')}
                 placeholder="Enter your password"
               />
               <span className={css.icon} onClick={togglePasswordVisibility}>
@@ -116,8 +133,11 @@ const SignUpForm = () => {
             <div className={css.inputWrap}>
               <input
                 type={showPassword ? 'text' : 'password'}
-                className={css.formInput}
+                className={clsx(css.formInput, {
+                  [css.errorInput]: errors.repeatPassword,
+                })}
                 {...registerInput('repeatPassword')}
+                onChange={handleChange('repeatPassword')}
                 placeholder="Repeat your password"
               />
               <span className={css.icon} onClick={togglePasswordVisibility}>
