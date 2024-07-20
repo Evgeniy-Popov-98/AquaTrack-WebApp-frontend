@@ -18,7 +18,7 @@ import { calendarReducer } from './calendar/slice.js';
 const authPeristConfig = {
   key: 'auth',
   storage,
-  whitelist: ['accessToken'],
+  whitelist: ['accessToken', 'isLoggedIn'],
 };
 
 export const store = configureStore({
