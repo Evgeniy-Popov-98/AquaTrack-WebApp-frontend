@@ -30,7 +30,7 @@ const dailyWaterRecomendCalculation = (gender, weight, sport) => {
 const schema = yup.object().shape({
   name: yup.string().notRequired(),
   gender: yup.string().oneOf(['female', 'male']),
-  // email: yup.string().email().notRequired(),
+  email: yup.string().email().notRequired(),
   weight: yup
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
@@ -59,7 +59,7 @@ export default function UserSettingsForm() {
     defaultValues: {
       gender: user.gender || 'female',
       name: user.name || null,
-      // email: user.email ,
+      email: user.email,
       weight: user.weight || null,
       activeSportsTime: user.activeSportsTime || null,
       dailyWaterIntake: user.dailyWaterIntake || null,
@@ -80,49 +80,6 @@ export default function UserSettingsForm() {
   const onSubmit = data => {
     const formData = new FormData();
 
-    // Object.keys(data).forEach(key => {
-    //   switch (key) {
-    //     case 'gender':
-    //       return formData.append(key, data[key]);
-    //     case 'name':
-    //       if (data[key]) {
-    //         if (data[key] !== user.name) {
-    //           formData.append(key, data[key]);
-    //         }
-    //       }
-    //       break;
-    //     // case 'email':
-    //     //   if (data[key]) {
-    //     //     formData.append(key, data[key]);
-    //     //   }
-    //     //   break;
-    //     case 'weight':
-    //       if (data[key]) {
-    //         if (weightNumber !== user.weight) {
-    //           formData.append(key, weightNumber);
-    //         }
-    //       }
-    //       break;
-    //     case 'activeSportsTime':
-    //       if (data[key]) {
-    //         if (activeSportsTimeNumber !== user.activeSportsTime) {
-    //           formData.append(key, activeSportsTimeNumber);
-    //         }
-    //       }
-    //       break;
-    //     case 'dailyWaterIntake':
-    //       if (data[key]) {
-    //         if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
-    //           return formData.append(key, dailyWaterIntakeNumber);
-    //         } else {
-    //           break;
-    //         }
-    //       } else {
-    //         return formData.append(key, dailyWaterRecomended);
-    //       }
-    //   }
-    // });
-
     Object.keys(data).forEach(key => {
       const value = data[key];
       if (!value) {
@@ -140,6 +97,11 @@ export default function UserSettingsForm() {
             formData.append(key, value);
           }
           break;
+        case 'email':
+          if (value !== user.email) {
+            formData.append(key, value);
+          }
+          break;
         case 'weight':
           if (weightNumber !== user.weight) {
             formData.append(key, weightNumber);
@@ -151,12 +113,6 @@ export default function UserSettingsForm() {
           }
           break;
         case 'dailyWaterIntake':
-          // if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
-          //   formData.append(key, dailyWaterIntakeNumber);
-          // } else if (!value) {
-          //   formData.append(key, dailyWaterRecomended);
-          // }
-          // break;
           if (data[key]) {
             if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
               return formData.append(key, dailyWaterIntakeNumber);
@@ -239,14 +195,14 @@ export default function UserSettingsForm() {
 
             <div className={css.labelInput}>
               <label className={css.settingLabel}>Email</label>
-              {/* <input
+              <input
                 {...register('email')}
                 className={clsx(css.settingInput, {
                   [css.error]: errors.email,
                 })}
               />
-              <p className={css.errorMessage}>{errors.email?.message}</p> */}
-              <input value={user.email} readOnly className={css.settingInput} />
+              <p className={css.errorMessage}>{errors.email?.message}</p>
+              {/* <input value={user.email} readOnly className={css.settingInput} /> */}
             </div>
           </div>
 
