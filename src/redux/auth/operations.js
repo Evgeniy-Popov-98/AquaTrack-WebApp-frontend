@@ -54,7 +54,7 @@ export const refreshUser = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       const state = thunkApi.getState();
-      const token = state.auth.token;
+      const token = state.auth.accessToken;
 
       if (!token || isTokenExpired(token)) {
         if (!refreshTokenRequest) {
