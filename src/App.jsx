@@ -1,20 +1,20 @@
 // import { useState } from 'react';
-// import LogOutModal from './components/LogOutModal/LogOutModal.jsx';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
-import SharedLayout from './SharedLayout';
-import './App.css';
-// import NotFound from './page/NotFound/NotFound.jsx';
-import Loader from './components/Loader/Loader.jsx';
+import { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import RestrictedRoute from './routs/RestrictedRoute';
 import { PrivateRoute } from './routs/PrivateRoute';
-import { useDispatch, useSelector } from 'react-redux';
-// import { selectIsRefreshing } from './redux/auth/selectors.js';
 import { useAuth } from './hooks/useAuth.js';
 import { selectToken } from './redux/auth/selectors.js';
 import { refreshUser } from './redux/auth/operations.js';
-// import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute.jsx';
-// import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
+
+import Loader from './components/Loader/Loader.jsx';
+import SharedLayout from './SharedLayout';
+
+// import { selectIsRefreshing } from './redux/auth/selectors.js';
+
+import './App.css';
 
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
 const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
@@ -24,6 +24,11 @@ const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
 function App() {
   const dispatch = useDispatch();
+  const { isRefreshing } = useSelector(selectIsRefreshing);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
   const { isCurrent } = useAuth();
 
@@ -39,7 +44,8 @@ function App() {
   return isCurrent ? (
     <Loader />
   ) : (
-    // return(
+    // <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route
@@ -76,8 +82,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-      
-   
+      //{' '}
+    </Suspense>
   );
 }
 

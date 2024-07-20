@@ -6,7 +6,7 @@ const AddWaterBtn = () => {
   const [showWaterModal, setShowWaterModal] = useState(false);
   const [operationType, setOperationType] = useState('add');
 
-  const onOpenWaterModal = (type) => {
+  const onOpenWaterModal = type => {
     setOperationType(type);
     setShowWaterModal(true);
   };
@@ -16,9 +16,12 @@ const AddWaterBtn = () => {
   };
 
   return (
-    <div >
-      <button className={css.addWaterBtn} onClick={() => onOpenWaterModal('edit')}>
-          <svg
+    <div>
+      <button
+        className={css.addWaterBtn}
+        onClick={() => onOpenWaterModal('edit')}
+      >
+        <svg
           className={css.addWaterIcon}
           width="16"
           height="16"
