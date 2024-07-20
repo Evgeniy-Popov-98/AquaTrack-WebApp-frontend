@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import WaterModal from '../WaterModal/WaterModal';
 import css from './AddWaterBtn.module.css';
+import icons from '../../assets/icons/icons.svg';
 
 const AddWaterBtn = () => {
   const [showWaterModal, setShowWaterModal] = useState(false);
@@ -19,9 +20,12 @@ const AddWaterBtn = () => {
     <div>
       <button
         className={css.addWaterBtn}
-        onClick={() => onOpenWaterModal('edit')}
+        onClick={() => onOpenWaterModal('add')}
       >
-        <svg
+        <svg className={css.addWaterIcon} width="16" height="16">
+          <use href={`${icons}#icon-plus`} />
+          {/* onClick={() => onOpenWaterModal('edit')}> */}
+          {/* <svg
           className={css.addWaterIcon}
           width="16"
           height="16"
@@ -39,7 +43,7 @@ const AddWaterBtn = () => {
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-          />
+          /> */}
         </svg>
         Add water
       </button>

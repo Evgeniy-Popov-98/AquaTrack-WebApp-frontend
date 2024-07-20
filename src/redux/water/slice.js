@@ -1,19 +1,21 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { getWaterDaily } from '../water/operations.js';
-import { getWaterMonthly } from '../water/operations.js';
-import { addWater } from '../water/operations.js';
-import { deleteWater } from '../water/operations.js';
-import { updateWater } from '../water/operations.js';
-import toast from 'react-hot-toast';
+import {
+  getWaterDaily,
+  getWaterMonthly,
+  addWater,
+  deleteWater,
+} from './operations';
+import { isSameDay } from 'date-fns';
 
 const initialState = {
-  waterDaily: [
-    { id: 1, amountLiters: 250, time: '11:00' },
-    { id: 2, amountLiters: 250, time: '13:00' },
-    { id: 3, amountLiters: 250, time: '15:00' },
-  ],
-  waterMonthly: [],
-  loading: false,
+  waterItemsOfDay: {
+    dateOrMonth: '',
+    data: [],
+  },
+  waterItemsOfMonthly: [],
+  allWaterByDay: 0,
+  date: null,
+  //   loading: false,
   error: null,
 };
 
@@ -22,64 +24,63 @@ const waterSlice = createSlice({
   initialState: initialState,
   extraReducers: builder => {
     builder
-      .addCase(getWaterDaily.fulfilled, (state, action) => {
-        state.loading = false;
-        state.waterDaily = action.payload;
-      })
-      .addCase(getWaterMonthly.fulfilled, (state, action) => {
-        state.loading = false;
-        state.waterMonthly = action.payload;
-      })
       .addCase(addWater.fulfilled, (state, action) => {
-        state.loading = false;
-        if (
-          state.waterDaily.length > 0 &&
-          state.waterDaily[0].createdAt === action.payload.createdAt
-        ) {
-          state.waterDaily.push(action.payload);
-          toast('Water added.');
+        // state.loading = false;
+
+        const newItem = action.payload;
+        if (newItem) {
+          state.waterItemsOfDay.data.push(newItem);
+          state.allWaterByDay += newItem.amountOfWater;
+
+          const newWaterDate = new Date(newItem.date);
+          const waterByMonth = state.waterItemsOfMonthly.find(item =>
+            isSameDay(new Date(item.date), newWaterDate)
+          );
+          if (waterByMonth) {
+            waterByMonth.allWaterByDay += newItem.amountOfWater;
+          } else {
+            state.waterItemsOfMonthly.push({
+              date: newItem.date,
+              allWaterByDay: newItem.amountOfWater,
+            });
+          }
         }
       })
-      .addCase(deleteWater.fulfilled, (state, action) => {
-        state.loading = false;
-        console.log(action.payload);
-        state.waterDaily = state.waterDaily.filter(
-          item => item.id !== action.payload.id
+      .addCase(getWaterDaily.fulfilled, (state, action) => {
+        // state.loading = false;
+        // Ensure payload structure matches state structure
+        state.waterItemsOfDay = action.payload || { dateOrMonth: '', data: [] };
+        state.allWaterByDay = state.waterItemsOfDay.data.reduce(
+          (total, item) => total + item.amountOfWater,
+          0
         );
-        toast('Water deleted.');
       })
-      .addCase(updateWater.fulfilled, (state, action) => {
-        state.loading = false;
-        const index = state.waterDaily.findIndex(
-          item => item.id === action.payload.id
+      .addCase(deleteWater.fulfilled, (state, action) => {
+        state.waterItemsOfDay.data = state.waterItemsOfDay.data.filter(
+          waterItem => waterItem._id !== action.payload._id
         );
-        state.waterDaily.splice(index, 1, action.payload);
-        toast('Water updated.');
+        // Update allWaterByDay to reflect changes
+        state.allWaterByDay = state.waterItemsOfDay.data.reduce(
+          (total, item) => total + item.amountOfWater,
+          0
+        );
       })
       .addMatcher(
-        isAnyOf(
-          getWaterDaily.pending,
-          getWaterMonthly.pending,
-          addWater.pending,
-          deleteWater.pending,
-          updateWater.pending
-        ),
+        isAnyOf(addWater.pending, getWaterDaily.pending, deleteWater.pending),
         state => {
-          state.loading = true;
+          //   state.loading = true;
           state.error = null;
         }
       )
       .addMatcher(
         isAnyOf(
-          getWaterDaily.rejected,
-          getWaterMonthly.rejected,
           addWater.rejected,
-          deleteWater.rejected,
-          updateWater.rejected
+          getWaterDaily.rejected,
+          deleteWater.rejected
         ),
         (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+          //   state.loading = false;
+          state.error = action.error?.message || 'An error occurred';
         }
       );
   },
