@@ -4,8 +4,8 @@ import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  // baseURL: 'http://localhost:3000',
   withCredentials: true,
   headers: {
     Accept: 'application/json',
@@ -38,7 +38,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (formData, thunkApi) => {
     try {
-      const {data} = await instance.post('/users/login', formData);
+      const { data } = await instance.post('/users/login', formData);
       setToken(data.data.accessToken);
       return data.data;
     } catch (error) {
@@ -109,11 +109,9 @@ export const logout = createAsyncThunk(
   }
 });
 
-export const getUser = createAsyncThunk(
-  "auth/current", 
-  async (_, thunkAPI) => {
+export const getUser = createAsyncThunk('auth/current', async (_, thunkAPI) => {
   try {
-    const {data} = await instance.get("/users/current");
+    const { data } = await instance.get('/users/current');
     return data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.message);
@@ -121,12 +119,13 @@ export const getUser = createAsyncThunk(
 });
 
 export const updateUser = createAsyncThunk(
-  "auth/update", 
+  'auth/update',
   async (user, thunkAPI) => {
-  try {
-    const {data} = await instance.patch("/users/update", user);
-    return data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue(e.message);
+    try {
+      const { data } = await instance.patch('/users/update', user);
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
   }
-});
+);

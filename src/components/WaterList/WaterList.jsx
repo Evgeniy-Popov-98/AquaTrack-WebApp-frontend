@@ -1,17 +1,37 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { selectWaterItemsOfDay } from '../../redux/water/selectors';
+// import { selectWaterDaily } from '../../redux/water/selectors';
+import { getWaterDaily } from '../../redux/water/operations';
+
+import WaterItem from '../WaterItem/WaterItem';
+
 import css from './WaterList.module.css';
 
-const WaterList = () => {
-  const waterDaily = useSelector(state => state.water.waterDaily);
+const WaterList = ({ date }) => {
+  const dispatch = useDispatch();
+  const waterDailyItems = useSelector(selectWaterItemsOfDay);
+
+  useEffect(() => {
+    if (date) {
+      dispatch(getWaterDaily(date));
+    }
+  }, [dispatch, date]);
 
   return (
-    <div className={css.waterList}>
-      {waterDaily.map(item => (
-        <div key={item.id} className={css.waterCard}>
-          <p>{item.amountLiters} ml</p>
-          <p>{item.time}</p>
-        </div>
-      ))}
+    <div className={css.container}>
+      <ul className={css.list}>
+        {Array.isArray(waterDailyItems.data) &&
+          waterDailyItems.data.map(item => (
+            <li className={css.item} key={item._id}>
+              <WaterItem
+                amountOfWater={item.amountOfWater}
+                date={item.date}
+                waterId={item._id}
+              />
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };
