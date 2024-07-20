@@ -8,8 +8,9 @@ import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
 import sprite from '../../assets/icons/icons.svg';
 import css from './UserSettingsForm.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/auth/selectors';
+import { updateUser } from '../../redux/auth/operations';
 
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
 
@@ -44,7 +45,9 @@ const schema = yup.object().shape({
 });
 
 export default function UserSettingsForm() {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  console.log(user);
 
   const {
     register,
@@ -54,12 +57,17 @@ export default function UserSettingsForm() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      gender: user.gender || 'female',
+      // gender: user.gender || 'female',
+      // name: user.name,
+      // email: user.email,
+      // weight: user.weight || null,
+      // activeSportsTime: user.activeSportsTime || null,
+      dailyWaterIntake: user.dailyWaterIntake || null,
+      gender: 'female',
       name: user.name,
-      email: user.email,
-      weight: user.weight,
-      activeSportsTime: user.activeSportsTime,
-      dailyWaterIntake: user.dailyWaterIntake,
+      weight: null,
+      activeSportsTime: null,
+      // dailyWaterIntake: null,
     },
   });
 
@@ -75,7 +83,7 @@ export default function UserSettingsForm() {
   );
 
   const onSubmit = data => {
-    console.log(data);
+    console.log('data', data);
 
     const formData = new FormData();
 
@@ -113,6 +121,8 @@ export default function UserSettingsForm() {
     });
 
     console.log(...formData);
+
+    dispatch(updateUser(formData));
   };
 
   return (

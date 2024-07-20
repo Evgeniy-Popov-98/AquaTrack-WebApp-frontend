@@ -65,6 +65,10 @@
   transition: border-color 0.3s, color 0.3s;
 }
 
+.settingInput::placeholder {
+  color: blue;
+}
+
 .settingInput:focus {
   border-color: var(--color-main-text);
 }
