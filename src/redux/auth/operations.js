@@ -60,6 +60,35 @@ export const refreshUser = createAsyncThunk(
   }
 );
 
+export const getAuthUrl = createAsyncThunk(
+  'auth/google-url',
+  async (_, thunkApi) => {
+    try {
+      const { data } = await instance.post('/users/get-oauth-url');
+
+      return data.data.url;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const verifyGoogleOAuth = createAsyncThunk(
+  'auth/google-verify',
+  async ({ code }, thunkApi) => {
+    try {
+      const { data } = await instance.post('/users/verify-google-oauth', {
+        code,
+      });
+      setToken(data.data.accessToken);
+
+      return data.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await instance.post('/users/logout');
