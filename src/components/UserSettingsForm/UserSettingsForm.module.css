@@ -5,9 +5,7 @@
  */
 
 .settingsContainer {
-  border-radius: 15px;
-  padding: 40px 20px;
-  max-width: 343px;
+  width: 100%;
 
   --color-main: #323f47;
   --color-main-text: #2f2f2f;
@@ -37,7 +35,8 @@
 }
 
 .settingsForm {
-  max-width: 303px;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   gap: var(--gap-section);
@@ -173,8 +172,7 @@
 /********min-width: 768px*************/
 @media only screen and (min-width: 768px) {
   .settingsContainer {
-    padding: 40px;
-    width: 648px;
+    /* width: 568px; */
 
     --font-size-main: 18px;
     --font-size-main-text: 16px;
@@ -182,9 +180,9 @@
     line-height: 150%;
   }
 
-  .settingsForm {
+  /* .settingsForm {
     width: 568px;
-  }
+  } */
 
   .settingLabel {
     line-height: 133%;
@@ -223,9 +221,9 @@
 
 /*************min-width: 1440px*******************/
 @media (min-width: 1440px) {
-  .settingsContainer {
-    width: 920px;
-  }
+  /* .settingsContainer {
+    width: 840px;
+  } */
 
   .settingsForm {
     width: 840px;
