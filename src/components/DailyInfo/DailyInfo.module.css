@@ -6,3 +6,26 @@
   height: 30px;
   margin: 40px 0 24px;
 }
+
+.container {
+  padding: 20px;
+  background-color: #f0eff4;
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+}
+@media screen and (min-width: 768px) {
+  .container {
+    width: 640px;
+    height: 192px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    width: 608px;
+    height: 192px;
+  }
+}
