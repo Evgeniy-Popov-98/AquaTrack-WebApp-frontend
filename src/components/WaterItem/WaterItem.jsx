@@ -2,10 +2,22 @@ import icons from '../../assets/icons/icons.svg';
 import css from './WaterItem.module.css';
 import { useState } from 'react';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
+import WaterModal from '../WaterModal/WaterModal';
 
+const WaterItem = ({ item, refreshData }) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showWaterModal, setShowWaterModal] = useState(false);
+  const [operationType, setOperationType] = useState('edit');
+ 
+  const onOpenWaterModal = type => {
+    setOperationType(type);
+    setShowWaterModal(true);
+  };
 
-const WaterItem = ({ item }) => {
-const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const onCloseWaterModal = () => {
+    setShowWaterModal(false);
+    refreshData(); 
+  };
 
   const onOpenDeleteModal = () => {
     setShowDeleteModal(true);
@@ -14,6 +26,7 @@ const [showDeleteModal, setShowDeleteModal] = useState(false);
   const onCloseDeleteModal = () => {
     setShowDeleteModal(false);
   };
+
 
   return (
     <div className={css.waterCard}>
@@ -27,12 +40,12 @@ const [showDeleteModal, setShowDeleteModal] = useState(false);
       </div>
 
       <div className={css.waterChangeContainer}>
-        <button className={css.waterChange}>
+        <button className={css.waterChange} onClick={() => onOpenWaterModal()}>
           <svg className={css.icon} width="14" height="14">
             <use href={`${icons}#icon-edit-2`} />
           </svg>
         </button>
-        <button className={css.waterChange} onClick={() => onOpenDeleteModal()}>
+        <button className={css.waterChange} onClick={onOpenDeleteModal}>
           <svg className={css.icon} width="14" height="14">
             <use href={`${icons}#icon-trash-04`} />
           </svg>
@@ -42,7 +55,16 @@ const [showDeleteModal, setShowDeleteModal] = useState(false);
         <DeleteWaterModal
           deleteWaterModalIsOpen={showDeleteModal}
           closeDeleteWaterModal={onCloseDeleteModal}
-          waterId = {item._id}
+          refreshData={refreshData}
+          item={item}
+        />
+      )}
+      {showWaterModal && (
+        <WaterModal
+          waterModalOpen={showWaterModal}
+          closeWaterModal={onCloseWaterModal}
+          operationType={operationType}
+          item={item}
         />
       )}
     </div>

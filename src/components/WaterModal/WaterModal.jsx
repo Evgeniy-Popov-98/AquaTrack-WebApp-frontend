@@ -2,7 +2,7 @@ import Modal from "../Modal/Modal.jsx"
 import WaterForm from "../WaterForm/WaterForm.jsx"
 import css from './WaterModal.module.css'
 
-const WaterModal = ({ waterModalOpen, closeWaterModal, operationType }) => {
+const WaterModal = ({ waterModalOpen, closeWaterModal, operationType, item}) => {
   if (!waterModalOpen) return null;
   
   const title = operationType === "add" ? "Add Water" : "Edit the entered amount of water";
@@ -12,7 +12,7 @@ const WaterModal = ({ waterModalOpen, closeWaterModal, operationType }) => {
       <div className={css.waterModal}>
         <p className={css.modalTitle}>{title}</p>
         <p className={css.modalValue}>{value}</p>
-        <WaterForm closeWaterModal={closeWaterModal} />
+        <WaterForm closeWaterModal={closeWaterModal} item={item} operationType={operationType} />
       </div>
     </Modal>
   )

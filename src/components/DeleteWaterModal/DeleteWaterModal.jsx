@@ -5,14 +5,17 @@ import Modal from "../Modal/Modal.jsx"
 import css from "./DeleteWaterModal.module.css";
 import { deleteWater } from "../../redux/water/operations.js";
 
-const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal, waterId}) => {
+const DeleteWaterModal = ({deleteWaterModalIsOpen, closeDeleteWaterModal, item, refreshData}) => {
   const dispatch = useDispatch();
 
-  const handleDelete = async () => {
-    const response = await dispatch(deleteWater(waterId));
-
-    if (response.meta.requestStatus === 'fulfilled') closeDeleteWaterModal();
-  };
+    const handleDelete = async () => {
+  if (!item._id) {
+    console.error('Invalid ID');
+    return;
+  }
+  await dispatch(deleteWater(item._id));
+  refreshData(); 
+};
 
   const handleClose = () => {
     closeDeleteWaterModal();

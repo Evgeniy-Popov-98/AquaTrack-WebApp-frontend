@@ -26,11 +26,11 @@ export const getWaterMonthly = createAsyncThunk(
 );
 
 export const addWater = createAsyncThunk(
-  "water/addWater",
+  'water/addWater',
   async (water, thunkAPI) => {
     try {
-      const response = await instance.post("/water", water);
-      return response.data;
+      const response = await instance.post('/water', water);
+      return response.data.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -50,13 +50,22 @@ export const deleteWater = createAsyncThunk(
 );
 
 export const updateWater = createAsyncThunk(
-  "water/updateWater",
-  async (data, thunkAPI) => {
+  'water/updateWater',
+  async ({ id, ...data}, thunkAPI) => {
     try {
-      const response = await instance.patch(`/water/${data.id}`, {
-        amountOfWater: data.amountLiters, 
-        date: data.time
-      });
+      const response = await instance.patch(`/water/${id}`, data);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchWaterById = createAsyncThunk(
+  "water/fetchWaterById",
+  async (id, thunkAPI) => {
+    try {
+      const response = await instance.get(`/water/${id}`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
