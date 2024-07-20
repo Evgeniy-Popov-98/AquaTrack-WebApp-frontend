@@ -3,7 +3,7 @@ import axios from 'axios';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  baseURL: 'https://aqua-track-webapp-backend.onrender.com',
   //    baseURL: 'http://localhost:3000',
 });
 
