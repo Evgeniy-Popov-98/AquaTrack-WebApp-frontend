@@ -8,6 +8,8 @@ import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
 import sprite from '../../assets/icons/icons.svg';
 import css from './UserSettingsForm.module.css';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/auth/selectors';
 
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
 
@@ -42,6 +44,8 @@ const schema = yup.object().shape({
 });
 
 export default function UserSettingsForm() {
+  const user = useSelector(selectUser);
+
   const {
     register,
     handleSubmit,
@@ -50,11 +54,12 @@ export default function UserSettingsForm() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      gender: 'female',
-      name: null,
-      weight: null,
-      activeSportsTime: null,
-      dailyWaterIntake: null,
+      gender: user.gender || 'female',
+      name: user.name,
+      email: user.email,
+      weight: user.weight,
+      activeSportsTime: user.activeSportsTime,
+      dailyWaterIntake: user.dailyWaterIntake,
     },
   });
 
