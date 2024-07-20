@@ -18,7 +18,7 @@ export const isTokenExpired = (token) => {
 
       return tokenLeftTime < minLifeTimeForUpdate
   } catch (e) {
-      console.error(e)
+    //   console.error(e)
       return true
   }
 }
