@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import icons from '../../assets/icons/icons.svg';
 import { useDispatch } from 'react-redux';
-import { login } from '../../redux/auth/operations.js';
+import { getAuthUrl, login } from '../../redux/auth/operations.js';
 import { toast, Toaster } from 'react-hot-toast';
 
 const validationSchema = Yup.object().shape({
@@ -32,13 +32,25 @@ const SignInForm = () => {
   const onSubmit = async data => {
     try {
       await dispatch(login(data)).unwrap();
-    } catch (error) {
-      toast.error('Login failed: ' + (error.message || 'Unexpected error'));
+    } catch (err) {
+      toast.error(`Login failed: ${err}`);
     }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleGoogleOAuth = async () => {
+    try {
+      const resultAction = await dispatch(getAuthUrl());
+      if (getAuthUrl.fulfilled.match(resultAction)) {
+        const url = resultAction.payload;
+        window.location.replace(url);
+      }
+    } catch (err) {
+      toast.error(`Error handling Google OAuth: ${err}`);
+    }
   };
 
   return (
@@ -98,7 +110,7 @@ const SignInForm = () => {
           Sign In
         </button>
       </form>
-      <button className={css.googleBtn}>
+      <button className={css.googleBtn} onClick={handleGoogleOAuth}>
         Continue with{' '}
         <svg width="20" height="20">
           <use href={`${icons}#icon-google`} />

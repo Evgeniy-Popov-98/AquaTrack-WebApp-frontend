@@ -47,8 +47,8 @@ function App() {
    ) : (
      // <Suspense fallback={<Loader />}>
      <Routes>
-       <Route path="/confirm-google-auth" component={GoogleAuthCallback} />
        <Route path="/" element={<SharedLayout />}>
+         <Route path="/confirm-google-auth" element={<GoogleAuthCallback />} />
          <Route
            index
            element={

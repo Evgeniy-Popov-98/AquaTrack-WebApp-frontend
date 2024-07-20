@@ -37,8 +37,8 @@ const SignUpForm = () => {
       const { email, password } = data;
       const formData = { email, password };
       await dispatch(register(formData)).unwrap();
-    } catch (error) {
-      toast.error('Register failed: ' + (error.message || 'Unexpected error'));
+    } catch (err) {
+      toast.error(`Register failed: ${err}`);
     }
   };
 
@@ -46,24 +46,15 @@ const SignUpForm = () => {
     setShowPassword(!showPassword);
   };
 
-  // const handleGoogleOAuth = () => {
-  //   dispatch(getAuthUrl());
-  // };
-
   const handleGoogleOAuth = async () => {
     try {
       const resultAction = await dispatch(getAuthUrl());
       if (getAuthUrl.fulfilled.match(resultAction)) {
         const url = resultAction.payload;
-        console.log('Redirecting to:', url);
         window.location.replace(url);
-      } else {
-        console.error('Failed to get auth URL:', resultAction.payload);
       }
-    } catch (error) {
-      toast.error(
-        'Error handling Google OAuth: ' + (error.message || 'Unexpected error')
-      );
+    } catch (err) {
+      toast.error(`Error handling Google OAuth: ${err}`);
     }
   };
 

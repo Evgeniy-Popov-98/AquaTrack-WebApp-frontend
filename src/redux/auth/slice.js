@@ -12,6 +12,7 @@ import {
 
 const INITIAL_STATE = {
   user: {
+    name: null,
     email: null,
     gender: null,
     weight: null,
@@ -24,7 +25,7 @@ const INITIAL_STATE = {
   isRefreshing: false,
   loading: false,
   error: null,
-  url: ''
+  url: '',
 };
 
 const handlePending = state => {
@@ -74,7 +75,11 @@ const authSlice = createSlice({
       .addCase(verifyGoogleOAuth.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.user = action.payload.user;
+        state.user = {
+          name: action.payload.name,
+          email: action.payload.email,
+          avatar: action.payload.avatar,
+        };
         state.accessToken = action.payload.accessToken;
       })
       .addCase(verifyGoogleOAuth.rejected, handleRejected)
