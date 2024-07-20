@@ -31,8 +31,8 @@ const WaterItem = ({ amountLiters, time, waterId }) => {
   return (
     <li className={css.item}>
       <div className={css.container}>
-        <div className={css.icon}>
-          <svg width={38} height={38}>
+        <div>
+          <svg className={css.icon}>
             <use href="/src/assets/icons/icons.svg#icon-water-glass" />
           </svg>
         </div>
@@ -40,14 +40,14 @@ const WaterItem = ({ amountLiters, time, waterId }) => {
           <p className={css.volume}>{amountLiters} ml</p>
           <p className={css.time}>{time} am</p>
         </div>
-        <div className={css.icons}>
+        <div className={css.containerIcons}>
           <button className={css.btn} onClick={() => onOpenWaterModal('edit')}>
-            <svg width={14} height={14} stroke="#323f47" fill="white">
+            <svg className={css.icons} stroke="#323f47" fill="white">
               <use href="/src/assets/icons/icons.svg#icon-edit-2" />
             </svg>
           </button>
           <button className={css.btn} onClick={() => onOpenWaterDeleteModal()}>
-            <svg width={14} height={14} stroke="#323f47" fill="white">
+            <svg className={css.icons} stroke="#323f47" fill="white">
               <use href="/src/assets/icons/icons.svg#icon-trash-04" />
             </svg>
           </button>

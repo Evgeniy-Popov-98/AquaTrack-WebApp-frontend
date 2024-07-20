@@ -19,10 +19,15 @@
   height: 38px;
 }
 
-.icons {
+.containerIcons {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.icons {
+  width: 14px;
+  height: 14px;
 }
 
 .btn {
@@ -35,6 +40,7 @@
 }
 
 .info {
+  width: 49px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -59,7 +65,7 @@
 @media screen and (min-width: 768px) {
   .item {
     padding: 20px;
-    min-width: 192px;
+    width: 192px;
     height: 86px;
   }
 
@@ -67,8 +73,22 @@
     gap: 20px;
   }
 
-  .icons {
+  .info {
+    width: 52px;
+  }
+
+  .icon {
+    width: 44px;
+    height: 45px;
+  }
+
+  .containerIcons {
     gap: 14px;
+  }
+
+  .icons {
+    width: 16px;
+    height: 16px;
   }
 
   .volume {

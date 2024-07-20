@@ -1,10 +1,10 @@
 .container {
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 24px;
 }
 
 .list {
+  margin-bottom: 24px;
   display: flex;
   gap: 8px;
   flex-direction: row;
@@ -32,9 +32,6 @@
 }
 
 @media screen and (min-width: 768px) {
-  .container {
-    padding: 10px;
-  }
   .list {
     gap: 32px;
   }
