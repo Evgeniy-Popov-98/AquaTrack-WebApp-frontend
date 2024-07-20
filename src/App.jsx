@@ -67,8 +67,8 @@ function App() {
         <Route
           path="/tracker"
           element={
-            // <TrackerPage />
-            <PrivateRoute redirectTo="/" component={<TrackerPage />} />
+            <TrackerPage />
+            // <PrivateRoute redirectTo="/" component={<TrackerPage />} />
           }
         />
         <Route path="*" element={<NotFound />} />
