@@ -26,9 +26,12 @@ instance.interceptors.request.use(
     async (config) => {
       const state = store.getState();
       const token = state.auth.accessToken;
+      if (!token) throw new Error('No token found');
       console.log('Current Token: ', token);
   
+      //=============================
       if (isTokenExpired(token)) {
+        //=======================
         if (!refreshTokenRequest) {
           console.log('Token is expired, requesting new one...');
           refreshTokenRequest = store.dispatch(refreshUser()).then((resultAction) => {
@@ -43,6 +46,7 @@ instance.interceptors.request.use(
             refreshTokenRequest = null;
           });
         }
+        //========================
   
         const newToken = await refreshTokenRequest;
         config.headers.Authorization = `Bearer ${newToken}`;
@@ -50,6 +54,7 @@ instance.interceptors.request.use(
         console.log('Token is valid.');
         config.headers.Authorization = `Bearer ${token}`;
       }
+      //==============================
   
       return config;
     },
