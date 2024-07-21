@@ -36,8 +36,10 @@ const UserBarPopover = ({ userBarPopover, closeUserBarPopover, width }) => {
         })}
       >
         <ul className={css.popoverContent}>
-          <li className={css.popoverItem} onClick={() => openSetting()}>
-            <svg width="16" height="16">
+          <li className={clsx(css.popoverItem, {
+              [css.textSettingColor]: true,
+          })} onClick={() => openSetting()}>
+            <svg className={css.iconSettingColor} width="16" height="16">
               <use href={`${sprite}#icon-settings`} />
             </svg>
             Setting

@@ -8,14 +8,18 @@ import css from './DeleteWaterModal.module.css';
 const DeleteWaterModal = ({
   deleteWaterModalIsOpen,
   closeDeleteWaterModal,
-  waterId,
+  item,
+  refreshData,
 }) => {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    const response = await dispatch(deleteWater(waterId));
-
-    if (response.meta.requestStatus === 'fulfilled') closeDeleteWaterModal();
+    if (!item._id) {
+      console.error('Invalid ID');
+      return;
+    }
+    await dispatch(deleteWater(item._id));
+    refreshData();
   };
 
   const handleClose = () => {
