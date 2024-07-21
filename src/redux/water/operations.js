@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { instance } from '../auth/operations';
+import { instance } from '../../api/axiosInstance.js';
 
 export const getWaterDaily = createAsyncThunk(
   'water/getWaterDaily',
