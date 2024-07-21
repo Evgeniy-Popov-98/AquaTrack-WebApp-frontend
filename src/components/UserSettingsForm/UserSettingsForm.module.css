@@ -1,13 +1,5 @@
-/* 
- !custom radio-button
- !background-color checked input
-
- */
-
 .settingsContainer {
-  border-radius: 15px;
-  padding: 40px 20px;
-  width: 343px;
+  width: 100%;
 
   --color-main: #323f47;
   --color-main-text: #2f2f2f;
@@ -30,7 +22,7 @@
   line-height: 129%;
   letter-spacing: -0.01em;
   margin: 0 auto;
-  /* background-color: pink; */
+  padding-bottom: 40px;
 }
 
 .errorMessage {
@@ -38,12 +30,12 @@
 }
 
 .settingsForm {
-  width: 303px;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   gap: var(--gap-section);
   margin-top: 40px;
-  /* background-color: gray; */
 }
 
 .settingLabel {
@@ -68,6 +60,10 @@
   transition: border-color 0.3s, color 0.3s;
 }
 
+.settingInput::placeholder {
+  color: blue;
+}
+
 .settingInput:focus {
   border-color: var(--color-main-text);
 }
@@ -82,7 +78,6 @@
   height: 54px;
   display: flex;
   flex-direction: column;
-  /* background-color: yellowgreen; */
 }
 
 .radioButton {
@@ -111,7 +106,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-inside-section);
-  /* background-color: yellowgreen; */
 }
 
 .labelInput {
@@ -177,8 +171,7 @@
 /********min-width: 768px*************/
 @media only screen and (min-width: 768px) {
   .settingsContainer {
-    padding: 40px;
-    width: 648px;
+    /* width: 568px; */
 
     --font-size-main: 18px;
     --font-size-main-text: 16px;
@@ -186,9 +179,9 @@
     line-height: 150%;
   }
 
-  .settingsForm {
+  /* .settingsForm {
     width: 568px;
-  }
+  } */
 
   .settingLabel {
     line-height: 133%;
@@ -227,10 +220,6 @@
 
 /*************min-width: 1440px*******************/
 @media (min-width: 1440px) {
-  .settingsContainer {
-    width: 920px;
-  }
-
   .settingsForm {
     width: 840px;
     display: grid;
@@ -239,6 +228,27 @@
     grid-column-gap: 40px;
     grid-row-gap: 24px;
   }
+
+  .settingsFormError {
+    grid-template-rows: 62px 270px 305px;
+  }
+
+  .settingsFormError .labelInput {
+    height: 1250px;
+  }
+
+  .labelInput {
+    height: 88px;
+  }
+
+  /* .settingsGender,
+  .settingsNameEmailWrap,
+  .settingsDailyNormaText,
+  .settingsWeightSport,
+  .settingsDailyNormaInput {
+    background-color: aqua;
+    border: 1px solid blue;
+  } */
 
   .settingsGender {
     grid-column: 1;

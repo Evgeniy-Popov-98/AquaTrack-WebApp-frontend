@@ -23,7 +23,7 @@
 .ReactModal__Overlay--before-close {
   opacity: 0;
 }
-  
+
 .ReactModal__Content {
   position: absolute;
   top: 50%;
@@ -39,7 +39,7 @@
   transform: translate(-50%, 50%);
   transition: transform 300ms ease-in-out;
 }
-  
+
 .ReactModal__Content--after-open {
   transform: translate(-50%, -50%);
 }

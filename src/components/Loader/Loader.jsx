@@ -1,9 +1,9 @@
 import { Comment } from 'react-loader-spinner';
 import css from './Loader.module.css';
 
-const Loader = ({ loading }) => {
+const Loader = ({ loading = false }) => {
   return (
-    <div className={css.loader}>
+    <div className={loading ? css.loaderActive : css.noLoaderActive}>
       <Comment
         visible={loading}
         height="80"

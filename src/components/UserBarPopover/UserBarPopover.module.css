@@ -54,14 +54,34 @@
   cursor: pointer;
 }
 
+.textSettingColor {
+  color: inherit;
+  transition: 0.3s;
+}
+
+.iconSettingColor {
+  stroke: black;
+  fill: none;
+  transition: 0.3s;
+}
+
 .textColor {
   color: rgba(50, 63, 71, 0.4);
   transition: 0.3s;
 }
 
 .iconColor {
-  fill: rgba(50, 63, 71, 0.4);
+  stroke: rgba(50, 63, 71, 0.4);
+  fill: none;
   transition: 0.3s;
+}
+
+.popoverItem:hover.textSettingColor {
+  color: #9be1a0;
+}
+
+.popoverItem:hover>.iconSettingColor {
+  stroke: #9be1a0;
 }
 
 .popoverItem:hover.textColor {
@@ -69,8 +89,10 @@
 }
 
 .popoverItem:hover>.iconColor {
-  fill: black;
+  stroke: black;
 }
+
+
 
 @media screen and (min-width: 768px) {
   .userBarPopover {

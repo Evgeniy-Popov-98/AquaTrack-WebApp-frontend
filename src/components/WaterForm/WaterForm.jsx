@@ -1,50 +1,88 @@
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import css from './WaterForm.module.css';
 import { useDispatch } from 'react-redux';
-import { addWater } from '../../redux/water/operations';
+import icons from '../../assets/icons/icons.svg';
+import { addWater, updateWater } from '../../redux/water/operations';
+import { useEffect } from 'react';
 
 const schema = yup.object().shape({
-  amountLiters: yup
+  amountOfWater: yup
     .number()
-    .typeError('Minimum amount is 10ml')
-    .min(10, 'Minimum amount is 10ml')
+    .typeError('Enter a valid amount of water')
+    .min(50, 'Minimum amount is 50ml')
+    .max(300, 'Maximum amount is 300 ml')
     .required('Amount is required'),
-  time: yup.string().required('Time is required'),
+  date: yup.string().required('Time is required'),
 });
 
-const WaterForm = ({ closeWaterModal }) => {
+const WaterForm = ({ closeWaterModal, operationType, item }) => {
   const dispatch = useDispatch();
 
+  const defaultValues = operationType !== 'add' && item
+    ? {
+        date: item.date,
+        amountOfWater: item.amountOfWater,
+      }
+    : {
+        date: new Date().toTimeString().slice(0, 5),
+        amountOfWater: 50,
+      };
+
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors },
+    watch,
     setValue,
     getValues,
+    reset
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      amountLiters: 50,
-      time: new Date().toTimeString().slice(0, 5),
-    },
+    defaultValues,
   });
 
-  const onSubmit = data => {
-    dispatch(addWater(data)).then(() => {
-      closeWaterModal();
-    });
+  useEffect(() => {
+    if (operationType !== 'add' && item) {
+      reset({
+        date: item.date,
+        amountOfWater: item.amountOfWater,
+      });
+    }
+  }, [operationType, item, reset]);
+
+  const onSubmit = async data => {
+    const dataToSend = {
+      amountOfWater: data.amountOfWater,
+      date: data.date,
+    };
+
+     try {
+      let result;
+      if (operationType === 'add') {
+        result = await dispatch(addWater(dataToSend));
+      } else {
+        
+        result = await dispatch(updateWater({ id: item._id, ...dataToSend }));
+      }
+
+      if (result.meta.requestStatus === 'fulfilled') {
+        closeWaterModal();
+      }
+    } catch (error) {
+      console.error('Failed to submit water data:', error);
+    }
   };
 
   const increaseAmount = () => {
-    const currentAmount = parseInt(getValues('amountLiters'), 10);
-    setValue('amountLiters', currentAmount + 10);
+    const currentAmount = parseInt(getValues('amountOfWater'), 10);
+    setValue('amountOfWater', currentAmount + 10);
   };
 
   const decreaseAmount = () => {
-    const currentAmount = parseInt(getValues('amountLiters'), 10);
-    setValue('amountLiters', Math.max(10, currentAmount - 10));
+    const currentAmount = parseInt(getValues('amountOfWater'), 10);
+    setValue('amountOfWater', Math.max(50, currentAmount - 10));
   };
 
   return (
@@ -57,101 +95,41 @@ const WaterForm = ({ closeWaterModal }) => {
             className={css.waterCountBtn}
             onClick={decreaseAmount}
           >
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.75"
-                y="0.75"
-                width="38.5"
-                height="38.5"
-                rx="19.25"
-                stroke="#323F47"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M12.8569 20H27.1426"
-                stroke="#323F47"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg className={css.counterIcon} width="40" height="40">
+              <use href={`${icons}#icon-minus`} />
             </svg>
           </button>
-          <Controller
-            name="amountLiters"
-            control={control}
-            render={({ field }) => (
-              <div className={css.waterAmount}>{field.value} ml</div>
-            )}
-          />
+          <div className={css.waterAmount}>{`${watch('amountOfWater')} ml`}</div>
           <button
             type="button"
             className={css.waterCountBtn}
             onClick={increaseAmount}
           >
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.75"
-                y="0.75"
-                width="38.5"
-                height="38.5"
-                rx="19.25"
-                stroke="#323F47"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M20 12.8572V27.1429"
-                stroke="#323F47"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12.8569 20H27.1426"
-                stroke="#323F47"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg className={css.counterIcon} width="40" height="40">
+              <use href={`${icons}#icon-plus-2`} />
             </svg>
           </button>
         </div>
-        {errors.amountLiters && (
-          <p className={css.error}>{errors.amountLiters.message}</p>
+        {errors.amountOfWater && (
+          <p className={css.error}>{errors.amountOfWater.message}</p>
         )}
       </div>
       <p>Recording time:</p>
-      <Controller
-        name="time"
-        control={control}
-        render={({ field }) => (
-          <input type="time" {...field} className={css.timeInput} />
-        )}
+      <input
+        type="time"
+        name="date"
+        className={css.timeInput}
+        {...register('date')}
       />
-      {errors.time && <p className={css.error}>{errors.time.message}</p>}
+      {errors.date && <p className={css.error}>{errors.date.message}</p>}
       <p className={css.waterInput}>Enter the value of the water used:</p>
-      <Controller
-        name="amountLiters"
-        control={control}
-        render={({ field }) => (
-          <input
-            type="number"
-            {...field}
-            className={css.amountInput}
-            placeholder="Enter amount (ml)"
-          />
-        )}
+      <input
+        type="number"
+        name="amountOfWater"
+        className={css.amountInput}
+        placeholder="Enter amount (ml)"
+        {...register('amountOfWater')}
+        onChange={(e) => setValue('amountOfWater', Number(e.target.value))}
       />
       <button className={css.saveBtn} type="submit">
         Save

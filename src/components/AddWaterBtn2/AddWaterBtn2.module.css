@@ -1,33 +1,41 @@
 .addWaterBtn2 {
-  display: flex;
-  text-align: center;
-  justify-self: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  line-height: 150%;
-  letter-spacing: -0.01em;
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background-color: inherit;
   width: 124px;
   height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0;
+
+  font-family: 'Poppins', sans-serif;
   color: #323f47;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  background-color: inherit;
+  height: 30px;
+  color: #323f47;
+
   border: none;
   cursor: pointer;
+
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-  gap: 10px;
 }
+
 .addWaterBtn2:hover .addWaterIconPath {
   stroke: #fff;
 }
+
 .addWaterIconBackground {
   fill: #9be1a0;
 }
+
 .addWaterBtn2:hover .addWaterIconBackground {
   fill: #323f47;
 }
+
 .addWaterIconPath {
   stroke: #323f47;
   fill: none;

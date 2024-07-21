@@ -71,3 +71,8 @@ p,
   letter-spacing: -0.01em;
   color: rgb(170, 19, 19);
 }
+
+.counterIcon {
+  fill: none;
+  stroke: #323f47;
+}

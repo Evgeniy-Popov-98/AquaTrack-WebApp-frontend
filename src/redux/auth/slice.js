@@ -1,5 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, refreshUser, register, logout, getUser, updateUser } from './operations';
+import {
+  login,
+  refreshUser,
+  register,
+  logout,
+  getUser,
+  updateUser,
+} from './operations';
 
 const INITIAL_STATE = {
   user: {
@@ -40,7 +47,6 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
-        // state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
       })
       .addCase(register.rejected, handleRejected)
@@ -49,7 +55,6 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
-        // state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, handleRejected)
@@ -61,8 +66,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.isRefreshing = false;
         state.isLoggedIn = true;
-        // state.user = action.payload.user;
-        state.token = action.payload.accessToken;
+        state.accessToken = action.payload;
       })
       .addCase(refreshUser.rejected, handleRejected, state => {
         state.isRefreshing = true;
@@ -77,31 +81,17 @@ const authSlice = createSlice({
       .addCase(getUser.pending, handlePending)
       .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user._id = action.payload.user._id;
-        state.user.name = action.payload.user.name;
-        state.user.email = action.payload.user.email;
-        state.user.gender = action.payload.user.gender;
-        state.user.weight = action.payload.user.weight;
-        state.user.activeSportsTime = action.payload.user.activeSportsTime;
-        state.user.dailyWaterIntake = action.payload.user.dailyWaterIntake;
-        state.user.avatar = action.payload.user.avatar;
+        state.user = action.payload.user;
       })
       .addCase(getUser.rejected, handleRejected)
       // updateUser
       .addCase(updateUser.pending, handlePending)
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user._id = action.payload.user._id;
-        state.user.name = action.payload.user.name;
-        state.user.email = action.payload.user.email;
-        state.user.gender = action.payload.user.gender;
-        state.user.weight = action.payload.user.weight;
-        state.user.activeSportsTime = action.payload.user.activeSportsTime;
-        state.user.dailyWaterIntake = action.payload.user.dailyWaterIntake;
-        state.user.avatar = action.payload.user.avatar;
+        state.user = action.payload.user;
       })
-      .addCase(updateUser.rejected, handleRejected)
-    }
+      .addCase(updateUser.rejected, handleRejected);
+  },
 });
 
 export const authReducer = authSlice.reducer;

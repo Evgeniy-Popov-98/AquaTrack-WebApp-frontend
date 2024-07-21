@@ -3,8 +3,18 @@ import ModalReact from 'react-modal';
 import sprite from '../../assets/icons/icons.svg';
 
 import css from "./Modal.module.css";
+import { useEffect } from 'react';
 
-const Modal = ({modalIsOpen, closeModal, children }) => {
+const Modal = ({ modalIsOpen, closeModal, children }) => {
+  useEffect(() => {
+    // При відкритті модального вікна приховати скролл на фоні
+    document.body.style.overflow = modalIsOpen ? 'hidden' : 'auto';
+    
+    // Відновити скролл при закритті модального вікна
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [modalIsOpen]);
   return (
     <ModalReact
       isOpen={modalIsOpen}
