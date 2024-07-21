@@ -39,6 +39,7 @@ const schema = yup.object().shape({
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
     .notRequired(),
+    avatar: yup.mixed().notRequired()
 });
 
 export default function UserSettingsForm() {
@@ -55,6 +56,7 @@ export default function UserSettingsForm() {
       weight: null,
       activeSportsTime: null,
       dailyWaterIntake: null,
+      avatar: null
     },
   });
 
@@ -104,6 +106,12 @@ export default function UserSettingsForm() {
           } else {
             return formData.append(key, dailyWaterRecomended);
           }
+           case 'avatar':
+            if (data[key]) {
+              formData.append(key, data[key]);
+            } 
+            break;
+
       }
     });
 
