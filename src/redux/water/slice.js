@@ -4,6 +4,7 @@ import {
   addWater,
   deleteWater,
   updateWater,
+  getWaterMonthly,
 } from './operations';
 
 const initialState = {
@@ -31,6 +32,10 @@ const waterSlice = createSlice({
         state.loading = false;
         state.waterItemsOfDay = action.payload || { dateOrMonth: '', data: [] };
       })
+      .addCase(getWaterMonthly.fulfilled, (state, action) => {
+        state.loading = false;
+        state.waterItemsOfMonthly = action.payload.dailyResults;
+      })
       .addCase(deleteWater.fulfilled, (state, action) => {
         const index = state.waterItemsOfDay.data.findIndex(
           waterItem => waterItem._id === action.payload._id
@@ -52,6 +57,7 @@ const waterSlice = createSlice({
         isAnyOf(
           addWater.pending,
           getWaterDaily.pending,
+          getWaterMonthly.pending,
           deleteWater.pending,
           updateWater.pending
         ),
@@ -64,6 +70,7 @@ const waterSlice = createSlice({
         isAnyOf(
           addWater.rejected,
           getWaterDaily.rejected,
+          getWaterMonthly.rejected,
           deleteWater.rejected,
           updateWater.rejected
         ),

@@ -1,21 +1,28 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import s from './CalendarItem.module.css';
 import { setDate } from '../../redux/calendar/slice.js';
 import { useDateFC } from '../../helpers/utils.js';
 import { useRef } from 'react';
+import { selectWaterItemsOfMonthly } from '../../redux/water/selectors.js';
 
 const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
   const { year, month } = useDateFC();
-
-  const isClicked = activeIndex === idx;
-
   const dispatch = useDispatch();
   const btn = useRef();
+  const waterMonthly = useSelector(selectWaterItemsOfMonthly);
 
+  const isClicked = activeIndex === idx;
   const date = idx + 1;
+  const formattedMonth = month < 10 ? `0${month + 1}` : month + 1;
+  const formattedDay = day - 1 < 10 ? `0${day - 1}` : day - 1;
+  const dateMonth = `${year}-${formattedMonth}-${formattedDay}`;
 
-  const procentage = 0;
-  const styleNorma = procentage >= 100 ? s.btn : s.normaInComplete;
+  const procentages = waterMonthly.reduce((acc, item) => {
+    acc[item.date] = (item.consumptionPercentage / 1000).toFixed(0);
+    return acc;
+  }, {});
+
+  const styleNorma = procentages[dateMonth] >= 100 ? s.btn : s.normaInComplete;
 
   let styleClick = isClicked ? s.btnClicked : styleNorma;
 
@@ -34,7 +41,7 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
       >
         <span>{day}</span>
       </button>
-      <span>{procentage}%</span>
+      <span>{procentages[dateMonth]}%</span>
     </div>
   );
 };

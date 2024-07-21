@@ -4,8 +4,8 @@ import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  //   baseURL: 'http://localhost:3000',
+  // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  baseURL: 'http://localhost:3000',
   withCredentials: true,
   headers: {
     Accept: 'application/json',
@@ -39,6 +39,7 @@ export const login = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await instance.post('/users/login', formData);
+      console.log('data: ', data);
       setToken(data.data.accessToken);
       return data.data;
     } catch (error) {
@@ -56,16 +57,16 @@ export const refreshUser = createAsyncThunk(
       const state = thunkApi.getState();
       const token = state.auth.accessToken;
 
-      if (!token || isTokenExpired(token)) {
-        if (!refreshTokenRequest) {
-          refreshTokenRequest = instance.post('/users/refresh-tokens');
-        }
-
-        const res = await refreshTokenRequest;
-        setToken(res.data.data.accessToken);
-
-        return res.data.data.accessToken;
+      // if (!token || isTokenExpired(token)) {
+      if (!refreshTokenRequest) {
+        refreshTokenRequest = instance.post('/users/refresh-tokens');
       }
+
+      const res = await refreshTokenRequest;
+      setToken(res.data.data.accessToken);
+
+      // return res.data.data.accessToken;
+      // }
 
       return token;
     } catch (error) {
