@@ -31,12 +31,13 @@ export const refreshUser = createAsyncThunk(
   'auth/refresh-tokens',
   async (_, thunkApi) => {
     try {
-      const state = thunkApi.getState();
-      const token = state.auth.accessToken;
-      if (!token) throw new Error('No token found');
+      // const state = thunkApi.getState();
+      // const token = state.auth.accessToken;
+      // if (!token) throw new Error('No token found');
       
-      setToken(token);
+      // setToken(token);
       const { data } = await instance.post('/users/refresh-tokens');
+      console.log('data: ', data);
       setToken(data.data.accessToken);
       return data.data;
     } catch (error) {

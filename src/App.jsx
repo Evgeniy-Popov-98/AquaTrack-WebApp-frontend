@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import RestrictedRoute from './routs/RestrictedRoute';
 import { PrivateRoute } from './routs/PrivateRoute';
+import useTokenRefresh from './hooks/useTokenRefresh.js';
 
 import Loader from './components/Loader/Loader.jsx';
 import SharedLayout from './SharedLayout';
@@ -16,6 +17,8 @@ const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
 
 function App() {
+  useTokenRefresh();
+
   return (
     <Suspense fallback={<Loader />}>
     <Routes>

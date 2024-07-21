@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { store } from '../redux/store.js';
-import { refreshUser } from '../redux/auth/operations.js';
+import { store } from '../redux/store';
+import { refreshUser } from '../redux/auth/operations';
 import { isTokenExpired } from '../utils/jwt';
 
 export const instance = axios.create({
@@ -13,53 +13,58 @@ export const instance = axios.create({
 });
 
 export const setToken = (token) => {
-    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  };
-  
-  export const clearToken = () => {
-    instance.defaults.headers.common.Authorization = '';
-  };
+  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+export const clearToken = () => {
+  instance.defaults.headers.common.Authorization = '';
+};
 
 let refreshTokenRequest = null;
 
 instance.interceptors.request.use(
-  async (config) => {
-    const state = store.getState();
-    const token = state.auth.accessToken;
-
-    if (isTokenExpired(token)) {
-      if (!refreshTokenRequest) {
-        refreshTokenRequest = store.dispatch(refreshUser());
-      }
-
-      const resultAction = await refreshTokenRequest;
-      if (refreshUser.fulfilled.match(resultAction)) {
-        config.headers.Authorization = `Bearer ${resultAction.payload}`;
+    async (config) => {
+      const state = store.getState();
+      const token = state.auth.accessToken;
+      console.log('Current Token: ', token);
+  
+      if (isTokenExpired(token)) {
+        if (!refreshTokenRequest) {
+          console.log('Token is expired, requesting new one...');
+          refreshTokenRequest = store.dispatch(refreshUser()).then((resultAction) => {
+            if (refreshUser.fulfilled.match(resultAction)) {
+              setToken(resultAction.payload.accessToken);
+              console.log('New Token received: ', resultAction.payload.accessToken);
+              return resultAction.payload.accessToken;
+            } else {
+              throw new axios.Cancel('Token refresh failed');
+            }
+          }).finally(() => {
+            refreshTokenRequest = null;
+          });
+        }
+  
+        const newToken = await refreshTokenRequest;
+        config.headers.Authorization = `Bearer ${newToken}`;
       } else {
-        throw new axios.Cancel('Token refresh failed');
+        console.log('Token is valid.');
+        config.headers.Authorization = `Bearer ${token}`;
       }
-    } else {
-      config.headers.Authorization = `Bearer ${token}`;
+  
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-// Інтерсептор відповідей
-instance.interceptors.response.use(
+  );
+  
+  instance.interceptors.response.use(
     (response) => response,
     (error) => {
       if (error.response && error.response.status === 401) {
+        console.log('Unauthorized, clearing token.');
         clearToken();
       }
       return Promise.reject(error);
     }
   );
-  
-  export default instance;
-
-
