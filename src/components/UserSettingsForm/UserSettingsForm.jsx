@@ -1,5 +1,6 @@
 // email from backend
 // відправка formData на backend
+// email тільки для читання
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,6 +9,9 @@ import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
 import sprite from '../../assets/icons/icons.svg';
 import css from './UserSettingsForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../redux/auth/selectors';
+import { updateUser } from '../../redux/auth/operations';
 
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
 
@@ -42,6 +46,9 @@ const schema = yup.object().shape({
 });
 
 export default function UserSettingsForm() {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
   const {
     register,
     handleSubmit,
@@ -50,11 +57,12 @@ export default function UserSettingsForm() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      gender: 'female',
-      name: null,
-      weight: null,
-      activeSportsTime: null,
-      dailyWaterIntake: null,
+      gender: user.gender || 'female',
+      name: user.name || null,
+      email: user.email,
+      weight: user.weight || null,
+      activeSportsTime: user.activeSportsTime || null,
+      dailyWaterIntake: user.dailyWaterIntake || null,
     },
   });
 
@@ -70,61 +78,71 @@ export default function UserSettingsForm() {
   );
 
   const onSubmit = data => {
-    console.log(data);
-
     const formData = new FormData();
 
     Object.keys(data).forEach(key => {
+      const value = data[key];
+      if (!value) {
+        if (key !== 'dailyWaterIntake') {
+          return;
+        }
+      }
+
       switch (key) {
         case 'gender':
-          return formData.append(key, data[key]);
+          formData.append(key, value);
+          break;
         case 'name':
-          if (data[key]) {
-            formData.append(key, data[key]);
+          if (value !== user.name) {
+            formData.append(key, value);
           }
           break;
         case 'email':
-          if (data[key]) {
-            formData.append(key, data[key]);
+          if (value !== user.email) {
+            formData.append(key, value);
           }
           break;
         case 'weight':
-          if (weightNumber) {
+          if (weightNumber !== user.weight) {
             formData.append(key, weightNumber);
           }
           break;
         case 'activeSportsTime':
-          if (activeSportsTimeNumber) {
+          if (activeSportsTimeNumber !== user.activeSportsTime) {
             formData.append(key, activeSportsTimeNumber);
           }
           break;
         case 'dailyWaterIntake':
           if (data[key]) {
-            return formData.append(key, dailyWaterIntakeNumber);
+            if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
+              return formData.append(key, dailyWaterIntakeNumber);
+            } else {
+              break;
+            }
           } else {
             return formData.append(key, dailyWaterRecomended);
           }
+        default:
+          break;
       }
     });
 
     console.log(...formData);
-  };
 
-  // useEffect(() => {
-  //   you can do async server request and fill up form: email
-  //   setTimeout(() => {
-  //     reset({
-  //       firstName: 'bill',
-  //       lastName: 'luo',
-  //     });
-  //   }, 2000);
-  // }, [reset]);
+    dispatch(updateUser(formData));
+  };
+  const hasErrors = !!errors.weight || !!errors.activeSportsTime;
 
   return (
     <div className={css.settingsContainer}>
       <UserSettingsAvatar />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={css.settingsForm}>
+        {/* <div className={css.settingsForm}> */}
+        <div
+          className={clsx(css.settingsForm, {
+            [css.settingsFormError]: hasErrors,
+          })}
+        >
           <div className={css.settingsGender}>
             <p className={css.settingLabel}>Your gender identity</p>
 
@@ -190,6 +208,7 @@ export default function UserSettingsForm() {
                 })}
               />
               <p className={css.errorMessage}>{errors.email?.message}</p>
+              {/* <input value={user.email} readOnly className={css.settingInput} /> */}
             </div>
           </div>
 
