@@ -1,5 +1,7 @@
 .boxUserBar {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .btnUserBar {
@@ -11,6 +13,17 @@
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.btnUserBar:hover .userName {
+    color:  #9be1a0;
+    transition: 0.3s;
+}
+
+.btnUserBar:hover>.staticPositionIcon {
+    stroke:  #9be1a0;
+    fill: none;
+    transition: 0.3s;
 }
 
 .userName {
@@ -32,8 +45,10 @@
 }
 
 .staticPositionIcon {
-    width: 16px;
-    height: 16px;
+    stroke:  #fff;
+    fill: none;
+    width: 10px;
+    height: 10px;
     transform: rotate(0deg);
     transition: 0.3s;
 }
@@ -63,8 +78,8 @@
     }
 
     .staticPositionIcon {
-        width: 20px;
-        height: 20px;
+        width: 12px;
+        height: 12px;
         transform: rotate(0deg);
         transition: 0.3s;
     }
