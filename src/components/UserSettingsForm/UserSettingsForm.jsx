@@ -43,7 +43,7 @@ const schema = yup.object().shape({
     .notRequired(),
 });
 
-export default function UserSettingsForm() {
+const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
@@ -75,7 +75,7 @@ export default function UserSettingsForm() {
     activeSportsTimeNumber
   );
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     const formData = new FormData();
 
     Object.keys(data).forEach(key => {
@@ -127,9 +127,13 @@ export default function UserSettingsForm() {
 
     console.log(...formData);
     try {
-      dispatch(updateUser(formData));
+      const result = await dispatch(updateUser(formData));
+      if (result.meta.requestStatus === 'fulfilled') {
+        closeSettingModal();
+      }
       toast.success('The form has been sent successfully!');
     } catch (error) {
+      console.error('Failed to send user settings:', error);
       toast.error('Something wrong!');
     }
   };
@@ -142,6 +146,7 @@ export default function UserSettingsForm() {
         position="bottom-left"
         reverseOrder={false}
         toastOptions={{
+          duration: 5000,
           success: {
             style: {
               border: '3px solid #9be1a0',
@@ -158,6 +163,7 @@ export default function UserSettingsForm() {
           },
         }}
       />
+
       <UserSettingsAvatar />
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* <div className={css.settingsForm}> */}
@@ -329,4 +335,5 @@ export default function UserSettingsForm() {
       </form>
     </div>
   );
-}
+};
+export default UserSettingsForm;
