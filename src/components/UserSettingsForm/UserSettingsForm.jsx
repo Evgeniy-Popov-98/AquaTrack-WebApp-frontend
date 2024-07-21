@@ -122,8 +122,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       }
     });
 
-    console.log(...formData);
-
     try {
       const result = await dispatch(updateUser(formData));
       if (result.meta.requestStatus === 'fulfilled') {
