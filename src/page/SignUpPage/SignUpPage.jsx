@@ -4,12 +4,14 @@ import css from './SignUpPage.module.css';
 
 const SignUpPage = () => {
   return (
-    <div className={css.signUpContainer}>
-      <SignUpForm />
-      <div className={css.advSection}>
-        <AdvantagesSection />
+    <section>
+      <div className={css.signUpContainer}>
+        <SignUpForm />
+        <div className={css.advSection}>
+          <AdvantagesSection />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,27 +1,24 @@
-// email from backend
-// відправка formData на backend
-
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
+import toast, { Toaster } from 'react-hot-toast';
+
+import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import sprite from '../../assets/icons/icons.svg';
+import { selectUser } from '../../redux/auth/selectors';
+import { updateUser } from '../../redux/auth/operations';
+
+import {
+  convertingToNumber,
+  dailyWaterRecomendCalculation,
+  DECIMAL_PATTERN,
+} from '../../helpers/userSettingUtils';
+
 import css from './UserSettingsForm.module.css';
-
-const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
-
-const convertingToNumber = str => {
-  return Math.floor(parseFloat(str) * 10) / 10;
-};
-
-const dailyWaterRecomendCalculation = (gender, weight, sport) => {
-  if (!weight) return 1.8;
-  if (!sport) sport = 0;
-  const baseValue = gender === 'female' ? 0.03 : 0.04;
-  const sportValue = gender === 'female' ? 0.4 : 0.6;
-  return (weight * baseValue + sport * sportValue).toFixed(1);
-};
+import { useState } from 'react';
+import ModalMessage from '../ModalMessage/ModalMessage';
 
 const schema = yup.object().shape({
   name: yup.string().notRequired(),
@@ -41,7 +38,12 @@ const schema = yup.object().shape({
     .notRequired(),
 });
 
-export default function UserSettingsForm() {
+const UserSettingsForm = ({ closeSettingModal }) => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  const [modalMessageIsOpen, setModalMessageIsOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -50,11 +52,12 @@ export default function UserSettingsForm() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      gender: 'female',
-      name: null,
-      weight: null,
-      activeSportsTime: null,
-      dailyWaterIntake: null,
+      gender: user.gender || 'female',
+      name: user.name || null,
+      email: user.email,
+      weight: user.weight || null,
+      activeSportsTime: user.activeSportsTime || null,
+      dailyWaterIntake: user.dailyWaterIntake || null,
     },
   });
 
@@ -69,74 +72,133 @@ export default function UserSettingsForm() {
     activeSportsTimeNumber
   );
 
-  const onSubmit = data => {
-    console.log(data);
-
+  const onSubmit = async data => {
     const formData = new FormData();
 
     Object.keys(data).forEach(key => {
+      const value = data[key];
+      if (!value) {
+        if (key !== 'dailyWaterIntake') {
+          return;
+        }
+      }
+
       switch (key) {
         case 'gender':
-          return formData.append(key, data[key]);
+          formData.append(key, value);
+          break;
         case 'name':
-          if (data[key]) {
-            formData.append(key, data[key]);
+          if (value !== user.name) {
+            formData.append(key, value);
           }
           break;
         case 'email':
-          if (data[key]) {
-            formData.append(key, data[key]);
+          if (value !== user.email) {
+            formData.append(key, value);
           }
           break;
         case 'weight':
-          if (weightNumber) {
+          if (weightNumber !== user.weight) {
             formData.append(key, weightNumber);
           }
           break;
         case 'activeSportsTime':
-          if (activeSportsTimeNumber) {
+          if (activeSportsTimeNumber !== user.activeSportsTime) {
             formData.append(key, activeSportsTimeNumber);
           }
           break;
         case 'dailyWaterIntake':
           if (data[key]) {
-            return formData.append(key, dailyWaterIntakeNumber);
+            if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
+              return formData.append(key, dailyWaterIntakeNumber);
+            } else {
+              break;
+            }
           } else {
             return formData.append(key, dailyWaterRecomended);
           }
+        default:
+          break;
       }
     });
 
-    console.log(...formData);
+    try {
+      const result = await dispatch(updateUser(formData));
+      if (result.meta.requestStatus === 'fulfilled') {
+        setModalMessageIsOpen(true);
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      toast.error('An error occurred while submitting the form.');
+      console.log('An error occurred while submitting the form:', error);
+    }
   };
 
-  // useEffect(() => {
-  //   you can do async server request and fill up form: email
-  //   setTimeout(() => {
-  //     reset({
-  //       firstName: 'bill',
-  //       lastName: 'luo',
-  //     });
-  //   }, 2000);
-  // }, [reset]);
+  const hasErrors = !!errors.weight || !!errors.activeSportsTime;
 
   return (
     <div className={css.settingsContainer}>
+      <Toaster
+        position="bottom-left"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          error: {
+            style: {
+              border: '3px solid red',
+              padding: '16px',
+              color: '#323f47',
+            },
+          },
+        }}
+      />
+
       <UserSettingsAvatar />
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={css.settingsForm}>
+        <div
+          className={clsx(css.settingsForm, {
+            [css.settingsFormError]: hasErrors,
+          })}
+        >
           <div className={css.settingsGender}>
             <p className={css.settingLabel}>Your gender identity</p>
 
             <div className={css.radioButton}>
               <label className={css.customRadio}>
-                <input type="radio" value="female" {...register('gender')} />
-                <span className={css.customRadioButton}></span>
+                <input
+                  className={css.inputRadio}
+                  type="radio"
+                  value="female"
+                  name="gender"
+                  {...register('gender')}
+                />
+                <svg width="18" height="18">
+                  <use
+                    href={`${sprite}#icon-radio-button-${
+                      genderValue === 'female' ? 'checked' : 'unchecked'
+                    }`}
+                  ></use>
+                </svg>
                 Woman
               </label>
-              <label className={css.customRadio}>
-                <input type="radio" value="male" {...register('gender')} />
-                <span className={css.customRadioButton}></span>
+
+              <label className={`${css.customRadio} ${css.text}`}>
+                <input
+                  className={css.inputRadio}
+                  type="radio"
+                  value="male"
+                  name="gender"
+                  {...register('gender')}
+                />
+                <svg width="18" height="18">
+                  <use
+                    href={`${sprite}#icon-radio-button-${
+                      genderValue === 'male' ? 'checked' : 'unchecked'
+                    }`}
+                  ></use>
+                </svg>
                 Man
               </label>
             </div>
@@ -165,6 +227,7 @@ export default function UserSettingsForm() {
                 })}
               />
               <p className={css.errorMessage}>{errors.email?.message}</p>
+              {/* <input value={user.email} readOnly className={css.settingInput} /> */}
             </div>
           </div>
 
@@ -260,6 +323,12 @@ export default function UserSettingsForm() {
           Save
         </button>
       </form>
+
+      <ModalMessage
+        modalMessageIsOpen={modalMessageIsOpen}
+        closeModalMessage={closeSettingModal}
+      />
     </div>
   );
-}
+};
+export default UserSettingsForm;

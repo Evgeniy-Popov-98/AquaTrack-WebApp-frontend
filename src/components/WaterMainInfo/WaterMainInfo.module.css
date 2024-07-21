@@ -3,11 +3,20 @@
   width: 343px;
   height: 415px;
   background-color: #9be1a0;
-  margin: 16px auto;
+  margin: 0 auto;
   position: relative;
   background-image: url('../../assets/images/transparent_bottle_for_water 1x.png');
   background-repeat: no-repeat;
   background-position: bottom 30px right 40px;
+}
+
+.logo {
+  position: absolute;
+  top: 24px;
+  left: 16px;
+  font-size: 18px;
+  line-height: 111%;
+  letter-spacing: -0.01em;
 }
 
 @media screen and (min-width: 768px) {
@@ -21,6 +30,13 @@
     height: 578px;
     background-size: 374px 477px;
     background-position: bottom 32px right 165px;
+  }
+
+  .logo {
+    font-size: 24px;
+    line-height: 100%;
+    top: 32px;
+    left: 33px;
   }
 }
 

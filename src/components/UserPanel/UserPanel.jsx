@@ -1,20 +1,13 @@
-// import { useSelector } from 'react-redux';
-// import { selectUser } from '../../redux/auth/selectors';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/auth/selectors';
 
 import UserBar from '../UserBar/UserBar.jsx';
 
 import css from './UserPanel.module.css';
 
-const userData = {
-  name: 'evgeniy',
-  email: 'evgeniy@gmail.com',
-  avatar: null,
-}; // тимчасовий юзер для тесту
-
 const UserPanel = () => {
-  // const userData = useSelector(selectUser);
-  // console.log(userData);
-  const {name, email, avatar} = userData;
+  const userData = useSelector(selectUser);
+  const { name, email, avatar } = userData;
 
   function uppercaseFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -24,8 +17,10 @@ const UserPanel = () => {
   if (name) {
     userName = uppercaseFirstLetter(name);
   } else {
-    const index = email.indexOf('@');
-    userName = uppercaseFirstLetter(email.slice(0, index));
+    if (email) {
+      const index = email.indexOf('@');
+      userName = uppercaseFirstLetter(email.slice(0, index));
+    }
   }
 
   return (
