@@ -4,3 +4,4 @@ export const selectToken = state => state.auth.accessToken;
 export const selectIsRefreshing = state => state.auth.isRefreshing;
 export const selectLoading = state => state.auth.loading;
 export const selectError = state => state.auth.error;
+export const selectUserAvatar = state => state.auth.user.avatar;

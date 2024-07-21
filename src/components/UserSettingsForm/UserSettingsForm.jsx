@@ -3,6 +3,7 @@
 // email тільки для читання
 
 import { useForm } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
@@ -10,7 +11,7 @@ import clsx from 'clsx';
 import sprite from '../../assets/icons/icons.svg';
 import css from './UserSettingsForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/selectors';
+import { selectUser, selectUserAvatar } from '../../redux/auth/selectors';
 import { updateUser } from '../../redux/auth/operations';
 
 const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
@@ -43,17 +44,37 @@ const schema = yup.object().shape({
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
     .notRequired(),
-    avatar: yup.mixed().notRequired()
+  avatar: yup.mixed().notRequired(),
 });
 
 export default function UserSettingsForm() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const currentAvatar = useSelector(selectUserAvatar);
+  const fileInputRef = useRef(null);
+
+  const [preview, setPreview] = useState(currentAvatar);
+
+  useEffect(() => {
+    if (currentAvatar) {
+      setPreview(currentAvatar);
+    }
+  }, [currentAvatar]);
+
+  const handleAvatarChange = e => {
+    const selectedAvatar = e.target.files[0];
+
+    if (selectedAvatar) {
+      const objectURL = URL.createObjectURL(selectedAvatar);
+      setPreview(objectURL);
+    }
+  };
 
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -64,6 +85,7 @@ export default function UserSettingsForm() {
       weight: user.weight || null,
       activeSportsTime: user.activeSportsTime || null,
       dailyWaterIntake: user.dailyWaterIntake || null,
+      avatar: null,
     },
   });
 
@@ -130,14 +152,22 @@ export default function UserSettingsForm() {
 
     console.log(...formData);
 
+    if (fileInputRef.current.files[0]) {
+      data.append('avatar', fileInputRef.current.files[0]);
+    }
     dispatch(updateUser(formData));
   };
+
   const hasErrors = !!errors.weight || !!errors.activeSportsTime;
 
   return (
     <div className={css.settingsContainer}>
-      <UserSettingsAvatar />
       <form onSubmit={handleSubmit(onSubmit)}>
+        <UserSettingsAvatar
+          onChange={handleAvatarChange}
+          fileInputRef={fileInputRef}
+          preview={preview}
+        />
         {/* <div className={css.settingsForm}> */}
         <div
           className={clsx(css.settingsForm, {
