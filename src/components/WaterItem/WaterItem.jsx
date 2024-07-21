@@ -29,24 +29,24 @@ const WaterItem = ({ item, refreshData }) => {
   };
 
   return (
-    <div className={css.waterCard}>
-      <svg className={css.waterGlass} width="38" height="38">
+    <div className={css.container}>
+      <svg className={css.icon} width="38" height="38">
         <use href={`${icons}#icon-water-glass`} />
       </svg>
 
-      <div className={css.waterData}>
-        <p className={css.waterAmount}>{item.amountOfWater} ml</p>
-        <p className={css.waterTime}>{item.date}</p>
+      <div className={css.info}>
+        <p className={css.volume}>{item.amountOfWater} ml</p>
+        <p className={css.time}>{item.date} am</p>
       </div>
 
-      <div className={css.waterChangeContainer}>
-        <button className={css.waterChange} onClick={() => onOpenWaterModal()}>
-          <svg className={css.icon} width="14" height="14">
+      <div className={css.containerIcons}>
+        <button className={css.btn} onClick={() => onOpenWaterModal()}>
+          <svg className={css.icons} stroke="#323f47" fill="white">
             <use href={`${icons}#icon-edit-2`} />
           </svg>
         </button>
-        <button className={css.waterChange} onClick={onOpenDeleteModal}>
-          <svg className={css.icon} width="14" height="14">
+        <button className={css.btn} onClick={onOpenDeleteModal}>
+          <svg className={css.icons} stroke="#323f47" fill="white">
             <use href={`${icons}#icon-trash-04`} />
           </svg>
         </button>
