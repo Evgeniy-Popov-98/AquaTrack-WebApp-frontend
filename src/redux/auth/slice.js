@@ -17,7 +17,7 @@ const INITIAL_STATE = {
     gender: null,
     weight: null,
     activeSportsTime: null,
-    dailyWaterIntake: null,
+    dailyWaterIntake: 1.5,
     avatar: null,
   },
   accessToken: null,

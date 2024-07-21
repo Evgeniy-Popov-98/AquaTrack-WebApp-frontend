@@ -13,7 +13,6 @@ const initialState = {
   },
   waterItemsOfMonthly: [],
   allWaterByDay: 0,
-  dailyWaterRecomended: 1.5,
   date: null,
   //   loading: false,
   error: null,

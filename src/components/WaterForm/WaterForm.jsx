@@ -20,15 +20,16 @@ const schema = yup.object().shape({
 const WaterForm = ({ closeWaterModal, operationType, item }) => {
   const dispatch = useDispatch();
 
-  const defaultValues = operationType !== 'add' && item
-    ? {
-        date: item.date,
-        amountOfWater: item.amountOfWater,
-      }
-    : {
-        date: new Date().toTimeString().slice(0, 5),
-        amountOfWater: 50,
-      };
+  const defaultValues =
+    operationType !== 'add' && item
+      ? {
+          date: item.date,
+          amountOfWater: item.amountOfWater,
+        }
+      : {
+          date: new Date().toTimeString().slice(0, 5),
+          amountOfWater: 50,
+        };
 
   const {
     register,
@@ -37,7 +38,7 @@ const WaterForm = ({ closeWaterModal, operationType, item }) => {
     watch,
     setValue,
     getValues,
-    reset
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues,
@@ -58,12 +59,11 @@ const WaterForm = ({ closeWaterModal, operationType, item }) => {
       date: data.date,
     };
 
-     try {
+    try {
       let result;
       if (operationType === 'add') {
         result = await dispatch(addWater(dataToSend));
       } else {
-        
         result = await dispatch(updateWater({ id: item._id, ...dataToSend }));
       }
 
@@ -99,7 +99,9 @@ const WaterForm = ({ closeWaterModal, operationType, item }) => {
               <use href={`${icons}#icon-minus`} />
             </svg>
           </button>
-          <div className={css.waterAmount}>{`${watch('amountOfWater')} ml`}</div>
+          <div className={css.waterAmount}>{`${watch(
+            'amountOfWater'
+          )} ml`}</div>
           <button
             type="button"
             className={css.waterCountBtn}
@@ -129,7 +131,7 @@ const WaterForm = ({ closeWaterModal, operationType, item }) => {
         className={css.amountInput}
         placeholder="Enter amount (ml)"
         {...register('amountOfWater')}
-        onChange={(e) => setValue('amountOfWater', Number(e.target.value))}
+        onChange={e => setValue('amountOfWater', Number(e.target.value))}
       />
       <button className={css.saveBtn} type="submit">
         Save
