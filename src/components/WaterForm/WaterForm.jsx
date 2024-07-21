@@ -4,7 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import css from './WaterForm.module.css';
 import { useDispatch } from 'react-redux';
 import icons from '../../assets/icons/icons.svg';
-import { addWater } from '../../redux/water/operations';
+import { addWater, updateWater } from '../../redux/water/operations';
+import { useEffect } from 'react';
 
 const schema = yup.object().shape({
   amountOfWater: yup
@@ -16,13 +17,13 @@ const schema = yup.object().shape({
   date: yup.string().required('Time is required'),
 });
 
-const WaterForm = ({ closeWaterModal, water }) => {
+const WaterForm = ({ closeWaterModal, operationType, item }) => {
   const dispatch = useDispatch();
 
-  const defaultValues = water
+  const defaultValues = operationType !== 'add' && item
     ? {
-        date: water.date,
-        amountOfWater: water.amountOfWater,
+        date: item.date,
+        amountOfWater: item.amountOfWater,
       }
     : {
         date: new Date().toTimeString().slice(0, 5),
@@ -36,10 +37,20 @@ const WaterForm = ({ closeWaterModal, water }) => {
     watch,
     setValue,
     getValues,
+    reset
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues,
   });
+
+  useEffect(() => {
+    if (operationType !== 'add' && item) {
+      reset({
+        date: item.date,
+        amountOfWater: item.amountOfWater,
+      });
+    }
+  }, [operationType, item, reset]);
 
   const onSubmit = async data => {
     const dataToSend = {
@@ -47,14 +58,21 @@ const WaterForm = ({ closeWaterModal, water }) => {
       date: data.date,
     };
 
-    try {
-    const result = await dispatch(addWater(dataToSend));
-    if (result.meta.requestStatus === 'fulfilled') {
-      closeWaterModal(); 
+     try {
+      let result;
+      if (operationType === 'add') {
+        result = await dispatch(addWater(dataToSend));
+      } else {
+        
+        result = await dispatch(updateWater({ id: item._id, ...dataToSend }));
+      }
+
+      if (result.meta.requestStatus === 'fulfilled') {
+        closeWaterModal();
+      }
+    } catch (error) {
+      console.error('Failed to submit water data:', error);
     }
-  } catch (error) {
-    console.error('Failed to add water:', error);
-  }
   };
 
   const increaseAmount = () => {

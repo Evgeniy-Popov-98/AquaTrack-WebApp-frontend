@@ -1,18 +1,11 @@
-// import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { lazy, Suspense } from 'react';
 import RestrictedRoute from './routs/RestrictedRoute';
 import { PrivateRoute } from './routs/PrivateRoute';
-import { useAuth } from './hooks/useAuth.js';
-import { selectToken } from './redux/auth/selectors.js';
-import { refreshUser } from './redux/auth/operations.js';
+import useTokenRefresh from './hooks/useTokenRefresh.js';
 
 import Loader from './components/Loader/Loader.jsx';
 import SharedLayout from './SharedLayout';
-
-// import { selectIsRefreshing } from './redux/auth/selectors.js';
 
 import './App.css';
 
@@ -22,28 +15,12 @@ const SignUpPage = lazy(() => import('./page/SignUpPage/SignUpPage'));
 const TrackerPage = lazy(() => import('./page/TrackerPage/TrackerPage'));
 const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
+
 function App() {
-  const dispatch = useDispatch();
-  // const { isRefreshing } = useSelector(selectIsRefreshing);
+  useTokenRefresh(); // Виклик хуку рефрешу токенів
 
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  // }, [dispatch]);
-
-  const { isCurrent } = useAuth();
-
-  const token = useSelector(selectToken);
-
-  useEffect(() => {
-    if (token) {
-      dispatch(refreshUser());
-    }
-  }, [dispatch, token]);
-
-  return isCurrent ? (
-    <Loader />
-  ) : (
-    // <Suspense fallback={<Loader />}>
+  return (
+    <Suspense fallback={<Loader />}>
     <Routes>
       <Route path="/" element={<SharedLayout />}>
         <Route
@@ -67,14 +44,13 @@ function App() {
         <Route
           path="/tracker"
           element={
-            <TrackerPage />
-            // <PrivateRoute redirectTo="/" component={<TrackerPage />} />
+            <PrivateRoute redirectTo="/" component={<TrackerPage />} />
           }
         />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
-    // </Suspense>
+    </Suspense>
   );
 }
 

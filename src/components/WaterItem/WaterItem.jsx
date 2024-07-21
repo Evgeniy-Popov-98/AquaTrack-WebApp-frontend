@@ -1,67 +1,70 @@
 import { useState } from 'react';
-
-import WaterModal from '../WaterModal/WaterModal';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
+import WaterModal from '../WaterModal/WaterModal';
 
+import icons from '../../assets/icons/icons.svg';
 import css from './WaterItem.module.css';
 
-const WaterItem = ({ amountOfWater, date, waterId }) => {
+const WaterItem = ({ item, refreshData }) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showWaterModal, setShowWaterModal] = useState(false);
-  const [showWaterDeleteModal, setShowWaterDeleteModal] = useState(false);
-  const [operationType, setOperationType] = useState('add');
+  const [operationType, setOperationType] = useState('edit');
 
   const onOpenWaterModal = type => {
     setOperationType(type);
     setShowWaterModal(true);
   };
 
-  const onOpenWaterDeleteModal = () => {
-    setShowWaterDeleteModal(true);
-  };
-
   const onCloseWaterModal = () => {
     setShowWaterModal(false);
+    refreshData();
   };
 
-  const onCloseWaterDeleteModal = () => {
-    setShowWaterDeleteModal(false);
+  const onOpenDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const onCloseDeleteModal = () => {
+    setShowDeleteModal(false);
   };
 
   return (
     <div className={css.container}>
-      <div>
-        <svg className={css.icon}>
-          <use href="/src/assets/icons/icons.svg#icon-water-glass" />
-        </svg>
-      </div>
+      <svg className={css.icon} width="38" height="38">
+        <use href={`${icons}#icon-water-glass`} />
+      </svg>
+
       <div className={css.info}>
-        <p className={css.volume}>{amountOfWater} ml</p>
-        <p className={css.time}>{date} am</p>
+        <p className={css.volume}>{item.amountOfWater} ml</p>
+        <p className={css.time}>{item.date} am</p>
       </div>
+
       <div className={css.containerIcons}>
-        <button className={css.btn} onClick={() => onOpenWaterModal('edit')}>
+        <button className={css.btn} onClick={() => onOpenWaterModal()}>
           <svg className={css.icons} stroke="#323f47" fill="white">
-            <use href="/src/assets/icons/icons.svg#icon-edit-2" />
+            <use href={`${icons}#icon-edit-2`} />
           </svg>
         </button>
-        <button className={css.btn} onClick={() => onOpenWaterDeleteModal()}>
+        <button className={css.btn} onClick={onOpenDeleteModal}>
           <svg className={css.icons} stroke="#323f47" fill="white">
-            <use href="/src/assets/icons/icons.svg#icon-trash-04" />
+            <use href={`${icons}#icon-trash-04`} />
           </svg>
         </button>
       </div>
+      {showDeleteModal && (
+        <DeleteWaterModal
+          deleteWaterModalIsOpen={showDeleteModal}
+          closeDeleteWaterModal={onCloseDeleteModal}
+          refreshData={refreshData}
+          item={item}
+        />
+      )}
       {showWaterModal && (
         <WaterModal
           waterModalOpen={showWaterModal}
           closeWaterModal={onCloseWaterModal}
           operationType={operationType}
-        />
-      )}
-      {showWaterDeleteModal && (
-        <DeleteWaterModal
-          deleteWaterModalIsOpen={showWaterDeleteModal}
-          closeDeleteWaterModal={onCloseWaterDeleteModal}
-          waterId={waterId}
+          item={item}
         />
       )}
     </div>

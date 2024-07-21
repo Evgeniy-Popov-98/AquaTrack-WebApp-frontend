@@ -18,17 +18,19 @@ const WaterList = ({ date }) => {
     }
   }, [dispatch, date]);
 
+  const refreshData = () => {
+    if (date) {
+      dispatch(getWaterDaily(date));
+    }
+  };
+
   return (
     <div className={css.container}>
       <ul className={css.list}>
         {Array.isArray(waterDailyItems.data) &&
           waterDailyItems.data.map(item => (
-            <li className={css.item} key={item._id}>
-              <WaterItem
-                amountOfWater={item.amountOfWater}
-                date={item.date}
-                waterId={item._id}
-              />
+            <li key={item._id} className={css.item}>
+              <WaterItem item={item} refreshData={refreshData} />
             </li>
           ))}
       </ul>
