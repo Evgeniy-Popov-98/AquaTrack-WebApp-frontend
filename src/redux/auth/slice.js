@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   login,
-  refreshUser,
+  //   refreshUser,
   register,
   logout,
   getUser,
@@ -82,18 +82,18 @@ const authSlice = createSlice({
       })
       .addCase(verifyGoogleOAuth.rejected, handleRejected)
       //refresh
-      .addCase(refreshUser.pending, handlePending, state => {
-        state.isRefreshing = true;
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.isRefreshing = false;
-        state.isLoggedIn = true;
-        state.accessToken = action.payload;
-      })
-      .addCase(refreshUser.rejected, handleRejected, state => {
-        state.isRefreshing = true;
-      })
+      //   .addCase(refreshUser.pending, handlePending, state => {
+      //     state.isRefreshing = true;
+      //   })
+      //   .addCase(refreshUser.fulfilled, (state, action) => {
+      //     state.loading = false;
+      //     state.isRefreshing = false;
+      //     state.isLoggedIn = true;
+      //     state.accessToken = action.payload;
+      //   })
+      //   .addCase(refreshUser.rejected, handleRejected, state => {
+      //     state.isRefreshing = true;
+      //   })
       // logout
       .addCase(logout.pending, handlePending)
       .addCase(logout.fulfilled, () => {

@@ -1,6 +1,9 @@
+import { useSelector } from 'react-redux';
 import css from './WaterDailyNorma.module.css';
 
 const WaterDailyNorma = () => {
+  //   const dayliWater = useSelector();
+
   return (
     <div className={css.waterDailyNormaContainer}>
       <div className={css.textContainer}>

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import css from './Logo.module.css';
 
-const Logo = () => {
+const Logo = ({ styleBtn = false }) => {
   return (
-    <Link className={css.logo} to="/">
+    <Link className={styleBtn ? css.logo : css.logoTrackerPage} to="/">
       AquaTrack
     </Link>
   );
