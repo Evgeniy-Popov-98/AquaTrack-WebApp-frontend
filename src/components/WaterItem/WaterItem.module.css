@@ -1,53 +1,106 @@
-.waterCard {
+.item {
   border-radius: 15px;
-  padding: 18px 14px;
-  width: 149px;
+  background-color: #ffffff;
+  min-width: 148px;
   height: 74px;
-  background-color: #fff;
   display: flex;
-  justify-content: space-between;
+  padding: 18px 14px;
+}
+
+.container {
+  display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 9px;
 }
 
-.waterGlass {
-  fill: #9be1a0;
+.icon {
+  width: 38px;
+  height: 38px;
 }
 
-.waterData {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 49px;
-  height: 32px;
-}
-
-.waterAmount {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 100%;
-}
-
-.waterTime {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 100%;
-  color: rgba(47, 47, 47, 0.6);
-}
-.waterChangeContainer {
+.containerIcons {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.waterChange {
-  background-color: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.icons {
+  width: 14px;
+  height: 14px;
 }
 
-.icon {
-  fill: none;
-  stroke: #323f47;
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.info {
+  width: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.volume {
+  font-weight: 700;
+  font-size: 14px;
+  color: #323f47;
+  line-height: 100%;
+}
+
+.time {
+  font-weight: 400;
+  font-size: 12px;
+  color: rgba(47, 47, 47, 0.6);
+  line-height: 100%;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 768px) {
+  .item {
+    padding: 20px;
+    width: 192px;
+    height: 86px;
+  }
+
+  .container {
+    gap: 20px;
+  }
+
+  .info {
+    width: 52px;
+  }
+
+  .icon {
+    width: 44px;
+    height: 45px;
+  }
+
+  .containerIcons {
+    gap: 14px;
+  }
+
+  .icons {
+    width: 16px;
+    height: 16px;
+  }
+
+  .volume {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 149%;
+  }
+
+  .time {
+    line-height: 187%;
+  }
+}
+
+@media screen and (min-width: 1440px) {
 }

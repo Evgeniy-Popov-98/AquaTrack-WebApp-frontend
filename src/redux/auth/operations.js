@@ -1,16 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
- // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-   baseURL: 'http://localhost:3000',
-});
+  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  // baseURL: 'http://localhost:3000',
+  withCredentials: true,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+})
 
 export const setToken = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  // const jwt = `Bearer ${token}`;
-  // console.log('Token set:', jwt);
 };
 
 export const clearToken = () =>
@@ -34,15 +38,16 @@ export const login = createAsyncThunk(
   'auth/login',
   async (formData, thunkApi) => {
     try {
-      const {data} = await instance.post('/users/login', formData);
+      const { data } = await instance.post('/users/login', formData);
       setToken(data.data.accessToken);
       return data.data;
     } catch (error) {
-      console.log("refresh", error.message);
       return thunkApi.rejectWithValue(error.message);
     }
   }
 );
+
+let refreshTokenRequest = null;
 
 export const refreshUser = createAsyncThunk(
   'auth/refresh-tokens',
@@ -50,17 +55,46 @@ export const refreshUser = createAsyncThunk(
     try {
       const state = thunkApi.getState();
       const token = state.auth.accessToken;
-      if (!token) throw new Error('No token found');
-      setToken(token);
-      const {data} = await instance.post("/users/refresh-tokens");
-      setToken(data.data.accessToken);
 
-      return data.data;
+      if (!token || isTokenExpired(token)) {
+        if (!refreshTokenRequest) {
+          refreshTokenRequest = instance.post("/users/refresh-tokens");
+        }
+
+        const res = await refreshTokenRequest;
+        setToken(res.data.data.accessToken);
+        
+        return res.data.data.accessToken;
+      }
+
+      return token;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
+    } finally {
+      refreshTokenRequest = null; // Переміщення цієї лінії сюди забезпечує скидання змінної навіть у випадку помилки
     }
   }
 );
+
+// export const refreshUser = createAsyncThunk(
+//   'auth/refresh-tokens',
+//   async (_, thunkApi) => {
+//     try {
+//       const state = thunkApi.getState();
+//       const token = state.auth.accessToken;
+//       if (!token) throw new Error('No token found');
+//       // викликати функцію що перевіряє чи токен ще валідний (якщо вже застарів то зробити запит і отримати нову пару ключів)
+//       setToken(token);
+
+//       const {data} = await instance.post("/users/refresh-tokens");
+//       setToken(data.data.accessToken);
+
+//       return data.data;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 export const logout = createAsyncThunk(
   "auth/logout", 
@@ -75,11 +109,9 @@ export const logout = createAsyncThunk(
   }
 });
 
-export const getUser = createAsyncThunk(
-  "auth/current", 
-  async (_, thunkAPI) => {
+export const getUser = createAsyncThunk('auth/current', async (_, thunkAPI) => {
   try {
-    const {data} = await instance.get("/users/current");
+    const { data } = await instance.get('/users/current');
     return data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.message);
@@ -87,12 +119,13 @@ export const getUser = createAsyncThunk(
 });
 
 export const updateUser = createAsyncThunk(
-  "auth/update", 
+  'auth/update',
   async (user, thunkAPI) => {
-  try {
-    const {data} = await instance.patch("/users/update", user);
-    return data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue(e.message);
+    try {
+      const { data } = await instance.patch('/users/update', user);
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
   }
-});
+);

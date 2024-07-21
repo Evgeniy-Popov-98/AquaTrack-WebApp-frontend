@@ -1,6 +1,6 @@
-import icons from '../../assets/icons/icons.svg';
-import css from './WaterItem.module.css';
 import { useState } from 'react';
+
+import WaterModal from '../WaterModal/WaterModal';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
 import WaterModal from '../WaterModal/WaterModal';
 
@@ -8,35 +8,30 @@ const WaterItem = ({ item, refreshData }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showWaterModal, setShowWaterModal] = useState(false);
   const [operationType, setOperationType] = useState('edit');
- 
+
   const onOpenWaterModal = type => {
     setOperationType(type);
     setShowWaterModal(true);
   };
 
+  const onOpenWaterDeleteModal = () => {
+    setShowWaterDeleteModal(true);
+  };
+
   const onCloseWaterModal = () => {
     setShowWaterModal(false);
-    refreshData(); 
   };
 
-  const onOpenDeleteModal = () => {
-    setShowDeleteModal(true);
+  const onCloseWaterDeleteModal = () => {
+    setShowWaterDeleteModal(false);
   };
-
-  const onCloseDeleteModal = () => {
-    setShowDeleteModal(false);
-  };
-
 
   return (
-    <div className={css.waterCard}>
-      <svg className={css.waterGlass} width="38" height="38">
-        <use href={`${icons}#icon-water-glass`} />
-      </svg>
-
-      <div className={css.waterData}>
-        <p className={css.waterAmount}>{item.amountOfWater} ml</p>
-        <p className={css.waterTime}>{item.date}</p>
+    <div className={css.container}>
+      <div>
+        <svg className={css.icon}>
+          <use href="/src/assets/icons/icons.svg#icon-water-glass" />
+        </svg>
       </div>
 
       <div className={css.waterChangeContainer}>
@@ -51,7 +46,14 @@ const WaterItem = ({ item, refreshData }) => {
           </svg>
         </button>
       </div>
-      {showDeleteModal && (
+      {showWaterModal && (
+        <WaterModal
+          waterModalOpen={showWaterModal}
+          closeWaterModal={onCloseWaterModal}
+          operationType={operationType}
+        />
+      )}
+      {showWaterDeleteModal && (
         <DeleteWaterModal
           deleteWaterModalIsOpen={showDeleteModal}
           closeDeleteWaterModal={onCloseDeleteModal}

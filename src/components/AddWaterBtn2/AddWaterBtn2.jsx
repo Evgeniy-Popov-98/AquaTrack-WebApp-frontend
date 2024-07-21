@@ -1,6 +1,7 @@
-import css from './AddWaterBtn2.module.css';
 import { useState } from 'react';
 import WaterModal from '../WaterModal/WaterModal';
+
+import css from './AddWaterBtn2.module.css';
 //import icons from '../../assets/icons/icons.svg';
 
 const AddWaterBtn2 = () => {
@@ -15,16 +16,26 @@ const AddWaterBtn2 = () => {
   const onCloseWaterModal = () => {
     setShowWaterModal(false);
   };
+
   return (
     <div>
-      <button className={css.addWaterBtn2} onClick={() => onOpenWaterModal('add')}>
+      <button
+        className={css.addWaterBtn2}
+        onClick={() => onOpenWaterModal('add')}
+        type="button"
+      >
         <svg
           width="30"
           height="30"
           viewBox="0 0 30 30"
           xmlns="http://www.w3.org/2000/svg"
         >
-           <rect width="30" height="30" rx="15" fill="#9BE1A0" />
+          <rect
+            width="30"
+            height="30"
+            rx="15"
+            className={css.addWaterIconBackground}
+          />
           <path
             d="M15 9.64282V20.3571"
             strokeWidth="1.5"
@@ -42,7 +53,7 @@ const AddWaterBtn2 = () => {
         </svg>
         Add water
       </button>
-       {showWaterModal && (
+      {showWaterModal && (
         <WaterModal
           waterModalOpen={showWaterModal}
           closeWaterModal={onCloseWaterModal}
@@ -54,6 +65,3 @@ const AddWaterBtn2 = () => {
 };
 
 export default AddWaterBtn2;
-  {/* <svg className={css.addWaterIcon2} width="15" height="15">
-          <use href={`${icons}#icon-plus`} />
-        </svg> */}

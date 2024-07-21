@@ -4,7 +4,7 @@ import {
   addWater,
   deleteWater,
   updateWater,
-} from './operations'; 
+} from './operations';
 
 const initialState = {
   waterItemsOfDay: {
@@ -14,7 +14,7 @@ const initialState = {
   waterItemsOfMonthly: [],
   allWaterByDay: 0,
   date: null,
-  loading: false,
+  //   loading: false,
   error: null,
 };
 
@@ -56,7 +56,7 @@ const waterSlice = createSlice({
           updateWater.pending
         ),
         state => {
-          state.loading = true;
+          //   state.loading = true;
           state.error = null;
         }
       )
@@ -68,7 +68,7 @@ const waterSlice = createSlice({
           updateWater.rejected
         ),
         (state, action) => {
-          state.loading = false;
+          //   state.loading = false;
           state.error = action.error?.message || 'An error occurred';
         }
       );
