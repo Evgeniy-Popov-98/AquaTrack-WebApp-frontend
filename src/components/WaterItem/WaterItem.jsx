@@ -1,8 +1,9 @@
 import { useState } from 'react';
-
-import WaterModal from '../WaterModal/WaterModal';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
 import WaterModal from '../WaterModal/WaterModal';
+
+import icons from '../../assets/icons/icons.svg';
+import css from './WaterItem.module.css';
 
 const WaterItem = ({ item, refreshData }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -14,24 +15,28 @@ const WaterItem = ({ item, refreshData }) => {
     setShowWaterModal(true);
   };
 
-  const onOpenWaterDeleteModal = () => {
-    setShowWaterDeleteModal(true);
-  };
-
   const onCloseWaterModal = () => {
     setShowWaterModal(false);
+    refreshData();
   };
 
-  const onCloseWaterDeleteModal = () => {
-    setShowWaterDeleteModal(false);
+  const onOpenDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const onCloseDeleteModal = () => {
+    setShowDeleteModal(false);
   };
 
   return (
-    <div className={css.container}>
-      <div>
-        <svg className={css.icon}>
-          <use href="/src/assets/icons/icons.svg#icon-water-glass" />
-        </svg>
+    <div className={css.waterCard}>
+      <svg className={css.waterGlass} width="38" height="38">
+        <use href={`${icons}#icon-water-glass`} />
+      </svg>
+
+      <div className={css.waterData}>
+        <p className={css.waterAmount}>{item.amountOfWater} ml</p>
+        <p className={css.waterTime}>{item.date}</p>
       </div>
 
       <div className={css.waterChangeContainer}>
@@ -46,14 +51,7 @@ const WaterItem = ({ item, refreshData }) => {
           </svg>
         </button>
       </div>
-      {showWaterModal && (
-        <WaterModal
-          waterModalOpen={showWaterModal}
-          closeWaterModal={onCloseWaterModal}
-          operationType={operationType}
-        />
-      )}
-      {showWaterDeleteModal && (
+      {showDeleteModal && (
         <DeleteWaterModal
           deleteWaterModalIsOpen={showDeleteModal}
           closeDeleteWaterModal={onCloseDeleteModal}
