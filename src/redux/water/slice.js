@@ -1,11 +1,10 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getWaterDaily,
-  getWaterMonthly,
   addWater,
   deleteWater,
+  updateWater,
 } from './operations';
-import { isSameDay } from 'date-fns';
 
 const initialState = {
   waterItemsOfDay: {
@@ -25,48 +24,37 @@ const waterSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(addWater.fulfilled, (state, action) => {
-        // state.loading = false;
-
-        const newItem = action.payload;
-        if (newItem) {
-          state.waterItemsOfDay.data.push(newItem);
-          state.allWaterByDay += newItem.amountOfWater;
-
-          const newWaterDate = new Date(newItem.date);
-          const waterByMonth = state.waterItemsOfMonthly.find(item =>
-            isSameDay(new Date(item.date), newWaterDate)
-          );
-          if (waterByMonth) {
-            waterByMonth.allWaterByDay += newItem.amountOfWater;
-          } else {
-            state.waterItemsOfMonthly.push({
-              date: newItem.date,
-              allWaterByDay: newItem.amountOfWater,
-            });
-          }
-        }
+        state.loading = false;
+        state.waterItemsOfDay.data.push(action.payload);
       })
       .addCase(getWaterDaily.fulfilled, (state, action) => {
-        // state.loading = false;
-        // Ensure payload structure matches state structure
+        state.loading = false;
         state.waterItemsOfDay = action.payload || { dateOrMonth: '', data: [] };
-        state.allWaterByDay = state.waterItemsOfDay.data.reduce(
-          (total, item) => total + item.amountOfWater,
-          0
-        );
       })
       .addCase(deleteWater.fulfilled, (state, action) => {
-        state.waterItemsOfDay.data = state.waterItemsOfDay.data.filter(
-          waterItem => waterItem._id !== action.payload._id
+        const index = state.waterItemsOfDay.data.findIndex(
+          waterItem => waterItem._id === action.payload._id
         );
-        // Update allWaterByDay to reflect changes
-        state.allWaterByDay = state.waterItemsOfDay.data.reduce(
-          (total, item) => total + item.amountOfWater,
-          0
+        if (index !== -1) {
+          state.waterItemsOfDay.data.splice(index, 1);
+        }
+      })
+      .addCase(updateWater.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedWaterIndex = state.waterItemsOfDay.data.findIndex(
+          waterItem => waterItem._id === action.payload._id
         );
+        if (updatedWaterIndex !== -1) {
+          state.waterItemsOfDay.data[updatedWaterIndex] = action.payload;
+        }
       })
       .addMatcher(
-        isAnyOf(addWater.pending, getWaterDaily.pending, deleteWater.pending),
+        isAnyOf(
+          addWater.pending,
+          getWaterDaily.pending,
+          deleteWater.pending,
+          updateWater.pending
+        ),
         state => {
           //   state.loading = true;
           state.error = null;
@@ -76,7 +64,8 @@ const waterSlice = createSlice({
         isAnyOf(
           addWater.rejected,
           getWaterDaily.rejected,
-          deleteWater.rejected
+          deleteWater.rejected,
+          updateWater.rejected
         ),
         (state, action) => {
           //   state.loading = false;

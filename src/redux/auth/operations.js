@@ -4,14 +4,14 @@ import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  // baseURL: 'http://localhost:3000',
-  withCredentials: true,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-})
+  //   baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  baseURL: 'http://localhost:3000',
+  //   withCredentials: true,
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+});
 
 export const setToken = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -58,12 +58,12 @@ export const refreshUser = createAsyncThunk(
 
       if (!token || isTokenExpired(token)) {
         if (!refreshTokenRequest) {
-          refreshTokenRequest = instance.post("/users/refresh-tokens");
+          refreshTokenRequest = instance.post('/users/refresh-tokens');
         }
 
         const res = await refreshTokenRequest;
         setToken(res.data.data.accessToken);
-        
+
         return res.data.data.accessToken;
       }
 
@@ -96,9 +96,7 @@ export const refreshUser = createAsyncThunk(
 //   }
 // );
 
-export const logout = createAsyncThunk(
-  "auth/logout", 
-  async (_, thunkAPI) => {
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await instance.post('/users/logout');
     clearToken();
