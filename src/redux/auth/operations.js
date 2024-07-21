@@ -4,13 +4,13 @@ import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  baseURL: 'http://localhost:3000',
-  //   withCredentials: true,
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json',
-  //   },
+  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  //   baseURL: 'http://localhost:3000',
+  withCredentials: true,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
 });
 
 export const setToken = token => {
