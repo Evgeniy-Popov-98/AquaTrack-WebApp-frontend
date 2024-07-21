@@ -128,12 +128,12 @@ const SignInForm = () => {
           Sign In
         </button>
       </form>
-      <button className={css.googleBtn} onClick={handleGoogleOAuth}>
+      {/* <button className={css.googleBtn} onClick={handleGoogleOAuth}>
         Continue with{' '}
         <svg width="20" height="20">
           <use href={`${icons}#icon-google`} />
         </svg>
-      </button>
+      </button> */}
       <p className={css.formLink}>
         Don&apos;t have an account?&nbsp;
         <Link className={css.linkSignUp} to="/signup">

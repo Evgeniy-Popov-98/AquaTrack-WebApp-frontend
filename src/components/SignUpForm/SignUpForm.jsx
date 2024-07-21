@@ -161,12 +161,12 @@ const SignUpForm = () => {
           Sign Up
         </button>
       </form>
-      <button className={css.googleBtn} onClick={handleGoogleOAuth}>
+      {/* <button className={css.googleBtn} onClick={handleGoogleOAuth}>
         Continue with
         <svg width="20" height="20">
           <use href={`${icons}#icon-google`} />
         </svg>
-      </button>
+      </button> */}
       <p className={css.formLink}>
         Already have account?&nbsp;
         <Link className={css.linkSignIn} to="/signin">
