@@ -121,6 +121,7 @@ export const updateUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const { data } = await instance.patch('/users/update', user);
+
       return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

@@ -129,8 +129,8 @@ const UserSettingsForm = ({ closeSettingModal }) => {
     try {
       const result = await dispatch(updateUser(formData));
       if (result.meta.requestStatus === 'fulfilled') {
-        toast.success('The form has been sent successfully!');
         closeSettingModal();
+        toast.success('The form has been sent successfully!');
       }
     } catch (error) {
       console.error('Failed to send user settings:', error);
@@ -146,7 +146,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
         position="bottom-left"
         reverseOrder={false}
         toastOptions={{
-          duration: 5000,
+          duration: 10000,
           success: {
             style: {
               border: '3px solid #9be1a0',
