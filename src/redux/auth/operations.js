@@ -2,7 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+    baseURL: 'http://localhost:3000',
 });
 
 export const setToken = token => {
