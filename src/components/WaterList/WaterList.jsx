@@ -11,6 +11,7 @@ import css from './WaterList.module.css';
 const WaterList = ({ date }) => {
   const dispatch = useDispatch();
   const waterDailyItems = useSelector(selectWaterItemsOfDay);
+  console.log('waterDailyItems: ', waterDailyItems);
 
   useEffect(() => {
     if (date) {
@@ -27,7 +28,7 @@ const WaterList = ({ date }) => {
   return (
     <div className={css.container}>
       <ul className={css.list}>
-        {Array.isArray(waterDailyItems.data) &&
+        {waterDailyItems.data.length > 0 &&
           waterDailyItems.data.map(item => (
             <li key={item._id} className={css.item}>
               <WaterItem item={item} refreshData={refreshData} />

@@ -41,7 +41,7 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
       >
         <span>{day}</span>
       </button>
-      <span>{procentages[dateMonth]}%</span>
+      <span>{procentages[dateMonth] || 0}%</span>
     </div>
   );
 };

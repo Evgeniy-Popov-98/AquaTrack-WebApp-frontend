@@ -27,10 +27,12 @@ const waterSlice = createSlice({
       .addCase(addWater.fulfilled, (state, action) => {
         state.loading = false;
         state.waterItemsOfDay.data.push(action.payload);
+        state.allWaterByDay += action.payload.amountOfWater;
       })
       .addCase(getWaterDaily.fulfilled, (state, action) => {
         state.loading = false;
-        state.waterItemsOfDay = action.payload || { dateOrMonth: '', data: [] };
+        state.waterItemsOfDay = action.payload;
+        console.log('action.payload: ', action.payload);
       })
       .addCase(getWaterMonthly.fulfilled, (state, action) => {
         state.loading = false;
