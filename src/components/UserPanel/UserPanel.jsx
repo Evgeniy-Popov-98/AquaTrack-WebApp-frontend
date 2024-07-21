@@ -7,7 +7,7 @@ import css from './UserPanel.module.css';
 
 const UserPanel = () => {
   const userData = useSelector(selectUser);
-  const {name, email, avatar} = userData;
+  const { name, email, avatar } = userData;
 
   function uppercaseFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
