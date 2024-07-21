@@ -1,29 +1,22 @@
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
-import sprite from '../../assets/icons/icons.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/selectors';
-import { updateUser } from '../../redux/auth/operations';
 import toast, { Toaster } from 'react-hot-toast';
 
+import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
+import sprite from '../../assets/icons/icons.svg';
+import { selectUser } from '../../redux/auth/selectors';
+import { updateUser } from '../../redux/auth/operations';
+
+import {
+  convertingToNumber,
+  dailyWaterRecomendCalculation,
+  DECIMAL_PATTERN,
+} from '../../helpers/userSettingUtils';
+
 import css from './UserSettingsForm.module.css';
-
-const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
-
-const convertingToNumber = str => {
-  return Math.floor(parseFloat(str) * 10) / 10;
-};
-
-const dailyWaterRecomendCalculation = (gender, weight, sport) => {
-  if (!weight) return 1.8;
-  if (!sport) sport = 0;
-  const baseValue = gender === 'female' ? 0.03 : 0.04;
-  const sportValue = gender === 'female' ? 0.4 : 0.6;
-  return (weight * baseValue + sport * sportValue).toFixed(1);
-};
 
 const schema = yup.object().shape({
   name: yup.string().notRequired(),
@@ -126,15 +119,19 @@ const UserSettingsForm = ({ closeSettingModal }) => {
     });
 
     console.log(...formData);
+
     try {
       const result = await dispatch(updateUser(formData));
       if (result.meta.requestStatus === 'fulfilled') {
-        closeSettingModal();
         toast.success('The form has been sent successfully!');
+        setTimeout(() => {
+          closeSettingModal();
+        }, 3000);
+      } else {
+        throw new Error('Failed to submit');
       }
     } catch (error) {
-      console.error('Failed to send user settings:', error);
-      toast.error('Something wrong!');
+      toast.error('An error occurred while submitting the form.');
     }
   };
 
@@ -146,7 +143,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
         position="bottom-left"
         reverseOrder={false}
         toastOptions={{
-          duration: 10000,
+          duration: 3000,
           success: {
             style: {
               border: '3px solid #9be1a0',
@@ -166,7 +163,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
 
       <UserSettingsAvatar />
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className={css.settingsForm}> */}
         <div
           className={clsx(css.settingsForm, {
             [css.settingsFormError]: hasErrors,
