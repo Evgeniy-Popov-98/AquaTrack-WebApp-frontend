@@ -4,8 +4,8 @@ import axios from 'axios';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  //  baseURL: 'http://localhost:3000',
+  //   baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  baseURL: 'http://localhost:3000',
   withCredentials: true,
   headers: {
     Accept: 'application/json',
@@ -39,7 +39,6 @@ export const login = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await instance.post('/users/login', formData);
-      console.log('data: ', data);
       setToken(data.data.accessToken);
       return data.data;
     } catch (error) {
@@ -197,9 +196,6 @@ export const updateUser = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      //   setToken(data.data.accessToken);
-      console.log('Response data:', data);
       return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

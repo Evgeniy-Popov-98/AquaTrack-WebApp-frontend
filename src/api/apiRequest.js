@@ -16,13 +16,6 @@ const apiRequest = async (
       // headers,
     });
 
-    console.log(`Request: ${method.toUpperCase()} ${url}`, {
-      data,
-      //   params,
-      //   headers,
-    });
-    console.log('Response:', response.data);
-
     return { data: response.data, error: null };
   } catch (error) {
     let errorMessage = 'An error occurred. Please try again.';

@@ -11,8 +11,6 @@ const GoogleAuthCallback = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get('code');
 
-    console.log('Authorization code:', code);
-
     if (code) {
       dispatch(verifyGoogleOAuth({ code })).then(resultAction => {
         if (verifyGoogleOAuth.fulfilled.match(resultAction)) {

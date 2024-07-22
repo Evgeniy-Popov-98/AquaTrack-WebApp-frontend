@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { selectAllWaterByDay } from '../../redux/water/selectors';
 import { selectUser } from '../../redux/auth/selectors';
 import { useDateFC } from '../../helpers/utils.js';
-
+import { selectCalendar } from '../../redux/calendar/selector.js';
 
 const WaterProgressBar = () => {
   const dayliWater = useSelector(selectUser);
@@ -44,20 +44,20 @@ const WaterProgressBar = () => {
   }, [roundedProgress]);
 
   const shouldShowPercentage =
-    (roundedProgress >= 12 && roundedProgress <= 38) || (roundedProgress >= 60 && roundedProgress <= 85);
+    (roundedProgress >= 12 && roundedProgress <= 38) ||
+    (roundedProgress >= 60 && roundedProgress <= 85);
 
-  const { numberOfMonth, monthName, currentDate } = useDateFC();
-  const today = new Date().toLocaleDateString(navigator.language, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-  
+  const { numberOfMonth, monthName } = useDateFC();
+
+  const today = new Date().toISOString().split('T')[0];
+  const currentActiveDay = useSelector(selectCalendar).split('T')[0];
   return (
     <div className={css.waterProgressBarContainer}>
       <div className={css.progressBarInfo}>
         <p className={css.data}>
-           {currentDate === today ? 'Today' : `${numberOfMonth}, ${monthName}`}
+          {currentActiveDay === today
+            ? 'Today'
+            : `${numberOfMonth - 1}, ${monthName}`}
         </p>
 
         <div className={css.progressBarContainer} ref={containerRef}>
@@ -67,13 +67,13 @@ const WaterProgressBar = () => {
           ></div>
           <div
             className={css.progressEllipse}
-            style={{ left: `${ellipsePosition+8}px` }}
+            style={{ left: `${ellipsePosition + 8}px` }}
           ></div>
         </div>
         {shouldShowPercentage && (
           <div
             className={css.progressPercentageMove}
-            style={{ left: `${ellipsePosition+8}px` }}
+            style={{ left: `${ellipsePosition + 8}px` }}
           >
             {roundedProgress}%
           </div>

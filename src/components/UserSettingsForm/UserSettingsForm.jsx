@@ -159,7 +159,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       }
     } catch (error) {
       toast.error('An error occurred while submitting the form');
-      console.log('An error occurred while submitting the form:', error);
     }
   };
 
