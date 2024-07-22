@@ -101,11 +101,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
 
     Object.keys(data).forEach(key => {
       const value = data[key];
-      if (!value) {
-        if (key !== 'dailyWaterIntake') {
-          return;
-        }
-      }
+      if (!value) return;
 
       switch (key) {
         case 'gender':
