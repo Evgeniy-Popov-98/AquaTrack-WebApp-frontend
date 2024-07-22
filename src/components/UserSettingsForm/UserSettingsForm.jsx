@@ -18,7 +18,6 @@ import {
 } from '../../helpers/userSettingUtils';
 
 import css from './UserSettingsForm.module.css';
-import { useState } from 'react';
 import ModalMessage from '../ModalMessage/ModalMessage';
 
 const schema = yup.object().shape({
@@ -44,7 +43,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-
   const currentAvatar = useSelector(selectUserAvatar);
 
   const fileInputRef = useRef(null);
@@ -68,7 +66,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
   };
 
   const [modalMessageIsOpen, setModalMessageIsOpen] = useState(false);
-
 
   const {
     register,
@@ -184,11 +181,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
           },
         }}
       />
-
-
-
-    
-
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <UserSettingsAvatar

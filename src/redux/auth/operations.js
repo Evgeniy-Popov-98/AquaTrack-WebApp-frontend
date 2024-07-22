@@ -4,8 +4,8 @@ import axios from 'axios';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  // baseURL: 'http://localhost:3000',
+  //   baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  baseURL: 'http://localhost:3000',
   withCredentials: true,
   headers: {
     Accept: 'application/json',
@@ -129,25 +129,16 @@ export const refreshUser = createAsyncThunk(
     const state = thunkApi.getState();
     const token = state.auth.accessToken;
 
-    console.log('Current token:', token);
-
     if (token === null) {
-      console.log('No token found. Rejecting.');
       return thunkApi.rejectWithValue('Unable to fetch user');
     }
     try {
-      console.log('Setting token...');
       setToken(token);
-      console.log('Sending refresh token request...');
       const response = await instance.post('/users/refresh-tokens');
 
-      console.log('Server response:', response);
-
       const { data } = response;
-      console.log('Setting new token...');
       setToken(data.data.accessToken);
 
-      console.log('Returning refreshed data:', data.data);
       return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -157,7 +148,6 @@ export const refreshUser = createAsyncThunk(
     condition: (_, { getState }) => {
       const reduxState = getState();
       const savedToken = reduxState.auth.accessToken;
-      console.log('Checking saved token:', savedToken);
       return savedToken !== null;
     },
   }

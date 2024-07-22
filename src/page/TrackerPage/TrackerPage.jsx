@@ -20,7 +20,7 @@ const TrackerPage = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
   const loading = useSelector(selectLoading);
-  // const error = useSelector(selectError);
+
   useEffect(() => {
     if (isLoggedIn && !isRefreshing) {
       dispatch(getUser());
