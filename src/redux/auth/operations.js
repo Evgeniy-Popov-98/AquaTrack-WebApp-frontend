@@ -111,8 +111,6 @@ export const updateUser = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-      //   setToken(data.data.accessToken);
-      console.log('Response data:', data);
       return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
