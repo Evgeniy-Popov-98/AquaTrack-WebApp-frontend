@@ -1,72 +1,81 @@
+import { useSelector } from 'react-redux';
 import css from './WaterProgressBar.module.css';
 import { useEffect, useRef, useState } from 'react';
+import { selectAllWaterByDay } from '../../redux/water/selectors';
+import { selectUser } from '../../redux/auth/selectors';
+import { useDateFC } from '../../helpers/utils.js';
 
-const WaterProgressBar = ({ progress }) => {
+
+const WaterProgressBar = () => {
+  const dayliWater = useSelector(selectUser);
+  const allWaterByDay = useSelector(selectAllWaterByDay);
+  const progress = allWaterByDay / (dayliWater.dailyWaterIntake * 10);
+  const roundedProgress = Math.round(progress);
+
   const containerRef = useRef(null);
-  const [ellipsePosition, setEllipsePosition] = useState(10);
+  const [ellipsePosition, setEllipsePosition] = useState(0);
 
   const updateEllipsePosition = () => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth;
-
-      let adjustedProgress = Math.min(100, Math.max(0, progress));
+      let adjustedProgress = Math.min(100, Math.max(0, roundedProgress));
       let newPosition = (adjustedProgress * containerWidth) / 100;
 
-      if (adjustedProgress >= 0 && adjustedProgress <= 5) {
-        newPosition = 10;
-      } else if (adjustedProgress === 100) {
-        newPosition = containerWidth; 
+      // Умова для корекції позиції еліпса
+      if (window.innerWidth > 768) {
+        newPosition += 8; // корекція для ширших екранів
       }
+      newPosition = Math.min(newPosition, containerWidth);
 
-       if (window.innerWidth > 768) {
-        if (adjustedProgress >= 0 && adjustedProgress <= 5) {
-          newPosition = 15;
-        } else if (adjustedProgress === 100) {
-          newPosition = containerWidth+10;
-        } else {
-           newPosition = (adjustedProgress * (containerWidth+20)) / 100;
-        }
-      }
       setEllipsePosition(newPosition);
     }
   };
 
   useEffect(() => {
     updateEllipsePosition();
-  }, [progress]);
+  }, [roundedProgress]);
 
   useEffect(() => {
+    updateEllipsePosition(); // Перераховуємо позицію при зміні ширини екрана
     window.addEventListener('resize', updateEllipsePosition);
     return () => {
       window.removeEventListener('resize', updateEllipsePosition);
     };
-  }, []);
+  }, [roundedProgress]);
 
   const shouldShowPercentage =
-    (progress >= 15 && progress <= 40) || (progress >= 60 && progress <= 90);
+    (roundedProgress >= 12 && roundedProgress <= 38) || (roundedProgress >= 60 && roundedProgress <= 85);
 
+  const { numberOfMonth, monthName, currentDate } = useDateFC();
+  const today = new Date().toLocaleDateString(navigator.language, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  
   return (
     <div className={css.waterProgressBarContainer}>
       <div className={css.progressBarInfo}>
-        <p className={css.data}>Today</p>
-        {/* <ChooseDate className={css.data} /> */}
+        <p className={css.data}>
+           {currentDate === today ? 'Today' : `${numberOfMonth}, ${monthName}`}
+        </p>
 
         <div className={css.progressBarContainer} ref={containerRef}>
           <div
             className={css.progressBar}
-            style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+            style={{ width: `${Math.min(100, Math.max(0, roundedProgress))}%` }}
           ></div>
           <div
             className={css.progressEllipse}
-            style={{ left: `${ellipsePosition}px` }}
+            style={{ left: `${ellipsePosition+8}px` }}
           ></div>
         </div>
         {shouldShowPercentage && (
           <div
             className={css.progressPercentageMove}
-            style={{ left: `${ellipsePosition}px` }}
+            style={{ left: `${ellipsePosition+8}px` }}
           >
-            {progress}%
+            {roundedProgress}%
           </div>
         )}
 

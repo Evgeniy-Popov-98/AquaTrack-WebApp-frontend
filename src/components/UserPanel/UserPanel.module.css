@@ -16,6 +16,7 @@
 .name {
   font-size: 32px;
   font-weight: 700;
+  color: #323f47;
 }
 
 @media screen and (min-width: 768px) {
