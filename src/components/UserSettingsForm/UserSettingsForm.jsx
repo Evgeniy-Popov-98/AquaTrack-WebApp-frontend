@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,7 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import sprite from '../../assets/icons/icons.svg';
-import { selectUser } from '../../redux/auth/selectors';
+import { selectUser, selectUserAvatar } from '../../redux/auth/selectors';
 import { updateUser } from '../../redux/auth/operations';
 
 import {
@@ -17,7 +18,6 @@ import {
 } from '../../helpers/userSettingUtils';
 
 import css from './UserSettingsForm.module.css';
-import { useState } from 'react';
 import ModalMessage from '../ModalMessage/ModalMessage';
 
 const schema = yup.object().shape({
@@ -36,11 +36,34 @@ const schema = yup.object().shape({
     .string()
     .matches(DECIMAL_PATTERN, 'please enter a number')
     .notRequired(),
+  avatar: yup.mixed().notRequired(),
 });
 
 const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  const currentAvatar = useSelector(selectUserAvatar);
+
+  const fileInputRef = useRef(null);
+
+  const [preview, setPreview] = useState(currentAvatar);
+
+  useEffect(() => {
+    if (currentAvatar) {
+      setPreview(currentAvatar);
+    }
+  }, [currentAvatar]);
+
+  const handleAvatarChange = e => {
+    const selectedAvatar = e.target.files[0];
+
+    if (selectedAvatar) {
+      const objectURL = URL.createObjectURL(selectedAvatar);
+
+      setPreview(objectURL);
+    }
+  };
 
   const [modalMessageIsOpen, setModalMessageIsOpen] = useState(false);
 
@@ -58,6 +81,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       weight: user.weight || null,
       activeSportsTime: user.activeSportsTime || null,
       dailyWaterIntake: user.dailyWaterIntake || null,
+      avatar: user.avatar || null,
     },
   });
 
@@ -122,6 +146,10 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       }
     });
 
+    if (fileInputRef.current && fileInputRef.current.files[0]) {
+      formData.append('avatar', fileInputRef.current.files[0]);
+    }
+
     try {
       const result = await dispatch(updateUser(formData));
       if (result.meta.requestStatus === 'fulfilled') {
@@ -155,9 +183,12 @@ const UserSettingsForm = ({ closeSettingModal }) => {
         }}
       />
 
-      <UserSettingsAvatar />
-
       <form onSubmit={handleSubmit(onSubmit)}>
+        <UserSettingsAvatar
+          onChange={handleAvatarChange}
+          fileInputRef={fileInputRef}
+          preview={preview}
+        />
         <div
           className={clsx(css.settingsForm, {
             [css.settingsFormError]: hasErrors,
