@@ -1,12 +1,17 @@
 .container {
-  overflow-x: scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
+}
+
+.container.scrollable {
+  overflow-x: scroll;
 }
 
 .list {
   margin-bottom: 24px;
   display: flex;
   gap: 8px;
+  height: 74px;
   flex-direction: row;
   align-items: center;
 }
@@ -43,6 +48,7 @@
 @media screen and (min-width: 768px) {
   .list {
     gap: 32px;
+    height: 86px;
   }
 
   .item {

@@ -20,6 +20,7 @@ const DeleteWaterModal = ({
     }
     await dispatch(deleteWater(item._id));
     refreshData();
+    closeDeleteWaterModal();
   };
 
   const handleClose = () => {
@@ -49,36 +50,5 @@ const DeleteWaterModal = ({
   );
 };
 
-//   return (
-//     <Modal
-//       modalIsOpen={deleteWaterModalIsOpen}
-//       closeModal={closeDeleteWaterModal}
-//     >
-//       <div className={css.box}>
-//         <div className={css.textBox}>
-//           <h3 className={css.title}>Delete entry</h3>
-//           <p className={css.text}>Are you sure you want to delete the entry?</p>
-//         </div>
-//         <div className={css.buttonBox}>
-//           <button
-//             className={css.btnDelete}
-//             onClick={() => {
-//               closeDeleteWaterModal();
-//               dispatch(deleteWater(waterId));
-//             }}
-//           >
-//             Delete
-//           </button>
-//           <button
-//             className={css.btnCancel}
-//             onClick={() => closeDeleteWaterModal(false)}
-//           >
-//             Cancel
-//           </button>
-//         </div>
-//       </div>
-//     </Modal>
-//   );
-// };
 
 export default DeleteWaterModal;
