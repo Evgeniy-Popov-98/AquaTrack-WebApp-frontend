@@ -1,31 +1,24 @@
-// email from backend
-// відправка formData на backend
-// email тільки для читання
-
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import clsx from 'clsx';
+import toast, { Toaster } from 'react-hot-toast';
+
+import UserSettingsAvatar from '../UserSettingsAvatar/UserSettingsAvatar';
 import sprite from '../../assets/icons/icons.svg';
-import css from './UserSettingsForm.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/auth/selectors';
 import { updateUser } from '../../redux/auth/operations';
 
-const DECIMAL_PATTERN = /^\d+(\.\d+)?$/;
+import {
+  convertingToNumber,
+  dailyWaterRecomendCalculation,
+  DECIMAL_PATTERN,
+} from '../../helpers/userSettingUtils';
 
-const convertingToNumber = str => {
-  return Math.floor(parseFloat(str) * 10) / 10;
-};
-
-const dailyWaterRecomendCalculation = (gender, weight, sport) => {
-  if (!weight) return 1.8;
-  if (!sport) sport = 0;
-  const baseValue = gender === 'female' ? 0.03 : 0.04;
-  const sportValue = gender === 'female' ? 0.4 : 0.6;
-  return (weight * baseValue + sport * sportValue).toFixed(1);
-};
+import css from './UserSettingsForm.module.css';
+import { useState } from 'react';
+import ModalMessage from '../ModalMessage/ModalMessage';
 
 const schema = yup.object().shape({
   name: yup.string().notRequired(),
@@ -45,9 +38,11 @@ const schema = yup.object().shape({
     .notRequired(),
 });
 
-export default function UserSettingsForm() {
+const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  const [modalMessageIsOpen, setModalMessageIsOpen] = useState(false);
 
   const {
     register,
@@ -77,7 +72,7 @@ export default function UserSettingsForm() {
     activeSportsTimeNumber
   );
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     const formData = new FormData();
 
     Object.keys(data).forEach(key => {
@@ -127,17 +122,42 @@ export default function UserSettingsForm() {
       }
     });
 
-    console.log(...formData);
-
-    dispatch(updateUser(formData));
+    try {
+      const result = await dispatch(updateUser(formData));
+      if (result.meta.requestStatus === 'fulfilled') {
+        setModalMessageIsOpen(true);
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      toast.error('An error occurred while submitting the form');
+      console.log('An error occurred while submitting the form:', error);
+    }
   };
+
   const hasErrors = !!errors.weight || !!errors.activeSportsTime;
 
   return (
     <div className={css.settingsContainer}>
+      <Toaster
+        position="bottom-left"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 4000,
+          error: {
+            style: {
+              border: '3px solid red',
+              background: '#363636',
+              color: '#fff',
+              padding: '16px',
+            },
+          },
+        }}
+      />
+
       <UserSettingsAvatar />
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className={css.settingsForm}> */}
         <div
           className={clsx(css.settingsForm, {
             [css.settingsFormError]: hasErrors,
@@ -304,6 +324,12 @@ export default function UserSettingsForm() {
           Save
         </button>
       </form>
+
+      <ModalMessage
+        modalMessageIsOpen={modalMessageIsOpen}
+        closeModalMessage={closeSettingModal}
+      />
     </div>
   );
-}
+};
+export default UserSettingsForm;

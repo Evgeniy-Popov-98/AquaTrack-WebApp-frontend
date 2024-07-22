@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { isTokenExpired } from '../../utils/jwt';
+// import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
@@ -48,31 +48,78 @@ export const login = createAsyncThunk(
   }
 );
 
-let refreshTokenRequest = null;
+// let refreshTokenRequest = null;
 
-export const refreshUser = createAsyncThunk(
-  'auth/refresh-tokens',
+// export const refreshUser = createAsyncThunk(
+//   'auth/refresh-tokens',
+//   async (_, thunkApi) => {
+//     try {
+//       const state = thunkApi.getState();
+//       const token = state.auth.accessToken;
+//       if (!token) throw new Error('No token found');
+//       setToken(token);
+//       const {data} = await instance.post("/users/refresh-tokens");
+//       setToken(data.data.accessToken);
+
+//       return data.data;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
+// export const refreshUser = createAsyncThunk(
+//   'auth/refresh-tokens',
+//   async (_, thunkApi) => {
+//     try {
+//       const state = thunkApi.getState();
+//       const token = state.auth.accessToken;
+
+//       if (!token || isTokenExpired(token)) {
+//         if (!refreshTokenRequest) {
+//           refreshTokenRequest = instance.post('/users/refresh-tokens');
+//         }
+
+//         const res = await refreshTokenRequest;
+//         setToken(res.data.data.accessToken);
+
+//         return res.data.data.accessToken;
+//       }
+
+//       return token;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(error.message);
+//     } finally {
+//       refreshTokenRequest = null; // Переміщення цієї лінії сюди забезпечує скидання змінної навіть у випадку помилки
+//     }
+//   }
+// );
+
+export const getAuthUrl = createAsyncThunk(
+  'auth/google-url',
   async (_, thunkApi) => {
     try {
-      const state = thunkApi.getState();
-      const token = state.auth.accessToken;
+      const { data } = await instance.post('/users/get-oauth-url');
 
-      // if (!token || isTokenExpired(token)) {
-      if (!refreshTokenRequest) {
-        refreshTokenRequest = instance.post('/users/refresh-tokens');
-      }
-
-      const res = await refreshTokenRequest;
-      setToken(res.data.data.accessToken);
-
-      // return res.data.data.accessToken;
-      // }
-
-      return token;
+      return data.data.url;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
-    } finally {
-      refreshTokenRequest = null; // Переміщення цієї лінії сюди забезпечує скидання змінної навіть у випадку помилки
+    }
+  }
+);
+
+export const verifyGoogleOAuth = createAsyncThunk(
+  'auth/google-verify',
+  async ({ code }, thunkApi) => {
+    try {
+      const { data } = await instance.post('/users/verify-google-oauth', {
+        code,
+      });
+      setToken(data.data.accessToken);
+
+      return data.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -122,6 +169,7 @@ export const updateUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const { data } = await instance.patch('/users/update', user);
+
       return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

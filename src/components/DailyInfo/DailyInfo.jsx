@@ -16,18 +16,6 @@ const DailyInfo = () => {
         <AddWaterBtn2 />
       </div>
       <WaterList date={currentDate} />
-      {/* <div
-        style={{
-          marginBottom: 32,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <ChooseDate />
-        <AddWaterBtn2 />
-      </div>
-      <WaterList /> */}
     </div>
   );
 };

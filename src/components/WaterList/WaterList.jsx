@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { selectWaterItemsOfDay } from '../../redux/water/selectors';
-// import { selectWaterDaily } from '../../redux/water/selectors';
 import { getWaterDaily } from '../../redux/water/operations';
 
 import WaterItem from '../WaterItem/WaterItem';

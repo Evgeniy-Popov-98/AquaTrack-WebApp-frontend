@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import { selectIsLoggedIn, selectIsRefreshing } from '../../redux/auth/selectors';
+import {
+  selectIsLoggedIn,
+  selectIsRefreshing,
+} from '../../redux/auth/selectors';
 
 import { getUser } from '../../redux/auth/operations';
 import { selectLoading } from '../../redux/water/selectors';
@@ -25,14 +28,16 @@ const TrackerPage = () => {
   }, [dispatch]);
 
   return (
-    <div className={css.trackContainer}>
+    <section>
       <Loader loading={loading} />
-      <Helmet>
-        <title>Tracker</title>
-      </Helmet>
-      <WaterMainInfo />
-      <WaterDetailedInfo />
-    </div>
+      <div className={css.trackContainer}>
+        <Helmet>
+          <title>AQUATRACK</title>
+        </Helmet>
+        <WaterMainInfo />
+        <WaterDetailedInfo />
+      </div>
+    </section>
   );
 };
 

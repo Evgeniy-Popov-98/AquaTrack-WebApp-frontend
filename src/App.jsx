@@ -8,6 +8,7 @@ import Loader from './components/Loader/Loader.jsx';
 import SharedLayout from './SharedLayout';
 
 import './App.css';
+import GoogleAuthCallback from './helpers/googleAuthCallback.js';
 
 const HomePage = lazy(() => import('./page/HomePage/HomePage'));
 const SignInPage = lazy(() => import('./page/SignInPage/SignInPage'));
@@ -22,12 +23,8 @@ function App() {
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route
-            index
-            element={
-              <RestrictedRoute redirectTo="/tracker" component={<HomePage />} />
-            }
-          />
+          <Route path="/confirm-google-auth" element={<GoogleAuthCallback />} />
+          <Route index element={<HomePage />} />
           <Route
             path="/signin"
             element={

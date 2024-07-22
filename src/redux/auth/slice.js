@@ -1,22 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   login,
-  refreshUser,
+  //   refreshUser,
   register,
   logout,
   getUser,
   updateUser,
+  verifyGoogleOAuth,
+  getAuthUrl,
 } from './operations';
 
 const INITIAL_STATE = {
   user: {
-    _id: null,
     name: null,
     email: null,
     gender: null,
     weight: null,
     activeSportsTime: null,
-    dailyWaterIntake: null,
+    dailyWaterIntake: 1.5,
     avatar: null,
   },
   accessToken: null,
@@ -24,6 +25,7 @@ const INITIAL_STATE = {
   isRefreshing: false,
   loading: false,
   error: null,
+  url: '',
 };
 
 const handlePending = state => {
@@ -58,19 +60,40 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, handleRejected)
-      //refresh
-      .addCase(refreshUser.pending, handlePending, state => {
-        state.isRefreshing = true;
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
+      // //google-url
+      .addCase(getAuthUrl.pending, handlePending)
+      .addCase(getAuthUrl.fulfilled, (state, action) => {
         state.loading = false;
-        state.isRefreshing = false;
         state.isLoggedIn = true;
-        state.accessToken = action.payload;
+        state.url = action.payload;
       })
-      .addCase(refreshUser.rejected, handleRejected, state => {
-        state.isRefreshing = true;
+      .addCase(getAuthUrl.rejected, handleRejected)
+      //google-verify
+      .addCase(verifyGoogleOAuth.pending, handlePending)
+      .addCase(verifyGoogleOAuth.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        state.user = {
+          name: action.payload.name,
+          email: action.payload.email,
+          avatar: action.payload.avatar,
+        };
+        state.accessToken = action.payload.accessToken;
       })
+      .addCase(verifyGoogleOAuth.rejected, handleRejected)
+      //refresh
+      //   .addCase(refreshUser.pending, handlePending, state => {
+      //     state.isRefreshing = true;
+      //   })
+      //   .addCase(refreshUser.fulfilled, (state, action) => {
+      //     state.loading = false;
+      //     state.isRefreshing = false;
+      //     state.isLoggedIn = true;
+      //     state.accessToken = action.payload;
+      //   })
+      //   .addCase(refreshUser.rejected, handleRejected, state => {
+      //     state.isRefreshing = true;
+      //   })
       // logout
       .addCase(logout.pending, handlePending)
       .addCase(logout.fulfilled, () => {
