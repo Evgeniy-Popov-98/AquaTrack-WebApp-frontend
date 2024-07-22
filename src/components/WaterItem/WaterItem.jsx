@@ -17,7 +17,6 @@ const WaterItem = ({ item, refreshData }) => {
 
   const onCloseWaterModal = () => {
     setShowWaterModal(false);
-    refreshData();
   };
 
   const onOpenDeleteModal = () => {
@@ -64,6 +63,7 @@ const WaterItem = ({ item, refreshData }) => {
           waterModalOpen={showWaterModal}
           closeWaterModal={onCloseWaterModal}
           operationType={operationType}
+          refreshData={refreshData}
           item={item}
         />
       )}
