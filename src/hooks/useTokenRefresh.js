@@ -4,6 +4,7 @@ import { refreshUser } from '../redux/auth/operations.js';
 
 const useTokenRefresh = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
