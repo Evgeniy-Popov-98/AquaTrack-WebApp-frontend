@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import avatarBase from '../../assets/images/Ellipse 14.jpg';
+import avatarBase from '../../assets/images/avatarBase.jpg';
 import sprite from '../../assets/icons/icons.svg';
 
 import UserBarPopover from '../UserBarPopover/UserBarPopover';
@@ -11,7 +11,6 @@ const UserBar = ({ name, avatar }) => {
   const elementRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [userBarPopover, setUserBarPopover] = useState(false);
-  
 
   useEffect(() => {
     if (elementRef.current) {
@@ -21,7 +20,11 @@ const UserBar = ({ name, avatar }) => {
 
   return (
     <div className={css.boxUserBar}>
-      <button ref={elementRef} className={css.btnUserBar} onClick={() => setUserBarPopover(true)}>
+      <button
+        ref={elementRef}
+        className={css.btnUserBar}
+        onClick={() => setUserBarPopover(true)}
+      >
         <p className={css.userName}>{name}</p>
         <img
           className={css.avatar}

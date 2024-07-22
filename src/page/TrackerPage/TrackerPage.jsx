@@ -29,8 +29,8 @@ const TrackerPage = () => {
 
   return (
     <section>
+      <Loader loading={loading} />
       <div className={css.trackContainer}>
-        <Loader loading={loading} />
         <Helmet>
           <title>AQUATRACK</title>
         </Helmet>
