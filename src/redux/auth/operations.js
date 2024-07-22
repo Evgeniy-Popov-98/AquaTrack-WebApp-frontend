@@ -197,7 +197,7 @@ export const updateUser = createAsyncThunk(
         },
       });
 
-      setToken(data.data.accessToken);
+      //   setToken(data.data.accessToken);
       console.log('Response data:', data);
       return data;
     } catch (e) {
