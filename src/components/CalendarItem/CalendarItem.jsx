@@ -12,9 +12,9 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
   const waterMonthly = useSelector(selectWaterItemsOfMonthly);
 
   const isClicked = activeIndex === idx;
-  const date = idx + 1;
+  // const date = idx + 1;
   const formattedMonth = month < 10 ? `0${month + 1}` : month + 1;
-  const formattedDay = day - 1 < 10 ? `0${day - 1}` : day - 1;
+  const formattedDay = day < 10 ? `0${day}` : day;
   const dateMonth = `${year}-${formattedMonth}-${formattedDay}`;
 
   const procentages = waterMonthly.reduce((acc, item) => {
@@ -28,7 +28,7 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
 
   const handleClick = () => {
     setActiveIndex(idx);
-    dispatch(setDate({ year, month, date }));
+    dispatch(setDate({ year, month, date: formattedDay + 1 }));
   };
 
   return (

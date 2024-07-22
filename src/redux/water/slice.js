@@ -32,7 +32,6 @@ const waterSlice = createSlice({
       .addCase(getWaterDaily.fulfilled, (state, action) => {
         state.loading = false;
         state.waterItemsOfDay = action.payload;
-        console.log('action.payload: ', action.payload);
       })
       .addCase(getWaterMonthly.fulfilled, (state, action) => {
         state.loading = false;

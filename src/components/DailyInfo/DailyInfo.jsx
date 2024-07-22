@@ -8,7 +8,6 @@ import { selectCalendar } from '../../redux/calendar/selector.js';
 const DailyInfo = () => {
   // const currentDate = new Date().toISOString().split('T')[0];
   const currentDate = useSelector(selectCalendar).split('T')[0];
-  console.log('currentDate: ', currentDate);
 
   return (
     <div style={{ margin: '40px 0px' }}>

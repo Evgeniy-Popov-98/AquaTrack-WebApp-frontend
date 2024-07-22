@@ -11,7 +11,6 @@ import css from './WaterList.module.css';
 const WaterList = ({ date }) => {
   const dispatch = useDispatch();
   const waterDailyItems = useSelector(selectWaterItemsOfDay);
-  console.log('waterDailyItems: ', waterDailyItems);
 
   useEffect(() => {
     if (date) {

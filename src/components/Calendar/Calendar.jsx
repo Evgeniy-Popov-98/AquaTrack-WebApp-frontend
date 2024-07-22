@@ -7,7 +7,6 @@ import { selectCalendar } from '../../redux/calendar/selector.js';
 
 const Calendar = ({ daysInMonth, setActiveIndex, activeIndex }) => {
   const currentActiveDay = useSelector(selectCalendar).split('T')[0];
-  console.log('currentActiveDay: ', currentActiveDay);
 
   const dispatch = useDispatch();
   const days = Array.from({ length: daysInMonth }, (v, k) => k + 1);
