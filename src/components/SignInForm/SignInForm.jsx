@@ -77,7 +77,7 @@ const SignInForm = () => {
           error: { duration: 2000 },
         }}
       />
-      <Logo />
+      <Logo styleBtn={true} />
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={css.formTitle}>Sign In</h2>
         <div className={css.labelWrap}>

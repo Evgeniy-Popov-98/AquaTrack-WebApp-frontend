@@ -24,12 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route path="/confirm-google-auth" element={<GoogleAuthCallback />} />
-          <Route
-            index
-            element={
-              <RestrictedRoute redirectTo="/tracker" component={<HomePage />} />
-            }
-          />
+          <Route index element={<HomePage />} />
           <Route
             path="/signin"
             element={
