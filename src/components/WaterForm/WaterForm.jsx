@@ -17,7 +17,7 @@ const schema = yup.object().shape({
   date: yup.string().required('Time is required'),
 });
 
-const WaterForm = ({ closeWaterModal, operationType, item }) => {
+const WaterForm = ({ closeWaterModal, operationType, item, refreshData}) => {
   const dispatch = useDispatch();
 
   const defaultValues =
@@ -63,6 +63,7 @@ const WaterForm = ({ closeWaterModal, operationType, item }) => {
       let result;
       if (operationType === 'add') {
         result = await dispatch(addWater(dataToSend));
+        
       } else {
         result = await dispatch(updateWater({ id: item._id, ...dataToSend }));
       }

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { instance } from '../auth/operations';
 
+
 export const getWaterDaily = createAsyncThunk(
   'water/getWaterDaily',
   async (date, thunkAPI) => {
@@ -8,7 +9,8 @@ export const getWaterDaily = createAsyncThunk(
       const response = await instance.get(`/water/daily/${date}`);
       return response.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      console.error('getWaterDaily error:', e.response?.data || e.message);
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
   }
 );

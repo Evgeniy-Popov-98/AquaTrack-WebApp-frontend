@@ -59,6 +59,13 @@
   line-height: 100%;
   color: rgba(47, 47, 47, 0.6);
 }
+.progressPercentage li:first-child {
+  margin-right: 66px;
+}
+
+.progressPercentage li:last-child {
+  margin-left: 49px;
+}
 
 .progressPercentageMove {
   position: absolute;
@@ -104,13 +111,13 @@
     font-size: 12px;
     line-height: 187%;
   }
-  /* .progressPercentage li:first-child {
-    margin-right: 103px;
+  .progressPercentage li:first-child {
+    margin-right: 99px;
   }
 
   .progressPercentage li:last-child {
     margin-left: 85px;
-  } */
+  }
   .progressPercentageMove {
     font-size: 10px;
     line-height: 180%;

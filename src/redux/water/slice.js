@@ -14,7 +14,6 @@ const initialState = {
   waterItemsOfMonthly: [],
   allWaterByDay: 0,
   date: null,
-  //   loading: false,
   error: null,
 };
 
@@ -26,26 +25,39 @@ const waterSlice = createSlice({
       .addCase(addWater.fulfilled, (state, action) => {
         state.loading = false;
         state.waterItemsOfDay.data.push(action.payload);
+        state.allWaterByDay += action.payload.amountOfWater;
       })
       .addCase(getWaterDaily.fulfilled, (state, action) => {
         state.loading = false;
         state.waterItemsOfDay = action.payload || { dateOrMonth: '', data: [] };
+        state.allWaterByDay = action.payload?.data.reduce(
+          (total, item) => total + item.amountOfWater,
+          0
+        );
       })
+
       .addCase(deleteWater.fulfilled, (state, action) => {
+        const deletedItem = action.payload;
         const index = state.waterItemsOfDay.data.findIndex(
-          waterItem => waterItem._id === action.payload._id
+          waterItem => waterItem._id === deletedItem._id
         );
         if (index !== -1) {
+          state.allWaterByDay -=
+            state.waterItemsOfDay.data[index].amountOfWater; // Віднімаємо кількість води
           state.waterItemsOfDay.data.splice(index, 1);
         }
       })
       .addCase(updateWater.fulfilled, (state, action) => {
         state.loading = false;
+        const updatedItem = action.payload;
         const updatedWaterIndex = state.waterItemsOfDay.data.findIndex(
-          waterItem => waterItem._id === action.payload._id
+          waterItem => waterItem._id === updatedItem._id
         );
         if (updatedWaterIndex !== -1) {
-          state.waterItemsOfDay.data[updatedWaterIndex] = action.payload;
+          state.allWaterByDay -=
+            state.waterItemsOfDay.data[updatedWaterIndex].amountOfWater; // Віднімаємо стару кількість води
+          state.waterItemsOfDay.data[updatedWaterIndex] = updatedItem;
+          state.allWaterByDay += updatedItem.amountOfWater; // Додаємо нову кількість води
         }
       })
       .addMatcher(
@@ -56,7 +68,7 @@ const waterSlice = createSlice({
           updateWater.pending
         ),
         state => {
-          //   state.loading = true;
+          // state.loading = true;
           state.error = null;
         }
       )
@@ -68,7 +80,7 @@ const waterSlice = createSlice({
           updateWater.rejected
         ),
         (state, action) => {
-          //   state.loading = false;
+          // state.loading = false;
           state.error = action.error?.message || 'An error occurred';
         }
       );
