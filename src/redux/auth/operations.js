@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { isTokenExpired } from '../../utils/jwt';
+// import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
@@ -47,7 +47,7 @@ export const login = createAsyncThunk(
   }
 );
 
-let refreshTokenRequest = null;
+// let refreshTokenRequest = null;
 
 // export const refreshUser = createAsyncThunk(
 //   'auth/refresh-tokens',

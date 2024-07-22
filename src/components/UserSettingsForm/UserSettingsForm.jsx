@@ -18,6 +18,8 @@ import {
 } from '../../helpers/userSettingUtils';
 
 import css from './UserSettingsForm.module.css';
+import { useState } from 'react';
+import ModalMessage from '../ModalMessage/ModalMessage';
 
 const schema = yup.object().shape({
   name: yup.string().notRequired(),
@@ -42,6 +44,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
+
   const currentAvatar = useSelector(selectUserAvatar);
 
   const fileInputRef = useRef(null);
@@ -63,6 +66,9 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       setPreview(objectURL);
     }
   };
+
+  const [modalMessageIsOpen, setModalMessageIsOpen] = useState(false);
+
 
   const {
     register,
@@ -150,15 +156,13 @@ const UserSettingsForm = ({ closeSettingModal }) => {
     try {
       const result = await dispatch(updateUser(formData));
       if (result.meta.requestStatus === 'fulfilled') {
-        toast.success('The form has been sent successfully!');
-        setTimeout(() => {
-          closeSettingModal();
-        }, 3000);
+        setModalMessageIsOpen(true);
       } else {
         throw new Error('Failed to submit');
       }
     } catch (error) {
       toast.error('An error occurred while submitting the form.');
+      console.log('An error occurred while submitting the form:', error);
     }
   };
 
@@ -171,13 +175,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
         reverseOrder={false}
         toastOptions={{
           duration: 3000,
-          success: {
-            style: {
-              border: '3px solid #9be1a0',
-              padding: '16px',
-              color: '#323f47',
-            },
-          },
           error: {
             style: {
               border: '3px solid red',
@@ -187,6 +184,11 @@ const UserSettingsForm = ({ closeSettingModal }) => {
           },
         }}
       />
+
+
+
+    
+
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <UserSettingsAvatar
@@ -360,6 +362,11 @@ const UserSettingsForm = ({ closeSettingModal }) => {
           Save
         </button>
       </form>
+
+      <ModalMessage
+        modalMessageIsOpen={modalMessageIsOpen}
+        closeModalMessage={closeSettingModal}
+      />
     </div>
   );
 };

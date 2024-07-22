@@ -1,0 +1,118 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+  width: 100%;
+}
+
+.textBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #323f47;
+}
+
+.text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #323f47;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.btnLogOut {
+  border-radius: 30px;
+  padding: 14px 126px;
+  width: 304px;
+  height: 46px;
+  background: #9be1a0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #323f47;
+}
+
+.btnCancel {
+  border-radius: 30px;
+  padding: 14px 126px;
+  width: 304px;
+  height: 46px;
+  background: #f0eff4;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: rgba(50, 63, 71, 0.3);
+  transition: 0.3s;
+}
+
+.btnCancel:hover {
+  color: #323f47;
+}
+
+@media screen and (min-width: 768px) {
+  .box {
+    gap: 24px;
+  }
+
+  .textBox {
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+    line-height: 114%;
+  }
+
+  .text {
+    font-size: 18px;
+    line-height: 133%;
+  }
+
+  .buttonBox {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btnLogOut {
+    padding: 18px 57px;
+    width: 173px;
+    height: 60px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  .btnCancel {
+    padding: 18px 59px;
+    width: 176px;
+    height: 60px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}

@@ -40,7 +40,7 @@
 }
 
 .info {
-  width: 50px;
+  width: 51px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -59,6 +59,7 @@
   font-size: 12px;
   color: rgba(47, 47, 47, 0.6);
   line-height: 100%;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
@@ -98,7 +99,7 @@
   }
 
   .time {
-    line-height: 187%;
+    line-height: 160%;
   }
 }
 
