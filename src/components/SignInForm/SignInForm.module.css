@@ -19,6 +19,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 172px;
+  margin-bottom: 16px;
 }
 
 .labelWrap {
@@ -55,6 +56,17 @@
   color: rgba(47, 47, 47, 0.6);
 }
 
+.errorInput {
+  border-color: #de1717;
+  color: #de1717;
+}
+
+.errorInput:focus,
+.errorInput:active {
+  border-color: #de1717;
+  color: #de1717;
+}
+
 .icon {
   display: none;
 }
@@ -70,7 +82,6 @@
   letter-spacing: -0.01em;
   text-align: center;
   color: #323f47;
-  margin-bottom: 16px;
   transition: background-color 300ms ease-in-out;
 }
 
@@ -100,6 +111,31 @@
   color: #2f2f2f;
 }
 
+.googleBtn {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  width: max-content;
+  border: 1px solid #323f47;
+  border-radius: 30px;
+  color: #323f47;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.01em;
+  text-align: center;
+  padding: 16px 88px;
+  margin: 0 auto;
+  margin-bottom: 16px;
+  transition: border-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.googleBtn:hover,
+.googleBtn:focus {
+  border-color: #87d28d;
+  color: #87d28d;
+}
+
 @media screen and (min-width: 768px) {
   .formContainer {
     display: flex;
@@ -112,6 +148,7 @@
   .form {
     margin: 0 auto;
     margin-top: 225px;
+    margin-bottom: 16px;
   }
 
   .formTitle {
@@ -171,6 +208,13 @@
   }
 
   .formLink {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .googleBtn {
+    gap: 8px;
+    padding: 18px 146px;
     font-size: 16px;
     line-height: 1.5;
   }

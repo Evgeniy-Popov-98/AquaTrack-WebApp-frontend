@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { selectWaterItemsOfDay } from '../../redux/water/selectors';
-// import { selectWaterDaily } from '../../redux/water/selectors';
 import { getWaterDaily } from '../../redux/water/operations';
 
 import WaterItem from '../WaterItem/WaterItem';
@@ -27,7 +26,7 @@ const WaterList = ({ date }) => {
   return (
     <div className={css.container}>
       <ul className={css.list}>
-        {Array.isArray(waterDailyItems.data) &&
+        {waterDailyItems.data.length > 0 &&
           waterDailyItems.data.map(item => (
             <li key={item._id} className={css.item}>
               <WaterItem item={item} refreshData={refreshData} />
