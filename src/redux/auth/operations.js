@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 // import { isTokenExpired } from '../../utils/jwt';
-// import apiRequest from '../../api/apiRequest';
+import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
   baseURL: 'https://aquatrack-webapp-backend.onrender.com',
@@ -23,27 +23,28 @@ export const clearToken = () =>
 export const register = createAsyncThunk(
   'auth/register',
   async (formData, thunkApi) => {
-    try {
-      const { data } = await instance.post('/users/register', formData);
-      setToken(data.data.accessToken);
+    const { data, error } = await apiRequest('post','/users/register', formData);
 
-      return data.data;
-    } catch (e) {
-      return thunkApi.rejectWithValue(e.message);
+    if (error) {
+      return thunkApi.rejectWithValue(error);
     }
+
+    setToken(data.data.accessToken);
+    return data.data;
   }
 );
 
 export const login = createAsyncThunk(
   'auth/login',
   async (formData, thunkApi) => {
-    try {
-      const { data } = await instance.post('/users/login', formData);
-      setToken(data.data.accessToken);
-      return data.data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
+    const { data, error } = await apiRequest('post', '/users/login', formData);
+
+    if (error) {
+      return thunkApi.rejectWithValue(error);
     }
+
+    setToken(data.data.accessToken);
+    return data.data;
   }
 );
 
