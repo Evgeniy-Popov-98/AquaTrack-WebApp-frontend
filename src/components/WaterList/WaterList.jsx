@@ -21,7 +21,9 @@ const WaterList = ({ date }) => {
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
-      const itemCount = Array.isArray(waterDailyItems.data) ? waterDailyItems.data.length : 0;
+      const itemCount = Array.isArray(waterDailyItems.data)
+        ? waterDailyItems.data.length
+        : 0;
 
       if (screenWidth >= 768) {
         setIsScrollable(itemCount >= 4);
@@ -47,7 +49,8 @@ const WaterList = ({ date }) => {
   return (
     <div className={`${css.container} ${isScrollable ? css.scrollable : ''}`}>
       <ul className={css.list}>
-        {Array.isArray(waterDailyItems.data) && waterDailyItems.data.length > 0 ? (
+        {Array.isArray(waterDailyItems.data) &&
+        waterDailyItems.data.length > 0 ? (
           waterDailyItems.data.map(item => (
             <li key={item._id} className={css.item}>
               <WaterItem item={item} refreshData={refreshData} />

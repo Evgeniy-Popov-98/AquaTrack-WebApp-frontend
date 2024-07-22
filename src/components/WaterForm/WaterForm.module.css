@@ -76,3 +76,22 @@ p,
   fill: none;
   stroke: #323f47;
 }
+
+p,
+.noSaveBtn {
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.01em;
+}
+
+.noSaveBtn {
+  border-radius: 30px;
+  padding: 14px 40px;
+  width: 116px;
+  height: 46px;
+  background-color: #585e5a;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  transition: background-color 0.3s ease-in-out;
+}

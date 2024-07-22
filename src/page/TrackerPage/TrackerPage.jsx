@@ -20,7 +20,7 @@ const TrackerPage = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
   const loading = useSelector(selectLoading);
-  // const error = useSelector(selectError);
+
   useEffect(() => {
     if (isLoggedIn && !isRefreshing) {
       dispatch(getUser());
@@ -29,8 +29,8 @@ const TrackerPage = () => {
 
   return (
     <section>
+      <Loader loading={loading} />
       <div className={css.trackContainer}>
-        <Loader loading={loading} />
         <Helmet>
           <title>AQUATRACK</title>
         </Helmet>

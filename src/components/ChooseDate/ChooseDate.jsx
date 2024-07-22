@@ -1,17 +1,20 @@
 import s from './ChooseDate.module.css';
 import { useDateFC } from '../../helpers/utils.js';
+import { useSelector } from 'react-redux';
+import { selectCalendar } from '../../redux/calendar/selector.js';
 
 const ChooseDate = () => {
-  const { numberOfMonth, monthName, currentDate } = useDateFC();
-  const today = new Date().toLocaleDateString(navigator.language, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
+  const { numberOfMonth, monthName } = useDateFC();
+  const today = new Date().toISOString().split('T')[0];
+
+  // Отримуємо обрану дату
+  const currentActiveDay = useSelector(selectCalendar).split('T')[0];
 
   return (
     <div className={s.ChooseDate}>
-      {currentDate === today ? 'Today' : `${numberOfMonth}, ${monthName}`}
+      {currentActiveDay === today
+        ? 'Today'
+        : `${numberOfMonth - 1}, ${monthName}`}
     </div>
   );
 };
