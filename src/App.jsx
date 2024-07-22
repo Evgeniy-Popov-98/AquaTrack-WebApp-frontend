@@ -17,7 +17,7 @@ const TrackerPage = lazy(() => import('./page/TrackerPage/TrackerPage'));
 const NotFound = lazy(() => import('./page/NotFound/NotFound'));
 
 function App() {
-  useTokenRefresh(); // Виклик хуку рефрешу токенів
+  //   useTokenRefresh(); // Виклик хуку рефрешу токенів
 
   return (
     <Suspense fallback={<Loader />}>

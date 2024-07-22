@@ -39,6 +39,7 @@ export const login = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await instance.post('/users/login', formData);
+      console.log('data: ', data);
       setToken(data.data.accessToken);
       return data.data;
     } catch (error) {

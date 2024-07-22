@@ -26,7 +26,7 @@ const WaterList = ({ date }) => {
   return (
     <div className={css.container}>
       <ul className={css.list}>
-        {Array.isArray(waterDailyItems.data) &&
+        {waterDailyItems.data.length > 0 &&
           waterDailyItems.data.map(item => (
             <li key={item._id} className={css.item}>
               <WaterItem item={item} refreshData={refreshData} />
