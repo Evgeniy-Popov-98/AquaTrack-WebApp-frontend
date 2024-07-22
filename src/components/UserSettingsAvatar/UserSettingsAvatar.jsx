@@ -18,6 +18,7 @@ const UserSettingsAvatar = ({ onChange, fileInputRef, preview }) => {
         accept="image/*"
         className={css.uploadInput}
         onChange={onChange}
+        // onChange={(e) => {console.log("Selected file", e.target.files[0])} }
         ref={fileInputRef}
       />
       <label htmlFor="uploadInput" className={css.uploadLabel}>

@@ -11,7 +11,7 @@ const UserBar = ({ name, avatar }) => {
   const elementRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [userBarPopover, setUserBarPopover] = useState(false);
-  console.log(avatar);
+  
 
   useEffect(() => {
     if (elementRef.current) {

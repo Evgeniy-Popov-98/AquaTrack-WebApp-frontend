@@ -4,8 +4,8 @@ import { isTokenExpired } from '../../utils/jwt';
 // import apiRequest from '../../api/apiRequest';
 
 export const instance = axios.create({
-  // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  // baseURL: 'http://localhost:3000',
   withCredentials: true,
   headers: {
     Accept: 'application/json',
@@ -66,33 +66,33 @@ let refreshTokenRequest = null;
 //     }
 //   }
 // );
+//-----------------------не забути розкоментувати
+// export const refreshUser = createAsyncThunk(
+//   'auth/refresh-tokens',
+//   async (_, thunkApi) => {
+//     try {
+//       const state = thunkApi.getState();
+//       const token = state.auth.accessToken;
 
-export const refreshUser = createAsyncThunk(
-  'auth/refresh-tokens',
-  async (_, thunkApi) => {
-    try {
-      const state = thunkApi.getState();
-      const token = state.auth.accessToken;
+//       if (!token || isTokenExpired(token)) {
+//         if (!refreshTokenRequest) {
+//           refreshTokenRequest = instance.post('/users/refresh-tokens');
+//         }
 
-      if (!token || isTokenExpired(token)) {
-        if (!refreshTokenRequest) {
-          refreshTokenRequest = instance.post('/users/refresh-tokens');
-        }
+//         const res = await refreshTokenRequest;
+//         setToken(res.data.data.accessToken);
 
-        const res = await refreshTokenRequest;
-        setToken(res.data.data.accessToken);
+//         return res.data.data.accessToken;
+//       }
 
-        return res.data.data.accessToken;
-      }
-
-      return token;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    } finally {
-      refreshTokenRequest = null; // Переміщення цієї лінії сюди забезпечує скидання змінної навіть у випадку помилки
-    }
-  }
-);
+//       return token;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(error.message);
+//     } finally {
+//       refreshTokenRequest = null; // Переміщення цієї лінії сюди забезпечує скидання змінної навіть у випадку помилки
+//     }
+//   }
+// );
 
 export const getAuthUrl = createAsyncThunk(
   'auth/google-url',
@@ -123,32 +123,50 @@ export const verifyGoogleOAuth = createAsyncThunk(
   }
 );
 
-// export const refreshUser = createAsyncThunk(
-//   'auth/refresh-tokens',
-//   async (_, thunkApi) => {
-//     try {
-//       const state = thunkApi.getState();
-//       const token = state.auth.accessToken;
-//       if (!token) throw new Error('No token found');
-//       // викликати функцію що перевіряє чи токен ще валідний (якщо вже застарів то зробити запит і отримати нову пару ключів)
-//       setToken(token);
+export const refreshUser = createAsyncThunk(
+  'auth/refresh-tokens',
+  async (_, thunkApi) => {
+    const state = thunkApi.getState();
+    const token = state.auth.accessToken;
 
-//       const {data} = await instance.post("/users/refresh-tokens");
-//       setToken(data.data.accessToken);
+    console.log('Current token:', token);
 
-//       return data.data;
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
+    if (token === null) {
+      console.log('No token found. Rejecting.');
+      return thunkApi.rejectWithValue('Unable to fetch user');
+    }
+    try {
+      console.log('Setting token...');
+      setToken(token);
+      console.log('Sending refresh token request...');
+      const response = await instance.post('/users/refresh-tokens');
+
+      console.log('Server response:', response);
+
+      const { data } = response;
+      console.log('Setting new token...');
+      setToken(data.data.accessToken);
+
+      console.log('Returning refreshed data:', data.data);
+      return data.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  },
+  {
+    condition: (_, { getState }) => {
+      const reduxState = getState();
+      const savedToken = reduxState.auth.accessToken;
+      console.log('Checking saved token:', savedToken);
+      return savedToken !== null;
+    },
+  }
+);
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await instance.post('/users/logout');
     clearToken();
-
-    return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -157,6 +175,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 export const getUser = createAsyncThunk('auth/current', async (_, thunkAPI) => {
   try {
     const { data } = await instance.get('/users/current');
+
     return data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.message);
@@ -167,8 +186,14 @@ export const updateUser = createAsyncThunk(
   'auth/update',
   async (user, thunkAPI) => {
     try {
-      const { data } = await instance.patch('/users/update', user);
+      const { data } = await instance.patch('/users/update', user, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
+      setToken(data.data.accessToken);
+      console.log('Response data:', data);
       return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

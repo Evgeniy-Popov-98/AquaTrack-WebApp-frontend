@@ -41,7 +41,9 @@ const schema = yup.object().shape({
 const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
   const currentAvatar = useSelector(selectUserAvatar);
+
   const fileInputRef = useRef(null);
 
   const [preview, setPreview] = useState(currentAvatar);
@@ -57,6 +59,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
 
     if (selectedAvatar) {
       const objectURL = URL.createObjectURL(selectedAvatar);
+
       setPreview(objectURL);
     }
   };
@@ -65,7 +68,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
     register,
     handleSubmit,
     watch,
-    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -76,7 +78,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       weight: user.weight || null,
       activeSportsTime: user.activeSportsTime || null,
       dailyWaterIntake: user.dailyWaterIntake || null,
-      avatar: null,
+      avatar: user.avatar || null,
     },
   });
 
@@ -141,11 +143,10 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       }
     });
 
-
-    if (fileInputRef.current.files[0]) {
-      data.append('avatar', fileInputRef.current.files[0]);
+    if (fileInputRef.current && fileInputRef.current.files[0]) {
+      formData.append('avatar', fileInputRef.current.files[0]);
     }
-  
+
     try {
       const result = await dispatch(updateUser(formData));
       if (result.meta.requestStatus === 'fulfilled') {
@@ -165,8 +166,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
 
   return (
     <div className={css.settingsContainer}>
-
-            <Toaster
+      <Toaster
         position="bottom-left"
         reverseOrder={false}
         toastOptions={{
@@ -188,9 +188,8 @@ const UserSettingsForm = ({ closeSettingModal }) => {
         }}
       />
 
-     
       <form onSubmit={handleSubmit(onSubmit)}>
-      <UserSettingsAvatar
+        <UserSettingsAvatar
           onChange={handleAvatarChange}
           fileInputRef={fileInputRef}
           preview={preview}
