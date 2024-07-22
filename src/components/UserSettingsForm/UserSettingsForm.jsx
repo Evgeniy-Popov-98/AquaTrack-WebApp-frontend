@@ -101,11 +101,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
 
     Object.keys(data).forEach(key => {
       const value = data[key];
-      if (!value) {
-        if (key !== 'dailyWaterIntake') {
-          return;
-        }
-      }
+      if (!value) return;
 
       switch (key) {
         case 'gender':
@@ -259,7 +255,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
                 })}
               />
               <p className={css.errorMessage}>{errors.email?.message}</p>
-              {/* <input value={user.email} readOnly className={css.settingInput} /> */}
             </div>
           </div>
 
@@ -340,7 +335,6 @@ const UserSettingsForm = ({ closeSettingModal }) => {
               <input
                 type="string"
                 {...register('dailyWaterIntake')}
-                placeholder={dailyWaterRecomended}
                 className={clsx(css.settingInput, {
                   [css.error]: errors.dailyWaterIntake,
                 })}
