@@ -130,7 +130,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
         throw new Error('Failed to submit');
       }
     } catch (error) {
-      toast.error('An error occurred while submitting the form.');
+      toast.error('An error occurred while submitting the form');
       console.log('An error occurred while submitting the form:', error);
     }
   };
@@ -143,12 +143,13 @@ const UserSettingsForm = ({ closeSettingModal }) => {
         position="bottom-left"
         reverseOrder={false}
         toastOptions={{
-          duration: 3000,
+          duration: 4000,
           error: {
             style: {
               border: '3px solid red',
+              background: '#363636',
+              color: '#fff',
               padding: '16px',
-              color: '#323f47',
             },
           },
         }}
