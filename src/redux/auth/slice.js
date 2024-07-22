@@ -61,7 +61,7 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, handleRejected)
-      // //google-url
+      //google-url
       .addCase(getAuthUrl.pending, handlePending)
       .addCase(getAuthUrl.fulfilled, (state, action) => {
         state.loading = false;
