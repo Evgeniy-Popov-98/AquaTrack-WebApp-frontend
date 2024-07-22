@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import avatarBase from '../../assets/images/avatarBase.png';
+import avatarBase from '../../assets/images/avatarBase.jpg';
 import sprite from '../../assets/icons/icons.svg';
 
 import UserBarPopover from '../UserBarPopover/UserBarPopover';
