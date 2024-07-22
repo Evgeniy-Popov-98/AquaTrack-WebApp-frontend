@@ -2,10 +2,12 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import css from './WaterForm.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import icons from '../../assets/icons/icons.svg';
 import { addWater, updateWater } from '../../redux/water/operations';
 import { useEffect } from 'react';
+import { selectdateOrMonth } from '../../redux/water/selectors';
+import { checkFutureDate } from '../../helpers/utils';
 
 const schema = yup.object().shape({
   amountOfWater: yup
@@ -18,6 +20,8 @@ const schema = yup.object().shape({
 });
 
 const WaterForm = ({ closeWaterModal, operationType, item }) => {
+  const isData = useSelector(selectdateOrMonth);
+
   const dispatch = useDispatch();
 
   const defaultValues =
@@ -133,9 +137,22 @@ const WaterForm = ({ closeWaterModal, operationType, item }) => {
         {...register('amountOfWater')}
         onChange={e => setValue('amountOfWater', Number(e.target.value))}
       />
-      <button className={css.saveBtn} type="submit">
-        Save
-      </button>
+      {checkFutureDate(isData) ? (
+        <button className={css.saveBtn} type="submit">
+          Save
+        </button>
+      ) : (
+        <>
+          <button
+            className={css.noSaveBtn}
+            type="submit"
+            title="It is not possible to add water to an invalid date!"
+            disabled
+          >
+            Save
+          </button>
+        </>
+      )}
     </form>
   );
 };

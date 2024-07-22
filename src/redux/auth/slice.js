@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import {
   login,
-  //   refreshUser,
+  refreshUser,
   register,
   logout,
   getUser,
@@ -82,18 +83,20 @@ const authSlice = createSlice({
       })
       .addCase(verifyGoogleOAuth.rejected, handleRejected)
       //refresh
-      //   .addCase(refreshUser.pending, handlePending, state => {
-      //     state.isRefreshing = true;
-      //   })
-      //   .addCase(refreshUser.fulfilled, (state, action) => {
-      //     state.loading = false;
-      //     state.isRefreshing = false;
-      //     state.isLoggedIn = true;
-      //     state.accessToken = action.payload;
-      //   })
-      //   .addCase(refreshUser.rejected, handleRejected, state => {
-      //     state.isRefreshing = true;
-      //   })
+
+      .addCase(refreshUser.pending, handlePending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isRefreshing = false;
+        state.isLoggedIn = true;
+        state.accessToken = action.payload.accessToken;
+      })
+      .addCase(refreshUser.rejected, handleRejected, state => {
+        state.isRefreshing = true;
+      })
+
       // logout
       .addCase(logout.pending, handlePending)
       .addCase(logout.fulfilled, () => {
@@ -104,14 +107,14 @@ const authSlice = createSlice({
       .addCase(getUser.pending, handlePending)
       .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = { ...state.user, ...action.payload.user };
       })
       .addCase(getUser.rejected, handleRejected)
       // updateUser
       .addCase(updateUser.pending, handlePending)
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = { ...state.user, ...action.payload.user };
       })
       .addCase(updateUser.rejected, handleRejected);
   },

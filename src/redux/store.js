@@ -14,6 +14,7 @@ import { authReducer } from './auth/slice.js';
 import { timerReducer } from './timer/slice.js';
 import { waterReducer } from './water/slice.js';
 import { calendarReducer } from './calendar/slice.js';
+import { refreshSettingInterceptors } from './auth/operations.js';
 
 const authPeristConfig = {
   key: 'auth',
@@ -35,5 +36,7 @@ export const store = configureStore({
       },
     }),
 });
+
+refreshSettingInterceptors(store);
 
 export const persistor = persistStore(store);

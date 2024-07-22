@@ -20,7 +20,11 @@ const UserBar = ({ name, avatar }) => {
 
   return (
     <div className={css.boxUserBar}>
-      <button ref={elementRef} className={css.btnUserBar} onClick={() => setUserBarPopover(true)}>
+      <button
+        ref={elementRef}
+        className={css.btnUserBar}
+        onClick={() => setUserBarPopover(true)}
+      >
         <p className={css.userName}>{name}</p>
         <img
           className={css.avatar}
