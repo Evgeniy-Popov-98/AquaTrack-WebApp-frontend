@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   login,
-  //   refreshUser,
+  refreshUser,
   register,
   logout,
   getUser,
@@ -97,7 +97,6 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
 
-      
       // logout
       .addCase(logout.pending, handlePending)
       .addCase(logout.fulfilled, () => {
