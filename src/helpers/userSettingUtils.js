@@ -6,7 +6,7 @@ export const convertingToNumber = str => {
 };
 
 export const dailyWaterRecomendCalculation = (gender, weight, sport) => {
-  if (!weight) return 1.8;
+  if (!weight) return 1.5;
   if (!sport) sport = 0;
   const baseValue = gender === 'female' ? 0.03 : 0.04;
   const sportValue = gender === 'female' ? 0.4 : 0.6;
