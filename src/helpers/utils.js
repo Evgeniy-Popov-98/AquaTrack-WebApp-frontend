@@ -36,3 +36,23 @@ export const useDateFC = () => {
     numberOfMonth,
   };
 };
+
+//
+export const checkFutureDate = data => {
+  const currentDate = new Date();
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
+
+  let [oldYear, oldMonth, oldDay] = data.split('-');
+
+  oldMonth = oldMonth.slice(1);
+
+  if (day < oldDay && month <= oldMonth && year <= oldYear) {
+    return false;
+  } else if (day > oldDay && month >= oldMonth && year >= oldYear) {
+    return false;
+  } else {
+    return true;
+  }
+};
