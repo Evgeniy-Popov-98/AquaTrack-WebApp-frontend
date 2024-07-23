@@ -1,14 +1,48 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { instance } from '../../api/axiosInstance.js';
 
+const errorMessage = error => {
+  let errorMessage = 'An error occurred. Please try again.';
+
+  if (error.response) {
+    switch (error.response.status) {
+      case 400:
+        errorMessage = 'Bad Request.';
+        break;
+      case 401:
+        errorMessage =
+          error.response.data.message || 'Unauthorized. Please log in.';
+        break;
+      case 403:
+        errorMessage = 'Forbidden.';
+        break;
+      case 404:
+        errorMessage = 'Resource not found.';
+        break;
+      case 500:
+        errorMessage = 'Server error.';
+        break;
+      default:
+        errorMessage = error.response.data.message || 'Server error.';
+    }
+  } else if (error.request) {
+    errorMessage = 'No response from server. Please try again later.';
+  } else {
+    errorMessage = error.message;
+  }
+
+  return { error: errorMessage };
+};
+
 export const register = createAsyncThunk(
   'auth/register',
   async (formData, thunkApi) => {
     try {
       const { data } = await instance.post('/users/register', formData);
       return data.data;
-    } catch (e) {
-      return thunkApi.rejectWithValue(e.message);
+    } catch (err) {
+      const { error } = errorMessage(err);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );
@@ -19,8 +53,10 @@ export const login = createAsyncThunk(
     try {
       const { data } = await instance.post('/users/login', formData);
       return data.data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
+    } catch (err) {
+      const { error } = errorMessage(err);
+      console.log(err);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );
@@ -78,29 +114,23 @@ export const refreshUser = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async (_, thunkAPI) => {
-    try {
-      await instance.post('/users/logout');
-      return;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  try {
+    await instance.post('/users/logout');
+    return;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
   }
-);
+});
 
-export const getUser = createAsyncThunk(
-  'auth/current',
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await instance.get('/users/current');
-      return data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
+export const getUser = createAsyncThunk('auth/current', async (_, thunkAPI) => {
+  try {
+    const { data } = await instance.get('/users/current');
+    return data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.message);
   }
-);
+});
 
 export const updateUser = createAsyncThunk(
   'auth/update',
