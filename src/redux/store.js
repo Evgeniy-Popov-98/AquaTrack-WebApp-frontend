@@ -19,7 +19,7 @@ import { refreshSettingInterceptors } from './auth/operations.js';
 const authPeristConfig = {
   key: 'auth',
   storage,
-  whitelist: ['accessToken'],
+  whitelist: ['accessToken', 'isloggedIn'],
 };
 
 export const store = configureStore({
