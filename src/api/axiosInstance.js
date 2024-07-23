@@ -3,8 +3,8 @@ import { store } from '../redux/store';
 import { refreshUser } from '../redux/auth/operations';
 
 export const instance = axios.create({
-  // baseURL: 'https://aquatrack-webapp-backend.onrender.com',
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://aquatrack-webapp-backend.onrender.com',
+  //   baseURL: 'http://localhost:3000',
   withCredentials: true,
   headers: {
     Accept: 'application/json',
@@ -12,7 +12,7 @@ export const instance = axios.create({
   },
 });
 
-export const setToken = (token) => {
+export const setToken = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -22,63 +22,67 @@ export const clearToken = () => {
 // let refreshTokenRequest = null
 
 instance.interceptors.request.use(
-    async (config) => {
-      const state = store.getState();
-      const token = state.auth.accessToken;
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      // if (config.url === "/users/refresh-tokens") {
-      //   console.log('config.url: ', config.url);
-      //   console.log('refreshTokenRequest: ', refreshTokenRequest);
-      //   if (refreshTokenRequest === null) {
-      //     console.log('запит: ', refreshTokenRequest);
-      //     refreshTokenRequest = store.dispatch(refreshUser());
-      //     console.log('refreshTokenRequest: ', refreshTokenRequest);
-      //   }
-      //   const res = await refreshTokenRequest
-      //   console.log('res: ', res);
-      //   refreshTokenRequest = null
-        
-      // }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
+  async config => {
+    const state = store.getState();
+    const token = state.auth.accessToken;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-  );
-  
-  instance.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      if (error.response && error.response.status === 401 && !error.config._retry) {
-        error.config._retry = true;
-  
-        try {
-          const state = store.getState();
-          const refreshToken = state.auth.accessToken;
-          if (refreshToken) {
-            const resultAction = await store.dispatch(refreshUser());
-            if (refreshUser.fulfilled.match(resultAction)) {
-              setToken(resultAction.payload.accessToken);
-              error.config.headers.Authorization = `Bearer ${resultAction.payload.accessToken}`;
-              return instance.request(error.config);
-            } else {
-              clearToken();
-              return Promise.reject(resultAction.payload);
-            }
-          }
-        } catch (refreshError) {
-          clearToken();
-          return Promise.reject(refreshError);
-        }
-      }
-  
-      return Promise.reject(error);
-    }
-  );
+    // if (config.url === "/users/refresh-tokens") {
+    //   console.log('config.url: ', config.url);
+    //   console.log('refreshTokenRequest: ', refreshTokenRequest);
+    //   if (refreshTokenRequest === null) {
+    //     console.log('запит: ', refreshTokenRequest);
+    //     refreshTokenRequest = store.dispatch(refreshUser());
+    //     console.log('refreshTokenRequest: ', refreshTokenRequest);
+    //   }
+    //   const res = await refreshTokenRequest
+    //   console.log('res: ', res);
+    //   refreshTokenRequest = null
 
-  // import axios from 'axios';
+    // }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  response => response,
+  async error => {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !error.config._retry
+    ) {
+      error.config._retry = true;
+
+      try {
+        const state = store.getState();
+        const refreshToken = state.auth.accessToken;
+        if (refreshToken) {
+          const resultAction = await store.dispatch(refreshUser());
+          if (refreshUser.fulfilled.match(resultAction)) {
+            setToken(resultAction.payload.accessToken);
+            error.config.headers.Authorization = `Bearer ${resultAction.payload.accessToken}`;
+            return instance.request(error.config);
+          } else {
+            clearToken();
+            return Promise.reject(resultAction.payload);
+          }
+        }
+      } catch (refreshError) {
+        clearToken();
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// import axios from 'axios';
 // import { store } from '../redux/store';
 // import { refreshUser } from '../redux/auth/operations';
 
@@ -151,13 +155,13 @@ instance.interceptors.request.use(
 //       return Promise.reject(error);
 //     }
 //   );
-  
+
 //   instance.interceptors.response.use(
 //     (response) => response,
 //     async (error) => {
 //       if (error.response && error.response.status === 401 && !error.config._retry) {
 //         error.config._retry = true;
-  
+
 //         try {
 //           const state = store.getState();
 //           const refreshToken = state.auth.accessToken;
@@ -177,7 +181,7 @@ instance.interceptors.request.use(
 //           return Promise.reject(refreshError);
 //         }
 //       }
-  
+
 //       return Promise.reject(error);
 //     }
 //   );
