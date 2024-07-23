@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import {
-  selectIsLoggedIn,
-  selectIsRefreshing,
-  selectLoading,
-} from '../../redux/auth/selectors';
+import { selectLoading } from '../../redux/auth/selectors';
 
 import { getUser } from '../../redux/auth/operations';
 // import { selectLoading } from '../../redux/water/selectors';
@@ -18,14 +14,10 @@ import css from './TrackerPage.module.css';
 
 const TrackerPage = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isRefreshing = useSelector(selectIsRefreshing);
   const loading = useSelector(selectLoading);
 
   useEffect(() => {
-    if (isLoggedIn && !isRefreshing) {
-      dispatch(getUser());
-    }
+    dispatch(getUser());
   }, [dispatch]);
 
   return (
