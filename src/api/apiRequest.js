@@ -26,7 +26,8 @@ const apiRequest = async (
           errorMessage = 'Bad Request.';
           break;
         case 401:
-          errorMessage = 'Unauthorized. Please log in.';
+          errorMessage =
+            error.response.data.message || 'Unauthorized. Please log in.';
           break;
         case 403:
           errorMessage = 'Forbidden.';
@@ -46,7 +47,6 @@ const apiRequest = async (
       errorMessage = error.message;
     }
 
-    console.error('Error:', errorMessage);
     return { data: null, error: errorMessage };
   }
 };
