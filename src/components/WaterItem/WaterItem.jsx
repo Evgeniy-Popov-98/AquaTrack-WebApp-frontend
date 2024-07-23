@@ -35,7 +35,7 @@ const WaterItem = ({ item, refreshData }) => {
 
       <div className={css.info}>
         <p className={css.volume}>{item.amountOfWater} ml</p>
-        <p className={css.time}>{item.date} am</p>
+        <p className={css.time}>{item.date}</p>
       </div>
 
       <div className={css.containerIcons}>
