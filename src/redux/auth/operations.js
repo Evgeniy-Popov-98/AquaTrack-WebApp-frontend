@@ -23,7 +23,11 @@ export const clearToken = () =>
 export const register = createAsyncThunk(
   'auth/register',
   async (formData, thunkApi) => {
-    const { data, error } = await apiRequest('post','/users/register', formData);
+    const { data, error } = await apiRequest(
+      'post',
+      '/users/register',
+      formData
+    );
 
     if (error) {
       return thunkApi.rejectWithValue(error);

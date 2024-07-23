@@ -42,6 +42,7 @@ const schema = yup.object().shape({
 const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const userNorma = user.dailyWaterIntake;
 
   const currentAvatar = useSelector(selectUserAvatar);
 
@@ -80,7 +81,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
       email: user.email,
       weight: user.weight || null,
       activeSportsTime: user.activeSportsTime || null,
-      dailyWaterIntake: user.dailyWaterIntake || null,
+      dailyWaterIntake: userNorma || null,
       avatar: user.avatar || null,
     },
   });
@@ -101,7 +102,11 @@ const UserSettingsForm = ({ closeSettingModal }) => {
 
     Object.keys(data).forEach(key => {
       const value = data[key];
-      if (!value) return;
+      if (!value) {
+        if (key !== 'dailyWaterIntake') {
+          return;
+        }
+      }
 
       switch (key) {
         case 'gender':
@@ -128,15 +133,12 @@ const UserSettingsForm = ({ closeSettingModal }) => {
           }
           break;
         case 'dailyWaterIntake':
-          if (data[key]) {
-            if (dailyWaterIntakeNumber !== user.dailyWaterIntake) {
-              return formData.append(key, dailyWaterIntakeNumber);
-            } else {
-              break;
-            }
+          if (dailyWaterIntakeNumber !== userNorma) {
+            formData.append(key, dailyWaterIntakeNumber);
           } else {
-            return formData.append(key, dailyWaterRecomended);
+            formData.append(key, userNorma);
           }
+          break;
         default:
           break;
       }
