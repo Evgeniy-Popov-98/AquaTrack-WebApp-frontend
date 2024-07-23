@@ -77,7 +77,7 @@ const waterSlice = createSlice({
           updateWater.pending
         ),
         state => {
-          // state.loading = true;
+          state.loading = true;
           state.error = null;
         }
       )
