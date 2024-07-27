@@ -108,7 +108,9 @@ export const refreshUser = createAsyncThunk(
     try {
       const { data } = await instance.post('/users/refresh-tokens');
       return data.data;
-    } catch (error) {
+    } catch (err) {
+      const { error } = errorMessage(err);
+      console.log(err);
       return thunkApi.rejectWithValue(error.message);
     }
   }
