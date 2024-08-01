@@ -14,7 +14,7 @@ const errorMessage = error => {
           error.response.data.message || 'Unauthorized. Please log in.';
         break;
       case 403:
-        errorMessage = 'Forbidden.';
+        errorMessage = error.response.data.message || 'Forbidden.';
         break;
       case 404:
         errorMessage = 'Resource not found.';
@@ -55,7 +55,6 @@ export const login = createAsyncThunk(
       return data.data;
     } catch (err) {
       const { error } = errorMessage(err);
-      console.log(err);
       return thunkApi.rejectWithValue(error);
     }
   }

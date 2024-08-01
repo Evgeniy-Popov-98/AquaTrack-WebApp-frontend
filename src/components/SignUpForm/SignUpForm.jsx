@@ -73,13 +73,13 @@ const SignUpForm = () => {
   return (
     <div className={css.formContainer}>
       <Toaster
-        position="bottom-center"
+        position="top-center"
         toastOptions={{
           style: {
             background: '#363636',
             color: '#fff',
           },
-          error: { duration: 2000 },
+          error: { duration: 3500 },
         }}
       />
       <Logo />
