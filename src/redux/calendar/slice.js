@@ -10,7 +10,7 @@ const calendarSlice = createSlice({
   reducers: {
     setDate: (state, action) => {
       const { year, month, date } = action.payload;
-      const newDate = new Date(year, month, date);
+      const newDate = new Date(year, month, date + 1);
       state.currentDate = newDate.toISOString();
     },
     changeMonth: (state, action) => {
