@@ -25,6 +25,17 @@
   padding: 18px 14px;
 }
 
+.noDataText {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #323f47;
+  letter-spacing: 0.02em;
+}
+
 .container::-webkit-scrollbar {
   border-radius: 9px;
   height: 8px;

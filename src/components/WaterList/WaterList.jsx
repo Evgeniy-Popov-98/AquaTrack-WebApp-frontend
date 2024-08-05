@@ -45,21 +45,20 @@ const WaterList = ({ date }) => {
       dispatch(getWaterDaily(date));
     }
   };
-
   return (
     <div className={`${css.container} ${isScrollable ? css.scrollable : ''}`}>
-      <ul className={css.list}>
-        {Array.isArray(waterDailyItems.data) &&
-        waterDailyItems.data.length > 0 ? (
-          waterDailyItems.data.map(item => (
-            <li key={item._id} className={css.item}>
-              <WaterItem item={item} refreshData={refreshData} />
-            </li>
-          ))
-        ) : (
-          <li></li>
-        )}
-      </ul>
+      {waterDailyItems.data.length > 0 ? (
+        <ul className={css.list}>
+          {Array.isArray(waterDailyItems.data) &&
+            waterDailyItems.data.map(item => (
+              <li key={item._id} className={css.item}>
+                <WaterItem item={item} refreshData={refreshData} />
+              </li>
+            ))}
+        </ul>
+      ) : (
+        <p className={css.noDataText}>There is no data for the selected date</p>
+      )}
     </div>
   );
 };
