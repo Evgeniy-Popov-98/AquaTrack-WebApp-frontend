@@ -39,6 +39,10 @@ const schema = yup.object().shape({
   avatar: yup.mixed().notRequired(),
 });
 
+function uppercaseFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 const UserSettingsForm = ({ closeSettingModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -68,6 +72,18 @@ const UserSettingsForm = ({ closeSettingModal }) => {
 
   const [modalMessageIsOpen, setModalMessageIsOpen] = useState(false);
 
+  const { name, email } = user;
+
+  let userName;
+  if (name) {
+    userName = uppercaseFirstLetter(name);
+  } else {
+    if (email) {
+      const index = email.indexOf('@');
+      userName = uppercaseFirstLetter(email.slice(0, index));
+    }
+  }
+
   const {
     register,
     handleSubmit,
@@ -77,7 +93,7 @@ const UserSettingsForm = ({ closeSettingModal }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       gender: user.gender || 'female',
-      name: user.name || null,
+      name: user.name || userName,
       email: user.email,
       weight: user.weight || null,
       activeSportsTime: user.activeSportsTime || null,

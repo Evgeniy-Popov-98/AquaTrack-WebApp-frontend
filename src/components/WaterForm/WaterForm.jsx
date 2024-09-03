@@ -14,7 +14,7 @@ const schema = yup.object().shape({
     .number()
     .typeError('Enter a valid amount of water')
     .min(50, 'Minimum amount is 50ml')
-    .max(300, 'Maximum amount is 300 ml')
+    .max(1500, 'Maximum amount is 1500 ml')
     .required('Amount is required'),
   date: yup.string().required('Time is required'),
 });
