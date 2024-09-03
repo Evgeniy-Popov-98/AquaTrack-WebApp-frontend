@@ -28,7 +28,8 @@ const CalendarItem = ({ day, idx, activeIndex, setActiveIndex }) => {
 
   const handleClick = () => {
     setActiveIndex(idx);
-    dispatch(setDate({ year, month, date: formattedDay + 1 }));
+    dispatch(setDate({ year, month, date: Number(formattedDay) }));
+    // dispatch(setDate({ year, month, date: formattedDay + 1 }));
   };
 
   return (

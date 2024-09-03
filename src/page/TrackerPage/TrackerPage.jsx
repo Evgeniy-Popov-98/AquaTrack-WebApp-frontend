@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { selectLoading } from '../../redux/auth/selectors';
 
 import { getUser } from '../../redux/auth/operations';
-// import { selectLoading } from '../../redux/water/selectors';
 
 import Loader from '../../components/Loader/Loader';
 import WaterMainInfo from '../../components/WaterMainInfo/WaterMainInfo';
